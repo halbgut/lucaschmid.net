@@ -83,10 +83,10 @@ comp_handlebars () {
   local FILE=${1}
   maybe_make_dir ${PROJECT_ROOT}build/_html
   if [ -f "${FILE}" ]; then
-    OUT=$(cd ${PROJECT_ROOT}src/client/handlebars && node ../../../${FILE})
+    OUT="$(cd ${PROJECT_ROOT}src/client/handlebars && node ../../../${FILE})"
     if (( ${#OUT} > 1 )); then
       NEW_DIR=$(make_dir ${PROJECT_ROOT}build/_html/ ${FILE} ${PROJECT_ROOT}src/client/handlebars/)
-      echo ${OUT} > ${NEW_DIR}$(change_ext $(basename ${FILE}) html 2)
+      echo "${OUT}" > ${NEW_DIR}$(change_ext $(basename ${FILE}) html 2)
     fi
   fi
 }
