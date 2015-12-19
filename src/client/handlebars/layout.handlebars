@@ -3,12 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <title>{{ title }}</title>
+  <link rel="stylesheet" href="/_css/writ.css">
+  <link rel="stylesheet" href="/_css/styles.css">
 </head>
 <body>
-  {{{ content }}}
-  <example-riot></example-riot>
-  <script src="/_js/script.js"></script>
-  <script src="/_tag/example.js"></script>
+  <main>
+    <nav>
+      <ul>
+        <li><a href="/">About</a></li>
+        <li><a href="/projects">Projects</a></li>
+        <li><a href="/anotherblog">Blog</a></li>
+      </ul>
+    </nav>
+    {{{ content }}}
+  </main>
 </body>
 </html>
 

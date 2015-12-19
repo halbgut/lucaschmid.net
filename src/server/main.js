@@ -12,8 +12,18 @@ app.set('views', './build/_html')
 
 app.use(express.static('./build/'))
 
-app.use('/', (req, res) => {
+app.use(/^\/$/, (req, res) => {
   res.render('start')
 })
-app.listen(3042)
+
+app.use(/^\/projects$/, (req, res) => {
+  res.render('projects')
+})
+
+app.use((req, res) => {
+  res.status(404)
+    .end()
+})
+
+app.listen(3040)
 

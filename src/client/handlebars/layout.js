@@ -5,8 +5,8 @@ module.exports = {
   render (contentFile, data, titleSuff) {
     var data = data || {}
     var title = titleSuff
-      ? `Yolo - ${titleSuff}`
-      : 'Yolo'
+      ? `Luca Nils Schmid - ${titleSuff}`
+      : 'Luca Nils Schmid'
     return this.getTemplate('./layout', {
       title,
       content: this.getTemplate(contentFile, data)
