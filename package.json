@@ -1,6 +1,6 @@
 {
-  "name": "glue-stack",
-  "description": "A simplistic node-based web-stack not compromising fancy frontend tech for speed",
+  "name": "lucaschmid.net",
+  "description": "My Portfolio",
   "dependencies": {
     "express": "~4.13.3"
   },
