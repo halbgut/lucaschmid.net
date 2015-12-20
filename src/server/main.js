@@ -30,6 +30,10 @@ app.use(/^\/projects$/, (req, res) => {
   res.render('projects')
 })
 
+app.use(/^\/anotherblog/, (req, res) => {
+  res.render('blog')
+})
+
 app.use((req, res) => {
   res.status(404)
     .end()

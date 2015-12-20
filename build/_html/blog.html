@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Luca Nils Schmid</title>
+  <link rel="stylesheet" href="/_css/writ.css">
+  <link rel="stylesheet" href="/_css/styles.css">
+</head>
+<body>
+  <main>
+    <nav>
+      <ul>
+        <li><a href="/">About</a></li>
+        <li><a href="/projects">Projects</a></li>
+        <li><a href="/anotherblog">Blog</a></li>
+      </ul>
+    </nav>
+      <article>
+    <h1 id="letsencryptexpress">Let's encrypt Express</h1>
+
+<p>Since <em><a href="https://letsencrypt.org/">Let's Encrypt</a></em> will be comming out soon, I thought I'd try it on this site. It runs on Node.js using Express on <a href="https://alpinelinux.org/">Alpine Linux</a>. The guide should work on pretty much any Linux System, since both Node.js and Letsencrypt are made to be compatible.</p>
+
+<h2 id="requestingthecertificate">Requesting the certificate</h2>
+
+<p>First of all lets get our certificate. I basically just followed the <a href="https://github.com/letsencrypt/letsencrypt/blob/master/README.rst">README in Let's Encrypt's Github repo</a>.</p>
+
+<p>Install the utility. This will become easier one it's released. You'll then be able to use your package-manager.</p>
+
+<pre><code>git clone https://github.com/letsencrypt/letsencrypt
+cd letsencrypt
+./letsencrypt-auto --help
+</code></pre>
+
+<p>Then we can request the certificate. Here's what I did for this site</p>
+
+<pre><code>./letsencrypt-auto certonly --standalone --email not_an_email_address@lucaschmid.net -d lucaschmid.net
+</code></pre>
+
+<p>This threw an error because I had IPv6 enabled. If <a href="https://github.com/letsencrypt/boulder/issues/1046">this issue</a> hasn't been resolved yet, you might need to do deactivate IPv6, before running the last command.</p>
+
+<pre><code>sysctl -w net.ipv6.conf.all.disable_ipv6=1
+</code></pre>
+
+<p>Then after you have recieved the cert, you can enable it again.</p>
+
+<pre><code>sysctl -w net.ipv6.conf.all.disable_ipv6=0
+</code></pre>
+
+<h2 id="installingthemfortheexpressapp">Installing them for the Express App</h2>
+
+<p>Inside my app's directory I created a directory called <code>tls</code>. Then I created some symlinks for the certificate and the key.</p>
+
+<pre><code>mkdir tls
+cd tls
+ln -s /etc/letsencrypt/live/lucaschmid.net/cert.pem
+ln -s /etc/letsencrypt/live/lucaschmid.net/privkey.pem key.pem
+</code></pre>
+
+<p>(I'm using Docker to run this site, so the symlinks won't work inside the container. To fix this, I had to make copies of the files instead of only symlinking them. This has the disadvantage, that letsencrypt can't manage them.)</p>
+
+<p>Now we can integrate the <code>https</code> module into our Express server. Here's a simple example.</p>
+
+<pre><code>var express = require('express')
+var fs = require('fs')
+var https = require('https')
+
+var ports = process.env.NODE_ENV === 'production'
+  ? [80, 443]
+  : [3442, 3443]
+
+var app = express()
+
+var server = https.createServer(
+  {
+    key: fs.readFileSync('./tls/key.pem'),
+    cert: fs.readFileSync('./tls/cert.pem')
+  },
+  app
+)
+
+server.listen(ports[1])
+app.listen(ports[0])
+</code></pre>
+  </article>
+
+
+  </main>
+</body>
+</html>
