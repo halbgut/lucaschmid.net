@@ -21,7 +21,6 @@ module.exports = (keyPath, certPath, app, port) => {
 }
 
 function initTLS (key, cert, app, port) {
-  return https.createServer({key, cert}, app)
-    .listen(port)
+  return https.createServer({key, cert}, app).listen(port)
 }
 

@@ -10,7 +10,7 @@ var ports = NODE_ENV === 'production'
   : [3442, 3443]
 
 var app = express()
-initTLS('./tls/key.pem', './tls/cert.pem', app)
+initTLS('./tls/key.pem', './tls/cert.pem', app, ports[1])
 app.listen(ports[0])
 
 app.engine('html', (filePath, options, cb) => {
