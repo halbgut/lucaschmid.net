@@ -1,6 +1,6 @@
 # Skills
 
-Here are things I spent considerable time on learning.
+Here are things I spent considerable time on learning. They are orderd by skill-level.
 
 ## Languages
 
@@ -27,11 +27,11 @@ Here are things I spent considerable time on learning.
 ## Tools
 
 - Node.js
+- MongoDB
 - Express
+- PostCSS
 - Handlebars
 - Riot.js
-- MongoDB
-- PostCSS
 - React
 - Angular
 

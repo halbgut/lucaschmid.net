@@ -36,7 +36,7 @@ cd letsencrypt
 <pre><code>./letsencrypt-auto certonly --standalone --email not_an_email_address@lucaschmid.net -d lucaschmid.net
 </code></pre>
 
-<p>This threw an error because I had IPv6 enabled. If <a href="https://github.com/letsencrypt/boulder/issues/1046">this issue</a> hasn't been resolved yet, you might need to do deactivate IPv6, before running the last command.</p>
+<p>This threw an error on my server because I had IPv6 enabled. If <a href="https://github.com/letsencrypt/boulder/issues/1046">this issue</a> hasn't been resolved yet, <strong>you might need to do deactivate IPv6</strong>, before running the last command.</p>
 
 <pre><code>sysctl -w net.ipv6.conf.all.disable_ipv6=1
 </code></pre>
