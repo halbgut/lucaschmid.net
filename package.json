@@ -2,13 +2,14 @@
   "name": "lucaschmid.net",
   "description": "My Portfolio",
   "dependencies": {
-    "express": "~4.13.3"
+    "express": "~4.13.3",
+    "riot": "~2.3.12",
+    "lodash": "~3.10.1"
   },
   "devDependencies": {
     "browserify": "~12.0.1",
     "babelify": "~7.2.0",
 
-    "riot": "~2.3.12",
     "handlebars": "~4.0.5",
     "gaze": "0.5.2",
 
