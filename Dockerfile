@@ -1,7 +1,9 @@
 FROM alpine:edge
 MAINTAINER Kriegslustig
 
-EXPOSE 3040
+EXPOSE 80
+EXPOSE 443
+
 WORKDIR /var/app
 VOLUME /var/app
 CMD npm start
