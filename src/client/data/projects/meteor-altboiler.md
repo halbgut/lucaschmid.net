@@ -1,6 +1,6 @@
-# [Altboiler](https://github.com/Kriegslustig/meteor-altboiler)
+# Altboiler
 
-Altboiler is an alternative Boilerplate for the [Meteor](https://www.meteor.com/) platform. I made the package in reaction to a StackOverflow question titled [_"Meteor: Eliminate render-blocking JavaScript and CSS in above-the-fold content"_](http://stackoverflow.com/questions/28886432/meteor-eliminate-render-blocking-javascript-and-css-in-above-the-fold-content). I read big parts of the Meteor-core in the Process. Especially the boilerplating parts, to figure out how I could replace the standard boilerplate with something that would perform better.
+[Altboiler](https://github.com/Kriegslustig/meteor-altboiler) is an alternative Boilerplate for the [Meteor](https://www.meteor.com/) platform. I made the package in reaction to a StackOverflow question titled [_"Meteor: Eliminate render-blocking JavaScript and CSS in above-the-fold content"_](http://stackoverflow.com/questions/28886432/meteor-eliminate-render-blocking-javascript-and-css-in-above-the-fold-content). I read big parts of the Meteor-core in the Process. Especially the boilerplating parts, to figure out how I could replace the standard boilerplate with something that would perform better.
 
 It was a very interesting exprerience and my first time diving this deep into a OSS frameworks source code.
 

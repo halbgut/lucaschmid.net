@@ -2,7 +2,7 @@
   <ul>
     <li each={ items } data-id={ id } class={ active ? 'active' : '' }>
       <div class="line"></div>
-      <a href="#{ id }">{ name }</a>
+      <a href="{ url }">{ name }</a>
     </li>
   </ul>
   <style scoped>
@@ -59,7 +59,12 @@
   <script>
     var that = this
     this.items = [].map.call(document.querySelectorAll('h1'), function (el) {
-      return { id: el.id, name: el.textContent, active: false}
+      return {
+        id: el.id,
+        name: el.textContent,
+        active: false,
+        url: el.childNodes[0].href || '#' + el.id,
+      }
     })
 
     this.on('mount', function () {
