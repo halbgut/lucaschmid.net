@@ -19,7 +19,7 @@ cd letsencrypt
 Then we can request the certificate. Here's what I did for this site.
 
 ```
-./letsencrypt-auto certonly --standalone --email not_an\_email\_address@lucaschmid.net -d lucaschmid.net
+./letsencrypt-auto certonly --standalone --email not_an_email_address@lucaschmid.net -d lucaschmid.net
 ```
 
 This threw an error on my server because I had IPv6 enabled. If [this issue][6] hasn't been resolved yet, **you might need to do deactivate IPv6**, before running the last command.

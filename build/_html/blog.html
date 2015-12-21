@@ -42,7 +42,7 @@ cd letsencrypt
 
 <p>Then we can request the certificate. Here's what I did for this site.</p>
 
-<pre><code>./letsencrypt-auto certonly --standalone --email not_an\_email\_address@lucaschmid.net -d lucaschmid.net
+<pre><code>./letsencrypt-auto certonly --standalone --email not_an_email_address@lucaschmid.net -d lucaschmid.net
 </code></pre>
 
 <p>This threw an error on my server because I had IPv6 enabled. If <a href="https://github.com/letsencrypt/boulder/issues/1046">this issue</a> hasn't been resolved yet, <strong>you might need to do deactivate IPv6</strong>, before running the last command.</p>
@@ -107,7 +107,7 @@ app.use('/', (req, res) =\&gt; {
 <p><strong>ENCRYPT ALL THE THINGS!!</strong></p>
     <p>
       <i>– By <a href="author.url">Luca Nils Schmid</a></i><br>
-      <i>Created on Mon Dec 21 2015 18:02:34 GMT+0100 (CET)</i>
+      <i>Created on Mon Dec 21 2015 18:08:20 GMT+0100 (CET)</i>
     </p>
   </article>
 
