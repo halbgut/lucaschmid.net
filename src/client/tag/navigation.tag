@@ -59,13 +59,14 @@
       calcPos()
       _.each(that.root.getElementsByTagName('li'), function (el) {
         var elem = document.getElementById(el.getAttribute('data-id')).parentNode
-        var topOffset = getTopOffset(elem)
-        var factor = ( elem.clientHeight / 100 )
-        var boundCalcPercent = calcPercent(topOffset, factor, false, scrollY) >= 100
-          ? calcPercent.bind(null, topOffset, factor, true)
-          : calcPercent.bind(null, topOffset, factor, false)
+        var center = innerHeight / 3
+        var containerHeight = center > elem.clientHeight
+          ? elem.clientHeight
+          : elem.clientHeight - innerHeight / 3
+        var topOffset = getTopOffset(elem) - center
+        var factor = ( containerHeight / 100 )
         var updateBarHeight = _.throttle(function (e) {
-          var res = boundCalcPercent(scrollY)
+          var res = calcPercent(scrollY, factor, topOffset)
           if(res < 0) res = 0
           if(res > 100) res = 100
           el.children[0].style.height = res + '%'
@@ -77,11 +78,9 @@
 
     addEventListener('resize', calcPos)
 
-    function calcPercent (offset, factor, fromTop, top) {
-      var add = fromTop
-        ? 0
-        : innerHeight
-      return Math.round(( top - offset + add ) / factor)
+    function calcPercent (offset, factor, top) {
+      console.log(offset, factor, top)
+      return Math.round(( offset - top ) / factor)
     }
 
 
