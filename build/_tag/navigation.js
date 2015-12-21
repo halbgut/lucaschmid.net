@@ -35,7 +35,6 @@ riot.tag2('navigation', '<ul> <li each="{items}" data-id="{id}" class="{active ?
     addEventListener('resize', calcPos)
 
     function calcPercent (offset, factor, top) {
-      console.log(offset, factor, top)
       return Math.round(( offset - top ) / factor)
     }
 

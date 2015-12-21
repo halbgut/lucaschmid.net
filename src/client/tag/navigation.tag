@@ -93,7 +93,6 @@
     addEventListener('resize', calcPos)
 
     function calcPercent (offset, factor, top) {
-      console.log(offset, factor, top)
       return Math.round(( offset - top ) / factor)
     }
 
