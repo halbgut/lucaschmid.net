@@ -7,7 +7,7 @@ var buildPath = '../../../build/_html/'
 getArticles('../data/blog/').forEach((article) => {
   fs.writeFile(
     `${buildPath}anotherblog-${article.name}.html`,
-    layout.render('./blog', { articles: [article] })
+    layout.render('./blogArticle', { articles: [article] })
   )
 })
 
