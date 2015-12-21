@@ -1,6 +1,6 @@
 <navigation>
   <ul>
-    <li data-id={ id } each={ items }>
+    <li each={ items } data-id={ id } class={ active ? 'active' : '' }>
       <div class="line"></div>
       <a href="#{ id }">{ name }</a>
     </li>
@@ -27,10 +27,12 @@
     :scope li a:visited {
       font-size: .8rem;
       color: #AAA;
+      transition: color .2s;
     }
 
-    :scope li a:hover {
-      color: #999;
+    :scope li a:hover,
+    :scope li.active a {
+      color: #666;
     }
 
     :scope li .line {
@@ -41,8 +43,13 @@
       width: 2px;
       height: 0;
       background: #CCC;
-      transition: height .2s;
+      transition: height .2s, background .2s;
       margin-right: .5rem;
+    }
+
+    :scope li:hover .line,
+    :scope li.active .line {
+      background: #666;
     }
 
     :scope ul {
@@ -52,12 +59,12 @@
   <script>
     var that = this
     this.items = [].map.call(document.querySelectorAll('h1'), function (el) {
-      return { id: el.id, name: el.textContent }
+      return { id: el.id, name: el.textContent, active: false}
     })
 
     this.on('mount', function () {
       calcPos()
-      _.each(that.root.getElementsByTagName('li'), function (el) {
+      _.each(that.root.getElementsByTagName('li'), function (el, i) {
         var elem = document.getElementById(el.getAttribute('data-id')).parentNode
         var center = innerHeight / 3
         var containerHeight = center > elem.clientHeight
@@ -69,6 +76,8 @@
           var res = calcPercent(scrollY, factor, topOffset)
           if(res < 0) res = 0
           if(res > 100) res = 100
+          that.items[i].active = !!(res > 0 && res < 100)
+          that.update()
           el.children[0].style.height = res + '%'
         }, 30)
         addEventListener('scroll', updateBarHeight)
