@@ -1,6 +1,10 @@
 {{#each articles}}
   <article>
     {{{content}}}
+    <p>
+      <i>– By <a href="author.url">{{ author.name }}</a></i><br>
+      <i>Created on {{ created }}</i>
+    </p>
   </article>
 {{/each}}
 

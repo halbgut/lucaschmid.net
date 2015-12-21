@@ -5,6 +5,7 @@
   <title>Luca Nils Schmid</title>
   <link rel="stylesheet" href="/_css/writ.css">
   <link rel="stylesheet" href="/_css/styles.css">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
 <body>
   <aside>
@@ -21,7 +22,9 @@
       <article>
     <h1 id="letsencryptexpress">Let's encrypt Express</h1>
 
-<p>Since <em><a href="https://letsencrypt.org/">Let's Encrypt</a></em> will be comming out soon, I thought I'd try it on this site. It runs on Node.js using Express on <a href="https://alpinelinux.org/">Alpine Linux</a>. The guide should work on pretty much any Linux System, since both Node.js and Letsencrypt are made to be compatible.</p>
+<p>Since <em><a href="https://letsencrypt.org/">Let's Encrypt</a></em> will be comming out <a href="https://letsencrypt.org/2015/11/12/public-beta-timing.html">soon</a>, I thought I'd try it on my Site. <em>Let's Encrypts</em> Infrastructure is actually fully operational already. They actually still label it as beeing in beta, because the client still has some (<a href="https://github.com/letsencrypt/letsencrypt/issues">around 400</a>) bugs. My Site runs on Node.js using Express on <a href="https://alpinelinux.org/">Alpine Linux</a>. The guide should work on pretty much any Linux System, since both Node.js and Letsencrypt are made to be compatible as cross-plattform-compatible as possible.</p>
+
+<p>I'll be covering three things in this guide. <strong>Requesting the Certificate</strong>, <strong>Installing it to the Express App</strong> and <strong>A simple Express-App running over TLS</strong>.</p>
 
 <h2 id="requestingthecertificate">Requesting the certificate</h2>
 
@@ -49,7 +52,7 @@ cd letsencrypt
 <pre><code>sysctl -w net.ipv6.conf.all.disable_ipv6=0
 </code></pre>
 
-<h2 id="installingthemfortheexpressapp">Installing them for the Express App</h2>
+<h2 id="installingittotheexpressapp">Installing it to the Express App</h2>
 
 <p>Inside my app's directory I created a directory called <code>tls</code>. Then I created some symlinks for the certificate and the key.</p>
 
@@ -61,7 +64,9 @@ ln -s /etc/letsencrypt/live/lucaschmid.net/privkey.pem key.pem
 
 <p>(I'm using Docker to run this site, so the symlinks won't work inside the container. To fix this, I had to make copies of the files instead of only symlinking them. This has the disadvantage, that letsencrypt can't manage them.)</p>
 
-<p>Now we can integrate the <code>https</code> module into our Express server. Here's a simple example.</p>
+<h2 id="asimpleexpressapprunningovertls">A simple Express-App running over TLS</h2>
+
+<p>Now we can integrate the <code>https</code> module into our Express server. Here's a simple example:</p>
 
 <pre><code>var express = require('express')
 var fs = require('fs')
@@ -83,7 +88,24 @@ var server = https.createServer(
 
 server.listen(ports[1])
 app.listen(ports[0])
+
+app.use('/', (req, res) =&gt; {
+  res.end('Hi')
+})
 </code></pre>
+
+<p>This script simply serves 'Hi' on all routes both over HTTP and HTTPS. It might be a good idea to redirect HTTP to HTTPS. I just wanted to keep it as simple as possible here.</p>
+
+<p>When you run this and go to your Website via HTTPS, you should see something like this:
+<img src="/_img/certificate.png" alt="Image of the certificate opened in Firefox" /></p>
+
+<p>Now go on!</p>
+
+<p><strong>ENCRYPT ALL THE THINGS!!</strong></p>
+    <p>
+      <i>– By <a href="author.url">Luca Nils Schmid</a></i><br>
+      <i>Created on Mon Dec 21 2015 14:34:45 GMT+0100 (CET)</i>
+    </p>
   </article>
 
 

@@ -13,7 +13,12 @@ function getArticles () {
     return {
       content: mdConverter.makeHtml(
         fs.readFileSync(`../data/blog/${path}`, 'utf8')
-      )
+      ),
+      author: {
+        name: 'Luca Nils Schmid',
+        url: '/',
+      },
+      created: fs.statSync(`../data/blog/${path}`).ctime
     }
   })
 }
