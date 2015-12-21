@@ -10,40 +10,40 @@ First of all lets get our certificate. I basically just followed the [README in 
 
 Install the utility. This will become easier one it's released. You'll then be able to use your package-manager.
 
-\`\`\`
+```
 git clone https://github.com/letsencrypt/letsencrypt
 cd letsencrypt
 ./letsencrypt-auto --help
-\`\`\`
+```
 
 Then we can request the certificate. Here's what I did for this site.
 
-\`\`\`
-./letsencrypt-auto certonly --standalone --email not\_an\_email\_address@lucaschmid.net -d lucaschmid.net
-\`\`\`
+```
+./letsencrypt-auto certonly --standalone --email not_an\_email\_address@lucaschmid.net -d lucaschmid.net
+```
 
 This threw an error on my server because I had IPv6 enabled. If [this issue][6] hasn't been resolved yet, **you might need to do deactivate IPv6**, before running the last command.
 
-\`\`\`
-sysctl -w net.ipv6.conf.all.disable\_ipv6=1
-\`\`\`
+```
+sysctl -w net.ipv6.conf.all.disable_ipv6=1
+```
 
 Then after you have received the certificate, you can enable IPv6 again.
 
-\`\`\`
-sysctl -w net.ipv6.conf.all.disable\_ipv6=0
-\`\`\`
+```
+sysctl -w net.ipv6.conf.all.disable_ipv6=0
+```
 
 ## Installing the certificate to the Express app
 
 Inside my app's directory I created a directory called `tls`. I then created some symlinks for the certificate and the key.
 
-\`\`\`
+```
 mkdir tls
 cd tls
 ln -s /etc/letsencrypt/live/lucaschmid.net/cert.pem
 ln -s /etc/letsencrypt/live/lucaschmid.net/privkey.pem key.pem
-\`\`\`
+```
 
 (I'm using Docker to run this site, so the symlinks won't work inside the container. To fix this, I had to make copies of the files instead of only symlinking them. This has the disadvantage of _Let’s Encrypt_ not being able to manage them.)
 
@@ -51,12 +51,12 @@ ln -s /etc/letsencrypt/live/lucaschmid.net/privkey.pem key.pem
 
 Now we can integrate the `https` module into our Express server. Here's a simple example:
 
-\`\`\`
+```
 var express = require('express')
 var fs = require('fs')
 var https = require('https')
 
-var ports = process.env.NODE\_ENV === 'production'
+var ports = process.env.NODE_ENV === 'production'
   ? [80, 443]
   : [3442, 3443]
 
@@ -64,8 +64,8 @@ var app = express()
 
 var server = https.createServer(
   {
-	key: fs.readFileSync('./tls/key.pem'),
-	cert: fs.readFileSync('./tls/cert.pem')
+    key: fs.readFileSync('./tls/key.pem'),
+    cert: fs.readFileSync('./tls/cert.pem')
   },
   app
 )
@@ -76,8 +76,7 @@ app.listen(ports[0])
 app.use('/', (req, res) =\> {
   res.end('Hi')
 })
-
-\`\`\`
+```
 
 This script simply serves 'Hi' on all routes both over HTTP and HTTPS. It might be a good idea to redirect HTTP to HTTPS. I just wanted to keep it as simple as possible here.
 
@@ -88,12 +87,13 @@ Now go on!
 
 **ENCRYPT ALL THE THINGS!!**
 
-[1]:	https://letsencrypt.org/
-[2]:	https://letsencrypt.org/2015/11/12/public-beta-timing.html
-[3]:	https://github.com/letsencrypt/letsencrypt/issues
-[4]:	https://alpinelinux.org/
-[5]:	https://github.com/letsencrypt/letsencrypt/blob/master/README.rst
-[6]:	https://github.com/letsencrypt/boulder/issues/1046
-[7]:	https://letsencrypt.org/
+[1]: https://letsencrypt.org/
+[2]: https://letsencrypt.org/2015/11/12/public-beta-timing.html
+[3]: https://github.com/letsencrypt/letsencrypt/issues
+[4]: https://alpinelinux.org/
+[5]: https://github.com/letsencrypt/letsencrypt/blob/master/README.rst
+[6]: https://github.com/letsencrypt/boulder/issues/1046
+[7]: https://letsencrypt.org/
 
-[image-1]:	/_img/certificate.png
+[image-1]: /_img/certificate.png
+
