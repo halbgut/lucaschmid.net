@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ lang }}">
 <head>
   <meta charset="UTF-8">
   <title>{{ title }}</title>
   <link rel="stylesheet" href="/_css/writ.css">
   <link rel="stylesheet" href="/_css/styles.css">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="utf-8" />
+  {{#each meta}}
+    <meta name="{{@keys}}" content="{{this}}">
+  {{/each}}
 </head>
 <body>
   <aside>
