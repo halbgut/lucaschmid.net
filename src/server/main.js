@@ -29,7 +29,7 @@ app.use(morgan('common'))
 app.use(express.static('./build/'))
 
 app.use('/', (req, res, next) => {
-  if(!req.client.TLSSocket && NODE_ENV === 'production') {
+  if(!req.client.encrypted && NODE_ENV === 'production') {
     res.writeHead(302, {
       Location: `https://${FQDN}${req.url}`
     })
