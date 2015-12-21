@@ -33,6 +33,7 @@ app.use('/', (req, res, next) => {
     res.writeHead(302, {
       Location: `https://${FQDN}${req.url}`
     })
+    res.end()
   } else {
     next()
   }
