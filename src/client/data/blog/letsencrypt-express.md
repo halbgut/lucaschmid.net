@@ -1,4 +1,4 @@
-# Let's encrypt Express
+# [Let's encrypt Express][0]
 
 Since [_Let's Encrypt_][1] will be coming out [soon][2], I thought I'd try it on my Site. _Let's Encrypts_ infrastructure is actually fully operational already. They still label it as being in beta, because the client has some ([around 400][3]) bugs. My Site runs on Node.js using Express on [_Alpine Linux_][4]. The guide should work on pretty much any Linux system, since both _Node.js_ and _Let's Encrypt_ are made to be as cross-platform-compatible as possible.
 
@@ -87,6 +87,7 @@ Now go on!
 
 **ENCRYPT ALL THE THINGS!!**
 
+[0]: /anotherblog/letsencrypt-express
 [1]: https://letsencrypt.org/
 [2]: https://letsencrypt.org/2015/11/12/public-beta-timing.html
 [3]: https://github.com/letsencrypt/letsencrypt/issues

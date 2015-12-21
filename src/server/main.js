@@ -3,6 +3,7 @@ var morgan = require('morgan')
 var fs = require('fs')
 
 var initTLS = require('./tls')
+var getArticles = require('./getArticles')
 
 var NODE_ENV = process.env.NODE_ENV
 
@@ -47,12 +48,19 @@ app.use(/^\/projects$/, (req, res) => {
   res.render('projects')
 })
 
-app.use(/^\/anotherblog/, (req, res) => {
+app.use(/^\/anotherblog$/, (req, res) => {
   res.render('blog')
+})
+
+app.use('/anotherblog/:name', (req, res, next) => {
+  res.render(`anotherblog-${req.params.name}`, (err, html) => {
+    if(err) next()
+    res.end(html)
+  })
 })
 
 app.use((req, res) => {
   res.status(404)
-    .end()
+  res.render('404')
 })
 
