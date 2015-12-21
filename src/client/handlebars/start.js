@@ -10,7 +10,7 @@ var skills = mdConverter.makeHtml(fs.readFileSync('../data/skills.md','utf8'))
 process.stdout.write(layout.render(
   './start',
   {
-    content: main + skills
+    sections: [main, skills]
   }
 ))
 
