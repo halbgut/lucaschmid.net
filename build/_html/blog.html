@@ -22,7 +22,7 @@
       <article>
     <h1 id="letsencryptexpress">Let's encrypt Express</h1>
 
-<p>Since <em><a href="https://letsencrypt.org/">Let's Encrypt</a></em> will be comming out <a href="https://letsencrypt.org/2015/11/12/public-beta-timing.html">soon</a>, I thought I'd try it on my Site. <em>Let's Encrypts</em> Infrastructure is actually fully operational already. They actually still label it as beeing in beta, because the client still has some (<a href="https://github.com/letsencrypt/letsencrypt/issues">around 400</a>) bugs. My Site runs on Node.js using Express on <a href="https://alpinelinux.org/">Alpine Linux</a>. The guide should work on pretty much any Linux System, since both Node.js and Letsencrypt are made to be compatible as cross-plattform-compatible as possible.</p>
+<p>Since <a href="https://letsencrypt.org/"><em>Let's Encrypt</em></a>_ will be comming out <a href="https://letsencrypt.org/2015/11/12/public-beta-timing.html">soon</a>, I thought I'd try it on my Site. <em>Let's Encrypts</em> Infrastructure is actually fully operational already. They actually still label it as beeing in beta, because the client still has some (<a href="https://github.com/letsencrypt/letsencrypt/issues">around 400</a>) bugs. My Site runs on Node.js using Express on <a href="https://alpinelinux.org/"><em>Alpine Linux</em></a>. The guide should work on pretty much any Linux System, since both <em>Node.js</em> and <em>Let's encrypt</em> are made to be compatible as cross-platform-compatible as possible.</p>
 
 <p>I'll be covering three things in this guide. <strong>Requesting the Certificate</strong>, <strong>Installing it to the Express App</strong> and <strong>A simple Express-App running over TLS</strong>.</p>
 
@@ -47,12 +47,12 @@ cd letsencrypt
 <pre><code>sysctl -w net.ipv6.conf.all.disable_ipv6=1
 </code></pre>
 
-<p>Then after you have recieved the cert, you can enable it again.</p>
+<p>Then after you have received the certificate, you can enable it again.</p>
 
 <pre><code>sysctl -w net.ipv6.conf.all.disable_ipv6=0
 </code></pre>
 
-<h2 id="installingittotheexpressapp">Installing it to the Express App</h2>
+<h2 id="installingittotheexpressapp">Installing it to the Express-App</h2>
 
 <p>Inside my app's directory I created a directory called <code>tls</code>. Then I created some symlinks for the certificate and the key.</p>
 
@@ -104,7 +104,7 @@ app.use('/', (req, res) =&gt; {
 <p><strong>ENCRYPT ALL THE THINGS!!</strong></p>
     <p>
       <i>– By <a href="author.url">Luca Nils Schmid</a></i><br>
-      <i>Created on Mon Dec 21 2015 14:34:45 GMT+0100 (CET)</i>
+      <i>Created on Mon Dec 21 2015 15:19:15 GMT+0100 (CET)</i>
     </p>
   </article>
 

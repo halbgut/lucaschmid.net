@@ -1,6 +1,6 @@
 # Let's encrypt Express
 
-Since _[Let's Encrypt](https://letsencrypt.org/)_ will be comming out [soon](https://letsencrypt.org/2015/11/12/public-beta-timing.html), I thought I'd try it on my Site. _Let's Encrypts_ Infrastructure is actually fully operational already. They actually still label it as beeing in beta, because the client still has some ([around 400](https://github.com/letsencrypt/letsencrypt/issues)) bugs. My Site runs on Node.js using Express on [Alpine Linux](https://alpinelinux.org/). The guide should work on pretty much any Linux System, since both Node.js and Letsencrypt are made to be compatible as cross-plattform-compatible as possible.
+Since [_Let's Encrypt_](https://letsencrypt.org/)_ will be comming out [soon](https://letsencrypt.org/2015/11/12/public-beta-timing.html), I thought I'd try it on my Site. _Let's Encrypts_ Infrastructure is actually fully operational already. They actually still label it as beeing in beta, because the client still has some ([around 400](https://github.com/letsencrypt/letsencrypt/issues)) bugs. My Site runs on Node.js using Express on [_Alpine Linux_](https://alpinelinux.org/). The guide should work on pretty much any Linux System, since both _Node.js_ and _Let's encrypt_ are made to be compatible as cross-platform-compatible as possible.
 
 I'll be covering three things in this guide. **Requesting the Certificate**, **Installing it to the Express App** and **A simple Express-App running over TLS**.
 
@@ -28,13 +28,13 @@ This threw an error on my server because I had IPv6 enabled. If [this issue](htt
 sysctl -w net.ipv6.conf.all.disable_ipv6=1
 ```
 
-Then after you have recieved the cert, you can enable it again.
+Then after you have received the certificate, you can enable it again.
 
 ```
 sysctl -w net.ipv6.conf.all.disable_ipv6=0
 ```
 
-## Installing it to the Express App
+## Installing it to the Express-App
 
 Inside my app's directory I created a directory called `tls`. Then I created some symlinks for the certificate and the key.
 
