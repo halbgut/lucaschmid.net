@@ -25,9 +25,9 @@
       <article>
     <h1 id="letsencryptexpress">Let's encrypt Express</h1>
 
-<p>Since <a href="https://letsencrypt.org/"><em>Let's Encrypt</em></a>_ will be comming out <a href="https://letsencrypt.org/2015/11/12/public-beta-timing.html">soon</a>, I thought I'd try it on my Site. <em>Let's Encrypts</em> Infrastructure is actually fully operational already. They actually still label it as beeing in beta, because the client still has some (<a href="https://github.com/letsencrypt/letsencrypt/issues">around 400</a>) bugs. My Site runs on Node.js using Express on <a href="https://alpinelinux.org/"><em>Alpine Linux</em></a>. The guide should work on pretty much any Linux System, since both <em>Node.js</em> and <em>Let's encrypt</em> are made to be compatible as cross-platform-compatible as possible.</p>
+<p>Since <a href="https://letsencrypt.org/"><em>Let's Encrypt</em></a> will be coming out <a href="https://letsencrypt.org/2015/11/12/public-beta-timing.html">soon</a>, I thought I'd try it on my Site. <em>Let's Encrypts</em> infrastructure is actually fully operational already. They still label it as being in beta, because the client has some (<a href="https://github.com/letsencrypt/letsencrypt/issues">around 400</a>) bugs. My Site runs on Node.js using Express on <a href="https://alpinelinux.org/"><em>Alpine Linux</em></a>. The guide should work on pretty much any Linux system, since both <em>Node.js</em> and <em>Let's Encrypt</em> are made to be as cross-platform-compatible as possible.</p>
 
-<p>I'll be covering three things in this guide. <strong>Requesting the Certificate</strong>, <strong>Installing it to the Express App</strong> and <strong>A simple Express-App running over TLS</strong>.</p>
+<p>I'll be covering three things in this guide. <strong>Requesting the certificate</strong>, <strong>Installing it to the Express app</strong> and <strong>A simple Express app running over TLS</strong>.</p>
 
 <h2 id="requestingthecertificate">Requesting the certificate</h2>
 
@@ -40,9 +40,9 @@ cd letsencrypt
 ./letsencrypt-auto --help
 </code></pre>
 
-<p>Then we can request the certificate. Here's what I did for this site</p>
+<p>Then we can request the certificate. Here's what I did for this site.</p>
 
-<pre><code>./letsencrypt-auto certonly --standalone --email not_an_email_address@lucaschmid.net -d lucaschmid.net
+<pre><code>./letsencrypt-auto certonly --standalone --email not_an\_email\_address@lucaschmid.net -d lucaschmid.net
 </code></pre>
 
 <p>This threw an error on my server because I had IPv6 enabled. If <a href="https://github.com/letsencrypt/boulder/issues/1046">this issue</a> hasn't been resolved yet, <strong>you might need to do deactivate IPv6</strong>, before running the last command.</p>
@@ -50,14 +50,14 @@ cd letsencrypt
 <pre><code>sysctl -w net.ipv6.conf.all.disable_ipv6=1
 </code></pre>
 
-<p>Then after you have received the certificate, you can enable it again.</p>
+<p>Then after you have received the certificate, you can enable IPv6 again.</p>
 
 <pre><code>sysctl -w net.ipv6.conf.all.disable_ipv6=0
 </code></pre>
 
-<h2 id="installingittotheexpressapp">Installing it to the Express-App</h2>
+<h2 id="installingthecertificatetotheexpressapp">Installing the certificate to the Express app</h2>
 
-<p>Inside my app's directory I created a directory called <code>tls</code>. Then I created some symlinks for the certificate and the key.</p>
+<p>Inside my app's directory I created a directory called <code>tls</code>. I then created some symlinks for the certificate and the key.</p>
 
 <pre><code>mkdir tls
 cd tls
@@ -65,9 +65,9 @@ ln -s /etc/letsencrypt/live/lucaschmid.net/cert.pem
 ln -s /etc/letsencrypt/live/lucaschmid.net/privkey.pem key.pem
 </code></pre>
 
-<p>(I'm using Docker to run this site, so the symlinks won't work inside the container. To fix this, I had to make copies of the files instead of only symlinking them. This has the disadvantage, that letsencrypt can't manage them.)</p>
+<p>(I'm using Docker to run this site, so the symlinks won't work inside the container. To fix this, I had to make copies of the files instead of only symlinking them. This has the disadvantage of <em>Let’s Encrypt</em> not being able to manage them.)</p>
 
-<h2 id="asimpleexpressapprunningovertls">A simple Express-App running over TLS</h2>
+<h2 id="asimpleexpressapprunningovertls">A simple Express app running over TLS</h2>
 
 <p>Now we can integrate the <code>https</code> module into our Express server. Here's a simple example:</p>
 
@@ -89,10 +89,10 @@ var server = https.createServer(
   app
 )
 
-server.listen(ports[1])
+server.listen(ports[1][7])
 app.listen(ports[0])
 
-app.use('/', (req, res) =&gt; {
+app.use('/', (req, res) =\&gt; {
   res.end('Hi')
 })
 </code></pre>
@@ -107,7 +107,7 @@ app.use('/', (req, res) =&gt; {
 <p><strong>ENCRYPT ALL THE THINGS!!</strong></p>
     <p>
       <i>– By <a href="author.url">Luca Nils Schmid</a></i><br>
-      <i>Created on Mon Dec 21 2015 15:19:15 GMT+0100 (CET)</i>
+      <i>Created on Mon Dec 21 2015 18:02:34 GMT+0100 (CET)</i>
     </p>
   </article>
 
