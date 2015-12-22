@@ -1,23 +1,19 @@
 var fs = require('fs')
-var showdown = require('showdown')
-
-var mdConverter = new showdown.Converter
+var getMarkdown = require(`${__dirname}/getMarkdown`)
 
 module.exports = (root) => {
-  return fs.readdirSync(root)
+  return fs.readdirSync(`${getMarkdown.getPath()}/${root}`)
     .map((path) => {
       var name = path.split('.').slice(0, -1).join('.')
       return {
         name,
         url: `/anotherblog/${name}`,
-        content: mdConverter.makeHtml(
-          fs.readFileSync(`${root}${path}`, 'utf8')
-        ),
+        content: getMarkdown.render(`${root}/${name}`).html,
         author: {
           name: 'Luca Nils Schmid',
           url: '/',
         },
-        created: fs.statSync(`${root}${path}`).ctime
+        created: fs.statSync(`${getMarkdown.getPath()}/${root}/${path}`).ctime
       }
     })
     .sort((a, b) => {

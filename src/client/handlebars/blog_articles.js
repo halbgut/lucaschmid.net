@@ -1,13 +1,14 @@
 var fs = require('fs')
-var layout = require('./layout')
-var getArticles = require('../../server/getArticles.js')
+var layout = require(`${__dirname}/layout`)
+var getMarkdown = require(`${__dirname}/../../common/getMarkdown`)
+var getArticles = require(`${__dirname}/../../common/getArticles.js`)
 
-var buildPath = '../../../build/_html/'
+var buildPath = `${__dirname}/../../../build/_html/`
 
-getArticles('../data/blog/').forEach((article) => {
+getArticles('blog').forEach((article) => {
   fs.writeFile(
     `${buildPath}anotherblog-${article.name}.html`,
-    layout.render('./blogArticle', { articles: [article] })
+    layout.render(`${__dirname}/blogArticle`, { articles: [article] })
   )
 })
 

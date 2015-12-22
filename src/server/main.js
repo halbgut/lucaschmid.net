@@ -2,8 +2,8 @@ var express = require('express')
 var morgan = require('morgan')
 var fs = require('fs')
 
-var initTLS = require('./tls')
-var getArticles = require('./getArticles')
+var initTLS = require(`${__dirname}/tls`)
+var getArticles = require(`${__dirname}/../common/getArticles`)
 
 var NODE_ENV = process.env.NODE_ENV
 

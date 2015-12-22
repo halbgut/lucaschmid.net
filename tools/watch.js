@@ -52,7 +52,7 @@ gaze('src/client/tag/**/*.tag', (err, watcher) => {
   })
 })
 
-gaze(['src/client/handlebars/**/*.handlebars', 'src/client/handlebars/**/*.js', 'src/client/data/**/*.md'], (err, watcher) => {
+gaze(['src/client/handlebars/**/*.handlebars', 'src/client/handlebars/**/*.js', 'src/data/**/*.md'], (err, watcher) => {
   if(err) console.error(err)
   watcher.on('all', () => {
     spawn('./tools/build.bash', ['handlebars'])
