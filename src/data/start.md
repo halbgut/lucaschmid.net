@@ -1,4 +1,6 @@
-# Hi! My name is Luca Nils Schmid.
+# Hi!
+
+My name is Luca Nils Schmid.
 
 ## How I learned to program
 
@@ -9,7 +11,7 @@ My favourite hobby is programming. I started my apprenticeship as a _mediamatic 
 29
 ```
 
-Around April I joined the Linux system-administration-team at work. There I got to know Apache, MySQL and Linux. In december I went to the Dupal team. At the time of this writting I'm still part of that team.
+Around April I joined the Linux system administration team at work. There I got to know Apache, MySQL and Linux. In december I went to a Dupal team. At the time of this writting I'm still part of that team.
 
 In August 2016 I will graduate from my apprenticeship. Then I want to start working as a JavaScript-Developer.
 
