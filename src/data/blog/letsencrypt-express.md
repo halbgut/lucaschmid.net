@@ -6,9 +6,9 @@ I'll be covering three things in this guide. **Requesting the certificate**, **I
 
 ## Requesting the certificate
 
-First of all lets get our certificate. I basically just followed the [README in Let's Encrypt's Github repo][5].
+First of all lets get our certificate. I basically just followed the [README inside Let's Encrypt's Github repo][5].
 
-Install the utility. This will become easier one it's released. You'll then be able to use your package-manager.
+We'll need to install the utility. This will become easier once it's released as stable. You'll then be able to use your package-manager.
 
 ```
 git clone https://github.com/letsencrypt/letsencrypt
@@ -28,7 +28,7 @@ This threw an error on my server because I had IPv6 enabled. If [this issue][6] 
 sysctl -w net.ipv6.conf.all.disable_ipv6=1
 ```
 
-Then after you have received the certificate, you can enable IPv6 again.
+When you now run the last command again, you should recieve the certificate. After that, you can enable IPv6 again.
 
 ```
 sysctl -w net.ipv6.conf.all.disable_ipv6=0
@@ -45,7 +45,7 @@ ln -s /etc/letsencrypt/live/lucaschmid.net/cert.pem
 ln -s /etc/letsencrypt/live/lucaschmid.net/privkey.pem key.pem
 ```
 
-(I'm using Docker to run this site, so the symlinks won't work inside the container. To fix this, I had to make copies of the files instead of only symlinking them. This has the disadvantage of _Let’s Encrypt_ not being able to manage them.)
+_I'm using Docker to run this site, so the symlinks won't work inside the container. To fix this, I had to make copies of the files instead of only symlinking them. This has the disadvantage of Let’s Encrypt not being able to manage them. The certificates have a pretty short lifetime (3 months), letsencrypt could renew them itself._
 
 ## A simple Express app running over TLS
 
