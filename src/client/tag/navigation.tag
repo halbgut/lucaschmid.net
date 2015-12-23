@@ -63,7 +63,7 @@
         id: el.id,
         name: el.textContent,
         active: false,
-        url: el.childNodes[0].href || '#' + el.id,
+        url: (el.childNodes[0] || {}).href || '#' + el.id,
       }
     })
 

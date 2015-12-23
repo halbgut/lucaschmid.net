@@ -5,7 +5,7 @@ riot.tag2('navigation', '<ul> <li each="{items}" data-id="{id}" class="{active ?
         id: el.id,
         name: el.textContent,
         active: false,
-        url: el.childNodes[0].href || '#' + el.id,
+        url: (el.childNodes[0] || {}).href || '#' + el.id,
       }
     })
 
