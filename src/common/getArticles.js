@@ -5,10 +5,13 @@ module.exports = (root) => {
   return fs.readdirSync(`${getMarkdown.getPath()}/${root}`)
     .map((path) => {
       var name = path.split('.').slice(0, -1).join('.')
+      var content = getMarkdown.render(`${root}/${name}`)
       return {
         name,
         url: `/anotherblog/${name}`,
-        content: getMarkdown.render(`${root}/${name}`).html,
+        title: content.title,
+        teaser: content.paragraphs[0],
+        content: content.html,
         author: {
           name: 'Luca Nils Schmid',
           url: '/',

@@ -13,8 +13,11 @@ module.exports = {
     } catch (e) {
       md = fs.readFileSync(`${path}${name}`,'utf8')
     }
+    var html = mdConverter.makeHtml(md)
     return {
-      html: mdConverter.makeHtml(md),
+      html,
+      paragraphs: /<p>(.*)<\/p>/g.exec(html),
+      title: /<h1 (id=\"\w*\")?>(.*)<\/h1>/g.exec(html)[0] // The regex narrow implementation that only works well for showdown
     }
   },
   getPath: () => path
