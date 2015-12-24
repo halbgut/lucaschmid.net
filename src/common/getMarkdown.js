@@ -17,7 +17,7 @@ module.exports = {
     return {
       html,
       paragraphs: /<p>(.*)<\/p>/g.exec(html),
-      title: /<h1 (id=\"\w*\")?>(.*)<\/h1>/g.exec(html)[0] // The regex narrow implementation that only works well for showdown
+      title: /<h1 (id=\"\w*\")?>(.*)<\/h1>/g.exec(html)[2] // The regex narrow implementation that only works well for showdown
     }
   },
   getPath: () => path

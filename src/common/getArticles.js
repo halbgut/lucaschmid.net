@@ -1,5 +1,6 @@
 var fs = require('fs')
 var getMarkdown = require(`${__dirname}/getMarkdown`)
+var config = require(`${__dirname}/config.js`)
 
 module.exports = (root) => {
   return fs.readdirSync(`${getMarkdown.getPath()}/${root}`)
@@ -8,13 +9,13 @@ module.exports = (root) => {
       var content = getMarkdown.render(`${root}/${name}`)
       return {
         name,
-        url: `/anotherblog/${name}`,
+        url: config.getFullUrl(`anotherblog/${name}`),
         title: content.title,
         teaser: content.paragraphs[0],
         content: content.html,
         author: {
           name: 'Luca Nils Schmid',
-          url: '/',
+          url: config.getFullUrl(),
         },
         created: fs.statSync(`${getMarkdown.getPath()}/${root}/${path}`).ctime
       }

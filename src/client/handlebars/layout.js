@@ -2,20 +2,22 @@ var handlebars = require('handlebars')
 var fs = require('fs')
 var _ = require('lodash')
 
+var config = require(`${__dirname}/../../common/config`)
+
 module.exports = {
   render (contentFile, data, options) {
     var data = data || {}
     var options = options || {}
     var title = options.titleSuffix
-      ? `Luca Nils Schmid - ${titleSuff}`
-      : 'Luca Nils Schmid'
+      ? `${config.title} - ${titleSuff}`
+      : config.title
     return this.getTemplate('./layout', {
       title,
       content: this.getTemplate(contentFile, data),
       lang: 'en',
       meta: _.extend({
         viewport: 'width=device-width,initial-scale=1',
-        description: 'My name is Luca Nils Schmid. This is my portfolio.',
+        description: config.description,
         keywords: 'luca nils schmid, kriegslustig, webdevelopment, node.js'
       }, options.meta)
     })

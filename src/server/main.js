@@ -4,11 +4,12 @@ var fs = require('fs')
 
 var initTLS = require(`${__dirname}/tls`)
 var getArticles = require(`${__dirname}/../common/getArticles`)
+var config = require(`${__dirname}/../common/config.js`)
 
 var NODE_ENV = process.env.NODE_ENV
 
 var FQDN = NODE_ENV === 'production'
-  ? 'lucaschmid.net'
+  ? config.hostname
   : 'localhost'
 var ports = NODE_ENV === 'production'
   ? [80, 443]
@@ -32,7 +33,7 @@ app.use(express.static('./build/'))
 app.use('/', (req, res, next) => {
   if(!req.client.encrypted && NODE_ENV === 'production') {
     res.writeHead(302, {
-      Location: `https://${FQDN}${req.url}`
+      Location: `${config.defaultProto}://${FQDN}${req.url}`
     })
     res.end()
   } else {
