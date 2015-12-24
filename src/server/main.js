@@ -26,7 +26,7 @@ app.engine('html', (filePath, options, cb) => {
 app.set('view engine', 'html')
 app.set('views', './build/_html')
 
-app.use(morgan('common'))
+app.use(morgan('combined'))
 
 app.use(express.static('./build/'))
 
