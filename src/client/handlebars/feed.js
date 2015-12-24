@@ -107,7 +107,6 @@ function genAtom (options, entries) {
       generator: 'Handmade by Luca Nils Schmid',
   }, options))
     .concat(entries.map((entry) => { return { entry: transformAtomEntry(entry) } } ))
-  console.error(feed)
   return xml({feed}, { declaration: true })
 }
 
