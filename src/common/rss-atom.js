@@ -52,6 +52,7 @@ function genRSS (options, items) {
 }
 
 function genAtom (options, entries) {
+  entries = _.clone(entries)
   var feed = objToXMLObj(deepExtend({
       _attr: {
         'xmlns:atom': 'http://www.w3.org/2005/Atom'
@@ -61,7 +62,7 @@ function genAtom (options, entries) {
       language: 'en-GB',
       generator: 'Handmade by Luca Nils Schmid',
   }, options))
-    .concat(entries.map((entry) => { return { entry: transformAtomEntry(entry) } } ))
+    .concat(_.map(entries, (entry) => { return { entry: transformAtomEntry(entry) } } ))
   return xml({feed}, { declaration: true })
 }
 
@@ -137,6 +138,7 @@ function objToXMLObj (obj) {
 
 function transformAtomEntry (entry) {
   return _.map(entry, (el) => {
+    el = _.cloneDeep(el)
     var key = Object.keys(el)[0]
     var mod = {
       content (content) {
