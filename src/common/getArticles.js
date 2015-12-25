@@ -16,6 +16,7 @@ module.exports = (root) => {
         author: {
           name: 'Luca Nils Schmid',
           url: config.getFullUrl(),
+          email: 'allspamhere@kriegslustig.me'
         },
         created: fs.statSync(`${getMarkdown.getPath()}/${root}/${path}`).ctime
       }

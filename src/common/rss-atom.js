@@ -37,7 +37,7 @@ function genRSS (options, items) {
       return {
         item: [
           { title: strip(article.title) },
-          { link: article.link },
+          { 'atom:link': article.link },
           { guid: article.guid || article.link },
           { 'description': strip(article.description) },
           { 'content:encoded': article.content },
@@ -75,10 +75,11 @@ function atomToRSSOpts (options) {
   var res = {}
   _.each(options, (val, key) => {
     ({
-      id (val, key) { res.link = val },
+      id (val, key) { },
       updated (val, key) { res.pubDate = val },
-      author (val, key) { res.author = findObj(val, 'name') },
-      subtitle (val, key) { res.description = val }
+      author (val, key) { res.author = findObj(val, 'email') },
+      subtitle (val, key) { res.description = val },
+      link (val, key) { res['atom:link'] = val }
     }[key] || ((val, key) => res[key] = val))(val, key)
   })
   return { channel: res }
@@ -91,7 +92,7 @@ function entryToItem (entry) {
     ;({
       id (val, key) { res.guid = val[key] },
       updated (val, key) { res.pubDate = val[key] },
-      author (val, key) { res.author = findObj(val[key], 'name') },
+      author (val, key) { res.author = findObj(val[key], 'email') },
       summary (val, key) { res.description = val[key] }
     }[key] || ((val, key) => res[key] = val[key]))(val, key)
   })
