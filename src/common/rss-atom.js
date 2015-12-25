@@ -100,9 +100,10 @@ function entryToItem (entry) {
 
 function findObj (obj, key) {
   var res
-  _.each(obj, (val, thisKey) => {
-    if(thisKey === key) res = val
+  _.each(obj, (val) => {
+    if(Object.keys(val)[0] === key) res = val[key]
   })
+  return res
 }
 
 function keyChanger (newKey) {
@@ -149,7 +150,7 @@ function transformAtomEntry (entry) {
         )
       },
       updated (date) {
-        return date.toUTCString()
+        return date
       }
     }[key]
     if(mod) el[key] = mod(el[key])

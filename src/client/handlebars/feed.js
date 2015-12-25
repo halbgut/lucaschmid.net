@@ -20,7 +20,7 @@ var feeds = rssAtom.genFeeds(
       { summary: article.teaser },
       { content: article.content },
       { author: [ { name: article.author.name }, { link: article.author.url } ] },
-      { updated: article.created }
+      { updated: article.created.toUTCString() }
     ]
   })
 )
