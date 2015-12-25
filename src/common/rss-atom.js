@@ -25,7 +25,7 @@ function genRSS (options, items) {
       'xmlns:slash': 'http://purl.org/rss/1.0/modules/slash/'
     },
     channel: {
-      lastBuildData: (new Date).toUTCString(),
+      lastBuildDate: (new Date).toUTCString(),
       language: 'en-GB',
       'sy:updatePeriod': 'hourly',
       'sy:updateFrequency': '1',
