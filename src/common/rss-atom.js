@@ -79,7 +79,7 @@ function atomToRSSOpts (options) {
       updated (val, key) { res.pubDate = val },
       author (val, key) { res.author = findObj(val, 'email') },
       subtitle (val, key) { res.description = val },
-      link (val, key) { res['atom:link'] = val }
+      link (val, key) { res['link:atom'] = { _attr: { href: val[0], rel: val[1] } } }
     }[key] || ((val, key) => res[key] = val))(val, key)
   })
   return { channel: res }
@@ -93,7 +93,8 @@ function entryToItem (entry) {
       id (val, key) { res.guid = val[key] },
       updated (val, key) { res.pubDate = val[key] },
       author (val, key) { res.author = findObj(val[key], 'email') },
-      summary (val, key) { res.description = val[key] }
+      summary (val, key) { res.description = val[key] },
+      link (val, key) { res['link:atom'] = [ { _attr: { href: val[key][0], rel: val[key][1] } } ] }
     }[key] || ((val, key) => res[key] = val[key]))(val, key)
   })
   return res
