@@ -77,9 +77,8 @@ function atomToRSSOpts (options) {
     ({
       id (val, key) { },
       updated (val, key) { res.pubDate = val },
-      author (val, key) { res.author = findObj(val, 'email') },
+      author (val, key) { res.author = `${findObj(val, 'name')} <${findObj(val, 'email')}>` },
       subtitle (val, key) { res.description = val },
-      link (val, key) { res['atom:link'] = { _attr: { href: val[0], rel: val[1] } } }
     }[key] || ((val, key) => res[key] = val))(val, key)
   })
   return { channel: res }
@@ -93,6 +92,7 @@ function entryToItem (entry) {
       id (val, key) { res.guid = val[key] },
       updated (val, key) { res.pubDate = val[key] },
       author (val, key) { res.author = findObj(val[key], 'email') },
+      author (val, key) { res.author = `${findObj(val[key], 'name')} <${findObj(val[key], 'email')}>` },
       summary (val, key) { res.description = val[key] },
       link (val, key) { res['atom:link'] = { _attr: { href: val[key][0], rel: val[key][1] } } }
     }[key] || ((val, key) => res[key] = val[key]))(val, key)
@@ -165,7 +165,7 @@ function transformRSSOptions (options) {
   var res = {}
   _.each(options.channel, (val, key) => {
     ({
-      link (val, key) { res['atom:link'] = { _attr: { href: val[0], rel: val[1] } } }
+      link (val, key) { res.link = val[0] }
     }[key] || ((val, key) => res[key] = val))(val, key)
   })
   return { channel: res }
