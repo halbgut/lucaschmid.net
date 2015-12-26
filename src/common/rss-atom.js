@@ -49,7 +49,7 @@ function genRSS (options, items) {
       }
     })
   )
-  return xml({ rss: rssFeed }, { declaration: true })
+  return xml({ rss: rssFeed }, { declaration: true, indent: true })
 }
 
 function genAtom (options, entries) {
@@ -62,9 +62,9 @@ function genAtom (options, entries) {
       updated: (new Date).toUTCString(),
       language: 'en-GB',
       generator: 'Handmade by Luca Nils Schmid',
-  }, options))
+  }, transformAtomOptions(options)))
     .concat(_.map(entries, (entry) => { return { entry: transformAtomEntry(entry) } } ))
-  return xml({feed}, { declaration: true })
+  return xml({feed}, { declaration: true, indent: true })
 }
 
 function atomObjToRSS (options, entries) {
@@ -152,12 +152,10 @@ function transformAtomEntry (entry) {
             : content
         )
       },
-      updated (date) {
-        return date
-      },
-      link (link) {
-        return { _attr: { href: link[0], rel: link[1] } }
-      }
+      updated (date) { return date },
+      link (link) { return { _attr: { href: link[0], rel: link[1] } } },
+      title (title) { return strip(title) },
+      summary (summary) { return strip(summary) }
     }[key]
     if(mod) el[key] = mod(el[key])
     return el
@@ -172,5 +170,16 @@ function transformRSSOptions (options) {
     }[key] || ((val, key) => res[key] = val))(val, key)
   })
   return { channel: res }
+}
+
+function transformAtomOptions (options) {
+  var res = {}
+  _.each(options, (val, key) => {
+    ({
+      link (val, key) { res.link = { _attr: { href: val[0], rel: val[1] } } },
+      title (val, key) { res.title = strip(val) }
+    }[key] || ((val, key) => res[key] = val))(val, key)
+  })
+  return res
 }
 
