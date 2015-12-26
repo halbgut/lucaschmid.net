@@ -43,7 +43,6 @@ function genRSS (options, items) {
           { 'description': strip(article.description) },
           { 'content:encoded': article.content },
           { author: article.author },
-          { 'dc:creator': article.author },
           { pubDate: article.pubDate }
         ]
       }
