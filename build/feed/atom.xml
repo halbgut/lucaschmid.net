@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>Luca Nils Schmid - Blog</title>
-    <update>2015-12-27T15:01:07.443Z</update>
+    <updated>2015-12-27T15:13:26.441Z</updated>
     <generator>Handmade by Luca Nils Schmid</generator>
     <id>https://lucaschmid.net/feed/atom.xml</id>
     <link href="https://lucaschmid.net/feed/atom.xml" rel="self">
@@ -91,6 +91,7 @@ app.use(&apos;/&apos;, (req, res) =\&amp;gt; {
 &lt;p&gt;Now go on!&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;ENCRYPT ALL THE THINGS!!&lt;/strong&gt;&lt;/p&gt;</content>
+        <id>https://lucaschmid.net/anotherblog/letsencrypt-express</id>
         <summary>Since Let&apos;s Encrypt will be coming out soon, I thought I&apos;d try it on my Site. Let&apos;s Encrypts infrastructure is actually fully operational already. They still label it as being in beta, because the client has some (around 400) bugs. My Site runs on Node.js using Express on Alpine Linux. The guide should work on pretty much any Linux system, since both Node.js and Let&apos;s Encrypt are made to be as cross-platform-compatible as possible.</summary>
         <updated>2015-12-23T08:28:46.000Z</updated>
         <author>

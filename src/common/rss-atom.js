@@ -31,6 +31,7 @@ function genAtom (options, entries) {
         { _attr: { lang: entry.language || options.language } },
         { title: strip(entry.title) },
         { content: entry.content },
+        { id: entry.id },
         { summary: strip(entry.summary) },
         { updated: entry.updated.toISOString() },
         {
@@ -52,7 +53,7 @@ function genAtom (options, entries) {
   feed = [
     { _attr: options._attr },
     { title: options.title },
-    { update: options.updated.toISOString() },
+    { updated: options.updated.toISOString() },
     { generator: options.generator },
     { id: options.atomId },
     { link: [ { _attr: { href: options.atomId, rel: 'self' } } ] },
