@@ -9,21 +9,26 @@ var feedLocation = `${__dirname}/../../../build/feed`
 var feeds = rssAtom.genFeeds(
   {
     title: `${config.title} - Blog`,
-    link: [config.getFullUrl('feed/rss.xml'), 'self'],
-    id: config.getFullUrl('feed/rss.xml'),
+    atomId: config.getFullUrl('feed/atom.xml'),
+    rssId: config.getFullUrl('feed/rss.xml'),
     subtitle: config.description
   },
   getArticles('blog').map((article) => {
-    return [
-      { title: article.title },
-      { link: [article.url, 'self'] },
-      { summary: article.teaser },
-      { content: article.content },
-      { author: [ { name: article.author.name }, { link: article.author.url }, { email: article.author.email } ] },
-      { updated: article.created }
-    ]
+    return {
+      title: article.title,
+      id: article.url,
+      summary: article.teaser,
+      content: article.content,
+      author: {
+        name: article.author.name,
+        uri: article.author.url,
+        email: article.author.email
+      },
+      updated: article.created
+    }
   })
 )
+
 fs.writeFile(
   `${feedLocation}/rss.xml`,
   feeds[1],
