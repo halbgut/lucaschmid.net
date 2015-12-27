@@ -58,6 +58,7 @@ var generators = {
   channel: [
     (options) => [{ title: strip(options.title) }],
     (options) => [{ link: options.rssId }],
+    (options) => [{ 'atom:link': genAtomLink([options.rssId, 'self']) }],
     (options) => [{ description: strip(options.subtitle) }],
     (options) => [{ generator: options.generator || defaults.generator }],
     (options) => options.language ? [{ language: options.language }] : [],
