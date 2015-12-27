@@ -30,7 +30,7 @@ function genAtom (options, entries) {
       entry: [
         { _attr: { lang: entry.language || options.language } },
         { title: strip(entry.title) },
-        { content: entry.content },
+        { content: [ { _attr: { type: 'html' } }, entry.content ] },
         { id: entry.id },
         { summary: strip(entry.summary) },
         { updated: entry.updated.toISOString() },
