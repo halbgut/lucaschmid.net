@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feed xmlns:atom="http://www.w3.org/2005/Atom">
+<feed atom="http://www.w3.org/2005/Atom">
     <title>Luca Nils Schmid - Blog</title>
-    <updated>Sat, 26 Dec 2015 21:32:34 GMT</updated>
+    <updated>2015-12-27T12:37:06.076Z</updated>
     <language>en-GB</language>
     <generator>Handmade by Luca Nils Schmid</generator>
     <link href="https://lucaschmid.net/feed/rss.xml" rel="self">
@@ -99,6 +99,6 @@ app.use(&apos;/&apos;, (req, res) =\&amp;gt; {
             <link>https://lucaschmid.net/</link>
             <email>allspamhere@kriegslustig.me</email>
         </author>
-        <updated>Wed, 23 Dec 2015 08:28:46 GMT</updated>
+        <updated>2015-12-23T08:28:46.000Z</updated>
     </entry>
 </feed>

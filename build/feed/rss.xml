@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/">
     <channel>
-        <lastBuildDate>Sat, 26 Dec 2015 21:32:34 GMT</lastBuildDate>
+        <lastBuildDate>2015-12-27T12:37:06.083Z</lastBuildDate>
         <language>en-GB</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -97,7 +97,7 @@ app.use(&apos;/&apos;, (req, res) =\&amp;gt; {
 
 &lt;p&gt;&lt;strong&gt;ENCRYPT ALL THE THINGS!!&lt;/strong&gt;&lt;/p&gt;</content:encoded>
             <author>Luca Nils Schmid &lt;allspamhere@kriegslustig.me&gt;</author>
-            <pubDate>Wed, 23 Dec 2015 08:28:46 GMT</pubDate>
+            <pubDate>2015-12-23T08:28:46.000Z</pubDate>
         </item>
     </channel>
 </rss>

@@ -25,7 +25,7 @@ function genRSS (options, items) {
       'xmlns:slash': 'http://purl.org/rss/1.0/modules/slash/'
     },
     channel: {
-      lastBuildDate: (new Date).toUTCString(),
+      lastBuildDate: (new Date).toISOString(),
       language: 'en-GB',
       'sy:updatePeriod': 'hourly',
       'sy:updateFrequency': '1',
@@ -43,7 +43,7 @@ function genRSS (options, items) {
           { 'description': strip(article.description) },
           { 'content:encoded': article.content },
           { author: article.author },
-          { pubDate: article.pubDate }
+          { pubDate: article.pubDate.toISOString() }
         ]
       }
     })
@@ -55,10 +55,10 @@ function genAtom (options, entries) {
   entries = _.clone(entries)
   var feed = objToXMLObj(deepExtend({
       _attr: {
-        'xmlns:atom': 'http://www.w3.org/2005/Atom'
+        'atom': 'http://www.w3.org/2005/Atom'
       },
       title: `Blog`,
-      updated: (new Date).toUTCString(),
+      updated: (new Date).toISOString(),
       language: 'en-GB',
       generator: 'Handmade by Luca Nils Schmid',
   }, transformAtomOptions(options)))
@@ -151,7 +151,7 @@ function transformAtomEntry (entry) {
             : content
         )
       },
-      updated (date) { return date },
+      updated (date) { return date.toISOString() },
       link (link) { return { _attr: { href: link[0], rel: link[1] } } },
       title (title) { return strip(title) },
       summary (summary) { return strip(summary) }
