@@ -75,12 +75,13 @@ function genRSS (options, entries) {
       'xmlns:slash': 'http://purl.org/rss/1.0/modules/slash/'
     } },
     { channel: [
-      { lastBuildDate: (new Date).toISOString() },
+      { lastBuildDate: (new Date).toUTCString() },
       { language: options.language || 'en-GB' },
       { 'sy:updatePeriod': 'hourly' },
       { 'sy:updateFrequency': '1' },
       { link: options.rssId },
-      { generator: 'Handmade by Luca Nils Schmid' }
+      { generator: 'Handmade by Luca Nils Schmid' },
+      { description: options.summary }
     ] },
   ]
   feed[1].channel = feed[1].channel.concat(entries.map(function (article) {
@@ -90,9 +91,9 @@ function genRSS (options, entries) {
         { guid: article.id },
         { 'atom:link': [ { _attr: { href: article.id, rel: 'self' } } ] },
         { 'description': strip(article.summary) },
-        { 'content:encoded': [ { _cdata: article.content } ] },
+        { 'content:encoded': { _cdata: article.content } },
         { author: `${article.author.name} <${article.author.email}>` },
-        { pubDate: article.updated.toISOString() }
+        { pubDate: article.updated.toUTCString() }
       ]
     }
     xmlArticle.item = xmlArticle.item.concat(_.map(article.links || [], (link) => {

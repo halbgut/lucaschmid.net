@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/">
     <channel>
-        <lastBuildDate>2015-12-27T15:15:48.752Z</lastBuildDate>
+        <lastBuildDate>Sun, 27 Dec 2015 15:21:07 GMT</lastBuildDate>
         <language>en-GB</language>
         <sy:updatePeriod>hourly</sy:updatePeriod>
         <sy:updateFrequency>1</sy:updateFrequency>
@@ -13,60 +13,59 @@
             <atom:link href="https://lucaschmid.net/anotherblog/letsencrypt-express" rel="self">
             </atom:link>
             <description>Since Let&apos;s Encrypt will be coming out soon, I thought I&apos;d try it on my Site. Let&apos;s Encrypts infrastructure is actually fully operational already. They still label it as being in beta, because the client has some (around 400) bugs. My Site runs on Node.js using Express on Alpine Linux. The guide should work on pretty much any Linux system, since both Node.js and Let&apos;s Encrypt are made to be as cross-platform-compatible as possible.</description>
-            <content:encoded>
-                <_cdata>&lt;h1 id=&quot;letsencryptexpress0&quot;&gt;&lt;a href=&quot;/anotherblog/letsencrypt-express&quot;&gt;Let&apos;s encrypt Express&lt;/a&gt;&lt;/h1&gt;
+            <content:encoded><![CDATA[<h1 id="letsencryptexpress0"><a href="/anotherblog/letsencrypt-express">Let's encrypt Express</a></h1>
 
-&lt;p&gt;Since &lt;a href=&quot;https://letsencrypt.org/&quot;&gt;&lt;em&gt;Let&apos;s Encrypt&lt;/em&gt;&lt;/a&gt; will be coming out &lt;a href=&quot;https://letsencrypt.org/2015/11/12/public-beta-timing.html&quot;&gt;soon&lt;/a&gt;, I thought I&apos;d try it on my Site. &lt;em&gt;Let&apos;s Encrypts&lt;/em&gt; infrastructure is actually fully operational already. They still label it as being in beta, because the client has some (&lt;a href=&quot;https://github.com/letsencrypt/letsencrypt/issues&quot;&gt;around 400&lt;/a&gt;) bugs. My Site runs on Node.js using Express on &lt;a href=&quot;https://alpinelinux.org/&quot;&gt;&lt;em&gt;Alpine Linux&lt;/em&gt;&lt;/a&gt;. The guide should work on pretty much any Linux system, since both &lt;em&gt;Node.js&lt;/em&gt; and &lt;em&gt;Let&apos;s Encrypt&lt;/em&gt; are made to be as cross-platform-compatible as possible.&lt;/p&gt;
+<p>Since <a href="https://letsencrypt.org/"><em>Let's Encrypt</em></a> will be coming out <a href="https://letsencrypt.org/2015/11/12/public-beta-timing.html">soon</a>, I thought I'd try it on my Site. <em>Let's Encrypts</em> infrastructure is actually fully operational already. They still label it as being in beta, because the client has some (<a href="https://github.com/letsencrypt/letsencrypt/issues">around 400</a>) bugs. My Site runs on Node.js using Express on <a href="https://alpinelinux.org/"><em>Alpine Linux</em></a>. The guide should work on pretty much any Linux system, since both <em>Node.js</em> and <em>Let's Encrypt</em> are made to be as cross-platform-compatible as possible.</p>
 
-&lt;p&gt;I&apos;ll be covering three things in this guide. &lt;strong&gt;Requesting the certificate&lt;/strong&gt;, &lt;strong&gt;Installing it to the Express app&lt;/strong&gt; and &lt;strong&gt;A simple Express app running over TLS&lt;/strong&gt;.&lt;/p&gt;
+<p>I'll be covering three things in this guide. <strong>Requesting the certificate</strong>, <strong>Installing it to the Express app</strong> and <strong>A simple Express app running over TLS</strong>.</p>
 
-&lt;h2 id=&quot;requestingthecertificate&quot;&gt;Requesting the certificate&lt;/h2&gt;
+<h2 id="requestingthecertificate">Requesting the certificate</h2>
 
-&lt;p&gt;First of all lets get our certificate. I basically just followed the &lt;a href=&quot;https://github.com/letsencrypt/letsencrypt/blob/master/README.rst&quot;&gt;README inside Let&apos;s Encrypt&apos;s Github repo&lt;/a&gt;.&lt;/p&gt;
+<p>First of all lets get our certificate. I basically just followed the <a href="https://github.com/letsencrypt/letsencrypt/blob/master/README.rst">README inside Let's Encrypt's Github repo</a>.</p>
 
-&lt;p&gt;We&apos;ll need to install the utility. This will become easier once it&apos;s released as stable. You&apos;ll then be able to use your package-manager.&lt;/p&gt;
+<p>We'll need to install the utility. This will become easier once it's released as stable. You'll then be able to use your package-manager.</p>
 
-&lt;pre&gt;&lt;code&gt;git clone https://github.com/letsencrypt/letsencrypt
+<pre><code>git clone https://github.com/letsencrypt/letsencrypt
 cd letsencrypt
 ./letsencrypt-auto --help
-&lt;/code&gt;&lt;/pre&gt;
+</code></pre>
 
-&lt;p&gt;Then we can request the certificate. Here&apos;s what I did for this site.&lt;/p&gt;
+<p>Then we can request the certificate. Here's what I did for this site.</p>
 
-&lt;pre&gt;&lt;code&gt;./letsencrypt-auto certonly --standalone --email not_an_email_address@lucaschmid.net -d lucaschmid.net
-&lt;/code&gt;&lt;/pre&gt;
+<pre><code>./letsencrypt-auto certonly --standalone --email not_an_email_address@lucaschmid.net -d lucaschmid.net
+</code></pre>
 
-&lt;p&gt;This threw an error on my server because I had IPv6 enabled. If &lt;a href=&quot;https://github.com/letsencrypt/boulder/issues/1046&quot;&gt;this issue&lt;/a&gt; hasn&apos;t been resolved yet, &lt;strong&gt;you might need to do deactivate IPv6&lt;/strong&gt;, before running the last command.&lt;/p&gt;
+<p>This threw an error on my server because I had IPv6 enabled. If <a href="https://github.com/letsencrypt/boulder/issues/1046">this issue</a> hasn't been resolved yet, <strong>you might need to do deactivate IPv6</strong>, before running the last command.</p>
 
-&lt;pre&gt;&lt;code&gt;sysctl -w net.ipv6.conf.all.disable_ipv6=1
-&lt;/code&gt;&lt;/pre&gt;
+<pre><code>sysctl -w net.ipv6.conf.all.disable_ipv6=1
+</code></pre>
 
-&lt;p&gt;When you now run the last command again, you should recieve the certificate. After that, you can enable IPv6 again.&lt;/p&gt;
+<p>When you now run the last command again, you should recieve the certificate. After that, you can enable IPv6 again.</p>
 
-&lt;pre&gt;&lt;code&gt;sysctl -w net.ipv6.conf.all.disable_ipv6=0
-&lt;/code&gt;&lt;/pre&gt;
+<pre><code>sysctl -w net.ipv6.conf.all.disable_ipv6=0
+</code></pre>
 
-&lt;h2 id=&quot;installingthecertificatetotheexpressapp&quot;&gt;Installing the certificate to the Express app&lt;/h2&gt;
+<h2 id="installingthecertificatetotheexpressapp">Installing the certificate to the Express app</h2>
 
-&lt;p&gt;Inside my app&apos;s directory I created a directory called &lt;code&gt;tls&lt;/code&gt;. I then created some symlinks for the certificate and the key.&lt;/p&gt;
+<p>Inside my app's directory I created a directory called <code>tls</code>. I then created some symlinks for the certificate and the key.</p>
 
-&lt;pre&gt;&lt;code&gt;mkdir tls
+<pre><code>mkdir tls
 cd tls
 ln -s /etc/letsencrypt/live/lucaschmid.net/cert.pem
 ln -s /etc/letsencrypt/live/lucaschmid.net/privkey.pem key.pem
-&lt;/code&gt;&lt;/pre&gt;
+</code></pre>
 
-&lt;p&gt;&lt;em&gt;I&apos;m using Docker to run this site, so the symlinks won&apos;t work inside the container. To fix this, I had to make copies of the files instead of only symlinking them. This has the disadvantage of Let’s Encrypt not being able to manage them. The certificates have a pretty short lifetime (3 months), letsencrypt could renew them itself.&lt;/em&gt;&lt;/p&gt;
+<p><em>I'm using Docker to run this site, so the symlinks won't work inside the container. To fix this, I had to make copies of the files instead of only symlinking them. This has the disadvantage of Let’s Encrypt not being able to manage them. The certificates have a pretty short lifetime (3 months), letsencrypt could renew them itself.</em></p>
 
-&lt;h2 id=&quot;asimpleexpressapprunningovertls&quot;&gt;A simple Express app running over TLS&lt;/h2&gt;
+<h2 id="asimpleexpressapprunningovertls">A simple Express app running over TLS</h2>
 
-&lt;p&gt;Now we can integrate the &lt;code&gt;https&lt;/code&gt; module into our Express server. Here&apos;s a simple example:&lt;/p&gt;
+<p>Now we can integrate the <code>https</code> module into our Express server. Here's a simple example:</p>
 
-&lt;pre&gt;&lt;code&gt;var express = require(&apos;express&apos;)
-var fs = require(&apos;fs&apos;)
-var https = require(&apos;https&apos;)
+<pre><code>var express = require('express')
+var fs = require('fs')
+var https = require('https')
 
-var ports = process.env.NODE_ENV === &apos;production&apos;
+var ports = process.env.NODE_ENV === 'production'
   ? [80, 443]
   : [3442, 3443]
 
@@ -74,8 +73,8 @@ var app = express()
 
 var server = https.createServer(
   {
-    key: fs.readFileSync(&apos;./tls/key.pem&apos;),
-    cert: fs.readFileSync(&apos;./tls/cert.pem&apos;)
+    key: fs.readFileSync('./tls/key.pem'),
+    cert: fs.readFileSync('./tls/cert.pem')
   },
   app
 )
@@ -83,22 +82,21 @@ var server = https.createServer(
 server.listen(ports[1][7])
 app.listen(ports[0])
 
-app.use(&apos;/&apos;, (req, res) =\&amp;gt; {
-  res.end(&apos;Hi&apos;)
+app.use('/', (req, res) =\&gt; {
+  res.end('Hi')
 })
-&lt;/code&gt;&lt;/pre&gt;
+</code></pre>
 
-&lt;p&gt;This script simply serves &apos;Hi&apos; on all routes both over HTTP and HTTPS. It might be a good idea to redirect HTTP to HTTPS. I just wanted to keep it as simple as possible here.&lt;/p&gt;
+<p>This script simply serves 'Hi' on all routes both over HTTP and HTTPS. It might be a good idea to redirect HTTP to HTTPS. I just wanted to keep it as simple as possible here.</p>
 
-&lt;p&gt;When you run this and go to your Website via HTTPS, you should see something like this:
-&lt;img src=&quot;/_img/certificate.png&quot; alt=&quot;Image of the certificate opened in Firefox&quot; /&gt;&lt;/p&gt;
+<p>When you run this and go to your Website via HTTPS, you should see something like this:
+<img src="/_img/certificate.png" alt="Image of the certificate opened in Firefox" /></p>
 
-&lt;p&gt;Now go on!&lt;/p&gt;
+<p>Now go on!</p>
 
-&lt;p&gt;&lt;strong&gt;ENCRYPT ALL THE THINGS!!&lt;/strong&gt;&lt;/p&gt;</_cdata>
-            </content:encoded>
+<p><strong>ENCRYPT ALL THE THINGS!!</strong></p>]]></content:encoded>
             <author>Luca Nils Schmid &lt;allspamhere@kriegslustig.me&gt;</author>
-            <pubDate>2015-12-23T08:28:46.000Z</pubDate>
+            <pubDate>Wed, 23 Dec 2015 08:28:46 GMT</pubDate>
         </item>
     </channel>
 </rss>
