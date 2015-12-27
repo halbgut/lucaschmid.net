@@ -6,29 +6,11 @@ var defaults = {
   generator: 'Handmade by Luca Nils Schmid',
 }
 
-module.exports = {
-  genFeeds, genRSS, genAtom
-}
-
 function genFeeds (options, items) {
   return [
     genAtom(options, items),
     genRSS(options, items)
   ]
-}
-
-function deepExtend (to, from) {
-  _.each(from, (value, key) => {
-    if(
-      typeof value === 'object'
-      && typeof to[key] === 'object'
-    ) {
-      to[key] = deepExtend(to[key], value)
-    } else {
-      to[key] = value
-    }
-  })
-  return to
 }
 
 function genRSS (options, entries) {
@@ -70,10 +52,6 @@ function genAtom (options, entries) {
       )
     ])
   }, { declaration: true, indent: true })
-}
-
-function mergeArrs (arrs, withArr) {
-  return (withArr || []).concat.apply([], arrs)
 }
 
 var generators = {
@@ -119,6 +97,10 @@ var generators = {
   ]
 }
 
+function mergeArrs (arrs, withArr) {
+  return (withArr || []).concat.apply([], arrs)
+}
+
 function genAtomLink (link) {
   var res = { _attr: { href: link[0] } }
   if(link[1]) res._attr.rel = link[1]
@@ -136,5 +118,9 @@ function genAtomAuthor (author) {
   if(author.email) res.push({ email: author.email })
   if(author.uri) res.push({ uri: author.uri })
   return res
+}
+
+module.exports = {
+  genFeeds, genRSS, genAtom, generators
 }
 
