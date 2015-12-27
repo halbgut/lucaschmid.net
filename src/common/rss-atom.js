@@ -55,11 +55,11 @@ function genAtom (options, entries) {
   entries = _.clone(entries)
   var feed = objToXMLObj(deepExtend({
       _attr: {
-        'xmlns': 'http://www.w3.org/2005/Atom'
+        'xmlns': 'http://www.w3.org/2005/Atom',
+        lang: 'en-GB'
       },
       title: `Blog`,
       updated: (new Date).toISOString(),
-      language: 'en-GB',
       generator: 'Handmade by Luca Nils Schmid',
   }, transformAtomOptions(options)))
     .concat(_.map(entries, (entry) => { return { entry: transformAtomEntry(entry) } } ))

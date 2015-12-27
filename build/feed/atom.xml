@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
+<feed xmlns="http://www.w3.org/2005/Atom" lang="en-GB">
     <title>Luca Nils Schmid - Blog</title>
-    <updated>2015-12-27T12:41:48.750Z</updated>
-    <language>en-GB</language>
+    <updated>2015-12-27T12:43:16.769Z</updated>
     <generator>Handmade by Luca Nils Schmid</generator>
     <link href="https://lucaschmid.net/feed/rss.xml" rel="self">
     </link>
