@@ -2,108 +2,19 @@ var xml = require('xml')
 var strip = require('strip')
 var _ = require('lodash')
 
+var defaults = {
+  generator: 'Handmade by Luca Nils Schmid',
+}
+
 module.exports = {
   genFeeds, genRSS, genAtom
 }
 
 function genFeeds (options, items) {
-  options = deepExtend({
-      title: `Blog`,
-      updated: (new Date),
-      generator: 'Handmade by Luca Nils Schmid',
-      language: 'en-GB'
-  }, options)
   return [
     genAtom(options, items),
     genRSS(options, items)
   ]
-}
-
-function genAtom (options, entries) {
-  var feed
-  var cleanEntries
-  options._attr= {
-    'xmlns': 'http://www.w3.org/2005/Atom'
-  }
-  cleanEntries = _.map(entries, (entry) => {
-    var res = {
-      entry: [
-        { _attr: { lang: entry.language || options.language } },
-        { title: strip(entry.title) },
-        { content: [ { _attr: { type: 'html' } }, entry.content ] },
-        { id: entry.id },
-        { summary: strip(entry.summary) },
-        { updated: entry.updated.toISOString() },
-        {
-          author: [
-            { name: entry.author.name },
-            { uri: entry.author.uri },
-            { email: entry.author.email }
-          ]
-        }
-      ]
-    }
-    _.each(entry.links, (link) => {
-      var xmlLink = { link: [ { _attr: { href: link[0] } } ] }
-      if(link[1]) xmlLink.link[0]._attr.rel = link[1]
-      res.entry.push(link)
-    })
-    return res
-  })
-  feed = [
-    { _attr: options._attr },
-    { title: options.title },
-    { updated: options.updated.toISOString() },
-    { generator: options.generator },
-    { id: options.atomId },
-    { link: [ { _attr: { href: options.atomId, rel: 'self' } } ] },
-    { subtitle: options.subtitle }
-  ].concat(cleanEntries)
-  return xml({feed}, { declaration: true, indent: true })
-}
-
-function genRSS (options, entries) {
-  var items
-  var feed = [
-    { _attr: {
-      version: '2.0',
-      'xmlns:content': 'http://purl.org/rss/1.0/modules/content/',
-      'xmlns:wfw': 'http://wellformedweb.org/CommentAPI/',
-      'xmlns:dc': 'http://purl.org/dc/elements/1.1/',
-      'xmlns:atom': 'http://www.w3.org/2005/Atom',
-      'xmlns:sy': 'http://purl.org/rss/1.0/modules/syndication/',
-      'xmlns:slash': 'http://purl.org/rss/1.0/modules/slash/'
-    } },
-    { channel: [
-      { lastBuildDate: (new Date).toUTCString() },
-      { language: options.language || 'en-GB' },
-      { 'sy:updatePeriod': 'hourly' },
-      { 'sy:updateFrequency': '1' },
-      { link: options.rssId },
-      { generator: 'Handmade by Luca Nils Schmid' },
-      { description: options.summary }
-    ] },
-  ]
-  feed[1].channel = feed[1].channel.concat(entries.map(function (article) {
-    var xmlArticle = {
-      item: [
-        { title: strip(article.title) },
-        { guid: article.id },
-        { 'atom:link': [ { _attr: { href: article.id, rel: 'self' } } ] },
-        { 'description': strip(article.summary) },
-        { 'content:encoded': { _cdata: article.content } },
-        { author: `${article.author.name} <${article.author.email}>` },
-        { pubDate: article.updated.toUTCString() }
-      ]
-    }
-    xmlArticle.item = xmlArticle.item.concat(_.map(article.links || [], (link) => {
-      var xmlLink = { 'atom:link': [ { _attr: { href: link[0] } } ] }
-      if(link[1]) xmlLink['atom:link'][0]._attr.rel = link[1]
-      res.entry.push(link)
-    }))
-    return xmlArticle
-  }))
-  return xml({ rss: feed }, { declaration: true, indent: true })
 }
 
 function deepExtend (to, from) {
@@ -118,5 +29,112 @@ function deepExtend (to, from) {
     }
   })
   return to
+}
+
+function genRSS (options, entries) {
+  return xml({
+    rss: [
+      { _attr: {
+        version: '2.0',
+        'xmlns:content': 'http://purl.org/rss/1.0/modules/content/',
+        'xmlns:wfw': 'http://wellformedweb.org/CommentAPI/',
+        'xmlns:dc': 'http://purl.org/dc/elements/1.1/',
+        'xmlns:atom': 'http://www.w3.org/2005/Atom',
+        'xmlns:sy': 'http://purl.org/rss/1.0/modules/syndication/',
+        'xmlns:slash': 'http://purl.org/rss/1.0/modules/slash/'
+      } },
+      { channel: mergeArrs([
+        mergeArrs(_.map(generators.channel, (fn) => fn(options))),
+        mergeArrs(
+          _.map(entries, (entry) => {
+            return {
+              item: mergeArrs( _.map(generators.item, (fn) => fn(entry)) )
+            }
+          })
+        )
+      ]) }
+    ]
+  }, { declaration: true, indent: true })
+}
+
+function genAtom (options, entries) {
+  return xml({
+    feed: mergeArrs([
+      mergeArrs(_.map(generators.feed, (fn) => fn(options))),
+      mergeArrs(
+        _.map(entries, (entry) => {
+          return {
+            entry: mergeArrs( _.map(generators.entry, (fn) => fn(entry)) )
+          }
+        })
+      )
+    ])
+  }, { declaration: true, indent: true })
+}
+
+function mergeArrs (arrs, withArr) {
+  return (withArr || []).concat.apply([], arrs)
+}
+
+var generators = {
+  channel: [
+    (options) => [{ title: strip(options.title) }],
+    (options) => [{ link: options.rssId }],
+    (options) => [{ description: strip(options.subtitle) }],
+    (options) => [{ generator: options.generator || defaults.generator }],
+    (options) => options.language ? [{ language: options.language }] : [],
+    (options) => [{ lastBuildDate: (options.updated || new Date).toUTCString() }],
+    // TODO: Implement image
+  ],
+  item: [
+    (entry) => [{ title: strip(entry.title) }],
+    (entry) => [{ guid: entry.id }],
+    (entry) => entry.link ? [{ 'aton:link': genAtomLink(entry.link) }] : [],
+    (entry) => entry.author.name && entry.author.email
+      ? [{ author: `${entry.author.name} <${entry.author.email}>` }]
+      : [],
+    (entry) => [{ 'content:encoded': { _cdata: entry.content } }],
+    (entry) => [{ description: strip(entry.summary) }],
+    (entry) => entry.pubDate ? [{ pubDate: entry.pubDate }] : []
+  ],
+  feed: [
+    (options) => [{ title: strip(options.title) }],
+    (options) => [{ subtitle: strip(options.subtitle) }],
+    (options) => [{ id: options.atomId }],
+    (options) => [{ updated: (options.updated || new Date).toISOString() }],
+    (options) => [{ generator: options.generator || defaults.generator }],
+    (options) => options.author ? [{ author: genAtomAuthor(options.author) }] : [],
+    (options) => [{ link: genAtomLink([options.atomId, 'self']) }],
+    (options) => [{ generator: options.generator || defaults.generator }],
+    (options) => options.language ? [{ _attr: { 'xml:lang': options.language } }] : []
+  ],
+  entry: [
+    (entry) => [{ id: entry.id }],
+    (entry) => [{ title: strip(entry.title) }],
+    (entry) => [{ updated: entry.updated }],
+    (entry) => [{ author: genAtomAuthor(entry.author) }],
+    (entry) => [{ link: genAtomLink([entry.id, 'self']) }],
+    (entry) => [{ summary: entry.summary }],
+    (entry) => [{ content: entry.content }]
+  ]
+}
+
+function genAtomLink (link) {
+  var res = { _attr: { href: link[0] } }
+  if(link[1]) res._attr.rel = link[1]
+  return [res]
+}
+
+function optional (x, val) {
+  if(x === undefined) return []
+  return val
+}
+
+function genAtomAuthor (author) {
+  var res = []
+  if(author.name) res.push({ name: author.name })
+  if(author.email) res.push({ email: author.email })
+  if(author.uri) res.push({ uri: author.uri })
+  return res
 }
 

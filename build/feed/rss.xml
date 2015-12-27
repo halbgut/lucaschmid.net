@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/">
     <channel>
-        <lastBuildDate>Sun, 27 Dec 2015 15:21:07 GMT</lastBuildDate>
-        <language>en-GB</language>
-        <sy:updatePeriod>hourly</sy:updatePeriod>
-        <sy:updateFrequency>1</sy:updateFrequency>
+        <title>Luca Nils Schmid - Blog</title>
         <link>https://lucaschmid.net/feed/rss.xml</link>
+        <description>My name is Luca Nils Schmid. This is my portfolio.</description>
         <generator>Handmade by Luca Nils Schmid</generator>
+        <language>en-GB</language>
+        <lastBuildDate>Sun, 27 Dec 2015 21:08:16 GMT</lastBuildDate>
         <item>
             <title>Let&apos;s encrypt Express</title>
             <guid>https://lucaschmid.net/anotherblog/letsencrypt-express</guid>
-            <atom:link href="https://lucaschmid.net/anotherblog/letsencrypt-express" rel="self">
-            </atom:link>
-            <description>Since Let&apos;s Encrypt will be coming out soon, I thought I&apos;d try it on my Site. Let&apos;s Encrypts infrastructure is actually fully operational already. They still label it as being in beta, because the client has some (around 400) bugs. My Site runs on Node.js using Express on Alpine Linux. The guide should work on pretty much any Linux system, since both Node.js and Let&apos;s Encrypt are made to be as cross-platform-compatible as possible.</description>
+            <author>Luca Nils Schmid &lt;allspamhere@kriegslustig.me&gt;</author>
             <content:encoded><![CDATA[<h1 id="letsencryptexpress0"><a href="/anotherblog/letsencrypt-express">Let's encrypt Express</a></h1>
 
 <p>Since <a href="https://letsencrypt.org/"><em>Let's Encrypt</em></a> will be coming out <a href="https://letsencrypt.org/2015/11/12/public-beta-timing.html">soon</a>, I thought I'd try it on my Site. <em>Let's Encrypts</em> infrastructure is actually fully operational already. They still label it as being in beta, because the client has some (<a href="https://github.com/letsencrypt/letsencrypt/issues">around 400</a>) bugs. My Site runs on Node.js using Express on <a href="https://alpinelinux.org/"><em>Alpine Linux</em></a>. The guide should work on pretty much any Linux system, since both <em>Node.js</em> and <em>Let's Encrypt</em> are made to be as cross-platform-compatible as possible.</p>
@@ -95,8 +93,7 @@ app.use('/', (req, res) =\&gt; {
 <p>Now go on!</p>
 
 <p><strong>ENCRYPT ALL THE THINGS!!</strong></p>]]></content:encoded>
-            <author>Luca Nils Schmid &lt;allspamhere@kriegslustig.me&gt;</author>
-            <pubDate>Wed, 23 Dec 2015 08:28:46 GMT</pubDate>
+            <description>Since Let&apos;s Encrypt will be coming out soon, I thought I&apos;d try it on my Site. Let&apos;s Encrypts infrastructure is actually fully operational already. They still label it as being in beta, because the client has some (around 400) bugs. My Site runs on Node.js using Express on Alpine Linux. The guide should work on pretty much any Linux system, since both Node.js and Let&apos;s Encrypt are made to be as cross-platform-compatible as possible.</description>
         </item>
     </channel>
 </rss>

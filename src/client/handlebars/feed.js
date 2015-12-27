@@ -11,7 +11,8 @@ var feeds = rssAtom.genFeeds(
     title: `${config.title} - Blog`,
     atomId: config.getFullUrl('feed/atom.xml'),
     rssId: config.getFullUrl('feed/rss.xml'),
-    subtitle: config.description
+    subtitle: config.description,
+    language: 'en-GB'
   },
   getArticles('blog').map((article) => {
     return {
