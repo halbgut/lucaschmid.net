@@ -80,7 +80,6 @@ var generators = {
     (options) => [{ subtitle: strip(options.subtitle) }],
     (options) => [{ id: options.atomId }],
     (options) => [{ updated: (options.updated || new Date).toISOString() }],
-    (options) => [{ generator: options.generator || defaults.generator }],
     (options) => options.author ? [{ author: genAtomAuthor(options.author) }] : [],
     (options) => [{ link: genAtomLink([options.atomId, 'self']) }],
     (options) => [{ generator: options.generator || defaults.generator }],
@@ -89,11 +88,11 @@ var generators = {
   entry: [
     (entry) => [{ id: entry.id }],
     (entry) => [{ title: strip(entry.title) }],
-    (entry) => [{ updated: entry.updated }],
+    (entry) => [{ updated: entry.updated.toISOString() }],
     (entry) => [{ author: genAtomAuthor(entry.author) }],
     (entry) => [{ link: genAtomLink([entry.id, 'self']) }],
-    (entry) => [{ summary: entry.summary }],
-    (entry) => [{ content: entry.content }]
+    (entry) => [{ summary: strip(entry.summary) }],
+    (entry) => [{ content: [ { _attr: { type: 'html'} }, entry.content ] }]
   ]
 }
 
