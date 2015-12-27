@@ -84,7 +84,12 @@ var generators = {
     (options) => options.author ? [{ author: genAtomAuthor(options.author) }] : [],
     (options) => [{ link: genAtomLink([options.atomId, 'self']) }],
     (options) => [{ generator: options.generator || defaults.generator }],
-    (options) => options.language ? [{ _attr: { 'xml:lang': options.language } }] : []
+    (options) => options.language
+      ? [{ _attr: {
+          'xml:lang': options.language,
+          xmlns: 'http://www.w3.org/2005/Atom'
+        } }]
+      : []
   ],
   entry: [
     (entry) => [{ id: entry.id }],

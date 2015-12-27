@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feed xml:lang="en-GB">
+<feed xml:lang="en-GB" xmlns="http://www.w3.org/2005/Atom">
     <title>Luca Nils Schmid - Blog</title>
     <subtitle>My name is Luca Nils Schmid. This is my portfolio.</subtitle>
     <id>https://lucaschmid.net/feed/atom.xml</id>
-    <updated>2015-12-27T21:24:56.494Z</updated>
+    <updated>2015-12-27T21:42:04.525Z</updated>
     <link href="https://lucaschmid.net/feed/atom.xml" rel="self">
     </link>
     <generator>Handmade by Luca Nils Schmid</generator>
