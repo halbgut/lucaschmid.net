@@ -55,7 +55,7 @@ function genAtom (options, entries) {
   entries = _.clone(entries)
   var feed = objToXMLObj(deepExtend({
       _attr: {
-        'atom': 'http://www.w3.org/2005/Atom'
+        'xmlns': 'http://www.w3.org/2005/Atom'
       },
       title: `Blog`,
       updated: (new Date).toISOString(),
