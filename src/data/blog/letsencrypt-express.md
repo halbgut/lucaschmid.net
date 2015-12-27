@@ -87,7 +87,7 @@ Now go on!
 
 **ENCRYPT ALL THE THINGS!!**
 
-[0]: /anotherblog/letsencrypt-express
+[0]: https://lucaschmid.net/anotherblog/letsencrypt-express
 [1]: https://letsencrypt.org/
 [2]: https://letsencrypt.org/2015/11/12/public-beta-timing.html
 [3]: https://github.com/letsencrypt/letsencrypt/issues
@@ -96,5 +96,5 @@ Now go on!
 [6]: https://github.com/letsencrypt/boulder/issues/1046
 [7]: https://letsencrypt.org/
 
-[image-1]: /_img/certificate.png
+[image-1]: https://lucaschmid.net/_img/certificate.png
 

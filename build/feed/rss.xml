@@ -8,12 +8,12 @@
         <description>My name is Luca Nils Schmid. This is my portfolio.</description>
         <generator>Handmade by Luca Nils Schmid</generator>
         <language>en-GB</language>
-        <lastBuildDate>Sun, 27 Dec 2015 21:42:04 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 27 Dec 2015 21:44:26 GMT</lastBuildDate>
         <item>
             <title>Let&apos;s encrypt Express</title>
             <guid>https://lucaschmid.net/anotherblog/letsencrypt-express</guid>
             <author>Luca Nils Schmid &lt;allspamhere@kriegslustig.me&gt;</author>
-            <content:encoded><![CDATA[<h1 id="letsencryptexpress0"><a href="/anotherblog/letsencrypt-express">Let's encrypt Express</a></h1>
+            <content:encoded><![CDATA[<h1 id="letsencryptexpress0"><a href="https://lucaschmid.net/anotherblog/letsencrypt-express">Let's encrypt Express</a></h1>
 
 <p>Since <a href="https://letsencrypt.org/"><em>Let's Encrypt</em></a> will be coming out <a href="https://letsencrypt.org/2015/11/12/public-beta-timing.html">soon</a>, I thought I'd try it on my Site. <em>Let's Encrypts</em> infrastructure is actually fully operational already. They still label it as being in beta, because the client has some (<a href="https://github.com/letsencrypt/letsencrypt/issues">around 400</a>) bugs. My Site runs on Node.js using Express on <a href="https://alpinelinux.org/"><em>Alpine Linux</em></a>. The guide should work on pretty much any Linux system, since both <em>Node.js</em> and <em>Let's Encrypt</em> are made to be as cross-platform-compatible as possible.</p>
 
@@ -90,7 +90,7 @@ app.use('/', (req, res) =\&gt; {
 <p>This script simply serves 'Hi' on all routes both over HTTP and HTTPS. It might be a good idea to redirect HTTP to HTTPS. I just wanted to keep it as simple as possible here.</p>
 
 <p>When you run this and go to your Website via HTTPS, you should see something like this:
-<img src="/_img/certificate.png" alt="Image of the certificate opened in Firefox" /></p>
+<img src="https://lucaschmid.net/_img/certificate.png" alt="Image of the certificate opened in Firefox" /></p>
 
 <p>Now go on!</p>
 
