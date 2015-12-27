@@ -3,21 +3,17 @@ footer {
   text-align: right;
 }
 
-section {
+section:not(:first-of-type) {
   margin-top: 3rem;
 }
 
-section::before {
+section:not(:first-of-type)::before {
   content: '';
   display: block;
   height: 1px;
   width: 100%;
   margin: 1rem 0 0 0;
   background-color: #DDD;
-}
-
-section:nth-of-type(1)::before {
-  display: none;
 }
 
 @media (max-width: 900px) {
