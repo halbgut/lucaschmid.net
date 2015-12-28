@@ -47,10 +47,10 @@ var getCommit = (() => {
       if(
         (
           lastCommit
-          && lastCommit.updated - (new Date).getTime() < 1000 // cache for a minute
+          && (new Date).getTime() - lastCommit.updated < 60000 // cache for a minute
         )
         || updating
-      ) return res(JSON.stringify(lastCommit.data))
+      ) return res(lastCommit.data)
       updating = true
       auth()
       call('repos', 'getCommits', {
@@ -58,16 +58,20 @@ var getCommit = (() => {
         page: 0
       })
         .then((response) => {
-          var data = response[0]
-          if(lastCommit && data.sha === lastCommit.data.sha) return
+          var data = JSON.stringify(response[0])
+          updating = false
+          if(lastCommit && data === lastCommit.data) {
+            lastCommit.updated = (new Date).getTime()
+            return
+          }
           lastCommit = {
             updated: (new Date).getTime(),
             data
           }
           emitter.emit('newCommit', lastCommit)
-          res(JSON.strinify(data))
-          updating = false
+          res(data)
         })
+        .catch((err) => {updating = false})
     })
   }
 })()
