@@ -89,7 +89,9 @@ var generators = {
           'xml:lang': options.language,
           xmlns: 'http://www.w3.org/2005/Atom'
         } }]
-      : []
+      : [],
+    (options) => options.icon ? [{ icon: options.icon }] : [],
+    (options) => options.logo ? [{ logo: options.logo }] : []
   ],
   entry: [
     (entry) => [{ id: entry.id }],
