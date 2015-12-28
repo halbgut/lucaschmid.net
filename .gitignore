@@ -28,3 +28,5 @@ node_modules
 
 tls
 
+src/config.json
+
