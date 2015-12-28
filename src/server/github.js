@@ -68,7 +68,7 @@ var getCommit = (() => {
             updated: (new Date).getTime(),
             data
           }
-          emitter.emit('newCommit', lastCommit)
+          emitter.emit('newCommit', data)
           res(data)
         })
         .catch((err) => {updating = false})

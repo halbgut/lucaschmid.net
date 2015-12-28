@@ -43,7 +43,6 @@ function onSocketConn (socket) {
     fn = apiFn(msg.utf8Data)
     if(fn) fn(socket)
   })
-  //socket.resource)
 }
 
 initTLS('./tls/key.pem', './tls/cert.pem', app, ports[1])
