@@ -6,6 +6,9 @@ var initTLS = require(`${__dirname}/tls`)
 var getArticles = require(`${__dirname}/../common/getArticles`)
 var config = require(`${__dirname}/../common/config.js`)
 
+var api = {}
+api.github = require(`${__dirname}/github`)
+
 var NODE_ENV = process.env.NODE_ENV
 
 var FQDN = NODE_ENV === 'production'
@@ -58,6 +61,16 @@ app.use('/anotherblog/:name', (req, res, next) => {
     if(err) next()
     res.end(html)
   })
+})
+
+app.use('/_api/', (req, res, next) => {
+  var fn = req.url
+    .split('/')
+    .slice(1)
+    .reduce((mem, val) => mem[val] || 0, api)
+  fn
+    ? fn(req, res, next)
+    : next()
 })
 
 app.use((req, res) => {
