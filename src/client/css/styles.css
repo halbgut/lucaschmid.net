@@ -30,7 +30,6 @@ section:not(:first-of-type)::before {
 
 work-in-progress {
   height: auto;
-  width: 100%;
 }
 
 main {
@@ -49,7 +48,8 @@ nav a.current {
 }
 
 @media (max-width: 80ch) {
-  main {
+  main,
+  body > footer {
     margin: 1.5rem 2ch;
   }
 }

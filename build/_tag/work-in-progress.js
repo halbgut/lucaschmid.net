@@ -1,16 +1,13 @@
-riot.tag2('work-in-progress', '<p><b>Work in Progress.</b></p> <a target="_blank" href="{commit.html_url}">{commit.commit.committer.name}: {commit.commit.message}</a>', 'work-in-progress,[riot-tag="work-in-progress"] { box-sizing: content-box; height: 0; display: block; overflow: hidden; width: calc(100% - 2rem); padding: 0 1rem; background-color: #EEE; transition: height .2s, padding .2s; } work-in-progress.visible,[riot-tag="work-in-progress"].visible { padding: 1rem; } work-in-progress > a,[riot-tag="work-in-progress"] > a,work-in-progress > p,[riot-tag="work-in-progress"] > p { display: block; width: 100 %; }', '', function(opts) {
+riot.tag2('work-in-progress', '<div if="{commit}"> <p><b>Work in Progress.</b></p> <a target="_blank" href="{commit.html_url}">{commit.commit.committer.name}: {commit.commit.message}</a> </div>', 'work-in-progress,[riot-tag="work-in-progress"] { display: block; overflow: hidden; min-height: 5rem; width: 100%; padding: 1rem; background-color: #EEE; } work-in-progress > a,[riot-tag="work-in-progress"] > a,work-in-progress > p,[riot-tag="work-in-progress"] > p { display: block; width: 100 %; }', '', function(opts) {
     var that = this
 
     that.on('update', function () {
       if(
         !that.commit
           ? undefined
-          : (new Date).getTime()
-            - (new Date(that.commit.commit.committer.date)).getTime()
+          : (new Date).getTime() - (new Date(that.commit.commit.committer.date)).getTime()
             < (86400 * 2 * 1000)
       ) {
-        that.root.style.height = (that.root.children[0].clientHeight + that.root.children[1].clientHeight) + 'px'
-        that.root.className = 'visible'
       }
     })
 
