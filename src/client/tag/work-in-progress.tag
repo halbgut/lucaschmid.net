@@ -4,25 +4,21 @@
 
   <style scoped>
     :scope {
+      display: none;
       padding: 1rem;
       background-color: #EEE;
       transition: opacity .2s .2s;
     }
+
     :scope.visible {
+      display: block;
       opacity: 1;
     }
   </style>
 
   <script>
     var that = this
-    var req = new XMLHttpRequest
-    req.addEventListener('load', function (e) {
-      that.update({
-        commit: JSON.parse(req.responseText)
-      })
-    })
-    req.open('GET', '/_api/github/lastCommit')
-    req.send()
+
     that.on('update', function () {
       if(that.hasnt_been_long !== undefined) return
       that.update({
@@ -33,6 +29,42 @@
             < (86400 * 2 * 1000) // Last commit hasn't been longer than two days
       })
     })
+
+    function requestViaXHR () {
+      var req = new XMLHttpRequest
+      req.addEventListener('load', function (e) {
+        that.update({
+          commit: JSON.parse(req.responseText)
+        })
+      })
+      req.open('GET', '/_api/github/json/lastCommit')
+      req.send()
+    }
+
+    function requestViaWebSockets (err) {
+      try {
+        var proto = location.protocol === 'https:'
+          ? 'wss'
+          : 'ws'
+        var ws = new WebSocket(proto + '://' + location.host)
+        ws.addEventListener('open', () => {
+          ws.send('/_api/github/ws/lastCommit')
+        })
+        ws.addEventListener('message', function (e) {
+          that.update({
+            commit: JSON.parse(e.data)
+          })
+        })
+        ws.addEventListener('close', function (e) {
+          err(e)
+        })
+      } catch (e) {
+        err(e)
+      }
+    }
+
+    requestViaWebSockets(requestViaXHR)
+
   </script>
 </work-in-progress>
 
