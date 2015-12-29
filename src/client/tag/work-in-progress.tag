@@ -45,7 +45,7 @@
               < (86400 * 2 * 1000) // Last commit hasn't been longer than two days
         )
       })
-      if(that.commit) flash(that.tags[1])
+      if(that.commit) flash(that.root.children[1])
     })
 
     function flash (el) {

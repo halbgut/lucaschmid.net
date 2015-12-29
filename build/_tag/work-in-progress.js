@@ -10,7 +10,7 @@ riot.tag2('work-in-progress', '<div if="{commit && recent}"> <p><b>Work in Progr
               < (86400 * 2 * 1000)
         )
       })
-      if(that.commit) flash(that.tags[1])
+      if(that.commit) flash(that.root.children[1])
     })
 
     function flash (el) {
