@@ -1,5 +1,5 @@
 <work-in-progress>
-  <div if={ commit }>
+  <div if={ commit && recent }>
     <p><b>Work in Progress.</b></p>
     <a target="_blank" href={commit.html_url}>{commit.commit.committer.name}: {commit.commit.message}</a>
   </div>
@@ -24,13 +24,14 @@
     var that = this
 
     that.on('update', function () {
-      if(
-        !that.commit
-          ? undefined
-          : (new Date).getTime() - (new Date(that.commit.commit.committer.date)).getTime()
-            < (86400 * 2 * 1000) // Last commit hasn't been longer than two days
-      ) {
-      }
+      that.update({
+        recent: (
+          !that.commit
+            ? false
+            : (new Date).getTime() - (new Date(that.commit.commit.committer.date)).getTime()
+              < (86400 * 2 * 1000) // Last commit hasn't been longer than two days
+        )
+      })
     })
 
     function requestViaXHR () {

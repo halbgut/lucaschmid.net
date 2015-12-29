@@ -1,14 +1,15 @@
-riot.tag2('work-in-progress', '<div if="{commit}"> <p><b>Work in Progress.</b></p> <a target="_blank" href="{commit.html_url}">{commit.commit.committer.name}: {commit.commit.message}</a> </div>', 'work-in-progress,[riot-tag="work-in-progress"] { display: block; overflow: hidden; min-height: 5rem; width: 100%; padding: 1rem; background-color: #EEE; } work-in-progress > a,[riot-tag="work-in-progress"] > a,work-in-progress > p,[riot-tag="work-in-progress"] > p { display: block; width: 100 %; }', '', function(opts) {
+riot.tag2('work-in-progress', '<div if="{commit && recent}"> <p><b>Work in Progress.</b></p> <a target="_blank" href="{commit.html_url}">{commit.commit.committer.name}: {commit.commit.message}</a> </div>', 'work-in-progress,[riot-tag="work-in-progress"] { display: block; overflow: hidden; min-height: 5rem; width: 100%; padding: 1rem; background-color: #EEE; } work-in-progress > a,[riot-tag="work-in-progress"] > a,work-in-progress > p,[riot-tag="work-in-progress"] > p { display: block; width: 100 %; }', '', function(opts) {
     var that = this
 
     that.on('update', function () {
-      if(
-        !that.commit
-          ? undefined
-          : (new Date).getTime() - (new Date(that.commit.commit.committer.date)).getTime()
-            < (86400 * 2 * 1000)
-      ) {
-      }
+      that.update({
+        recent: (
+          !that.commit
+            ? false
+            : (new Date).getTime() - (new Date(that.commit.commit.committer.date)).getTime()
+              < (86400 * 2 * 1000)
+        )
+      })
     })
 
     function requestViaXHR () {
