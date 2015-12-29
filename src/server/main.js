@@ -7,6 +7,7 @@ var morgan = require('morgan')
 var _ = require('lodash')
 
 var initTLS = require(`${__dirname}/tls`)
+var ratelimiter = require(`${__dirname}/ratelimiter`)
 var getArticles = require(`${__dirname}/../common/getArticles`)
 var config = require(`${__dirname}/../common/config.js`)
 
@@ -37,6 +38,12 @@ function onSocketReq (req) {
 }
 
 function onSocketConn (socket) {
+  ratelimiter.inc()
+  if(ratelimiter.get() >= 100) {
+    socket.close(1000, 'Sorry, I\'m over capacity.')
+    return
+  }
+  socket.on('close', ratelimiter.dec)
   socket.on('message', (msg) => {
     var fn
     if(msg.type !== 'utf8') return
