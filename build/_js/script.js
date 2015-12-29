@@ -12360,7 +12360,8 @@
 },{}],3:[function(require,module,exports){
 _ = require('lodash');
 module.exports = () => {
-  _.each(document.getElementsByTagName('a'), el => {
+  _.each(document.querySelectorAll('nav a'), el => {
+    console.log(el);
     if (location.pathname === el.getAttribute('href')) {
       el.className += ' current';
     }

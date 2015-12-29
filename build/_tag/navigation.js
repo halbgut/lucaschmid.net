@@ -1,4 +1,4 @@
-riot.tag2('navigation', '<ul> <li each="{items}" data-id="{id}" class="{active ? \'active\' : \'\'}"> <div class="line"></div> <a href="{url}">{name}</a> </li> </ul>', 'navigation,[riot-tag="navigation"] { position: fixed; top: 4.7rem; } navigation ul,[riot-tag="navigation"] ul { margin-top: 0; } navigation li,[riot-tag="navigation"] li { display: block; position: relative; text-align: right; padding-right: 1rem; margin-bottom: .5rem; } navigation li a,[riot-tag="navigation"] li a,navigation li a:visited,[riot-tag="navigation"] li a:visited { font-size: .8rem; color: #AAA; transition: color .2s; } navigation li a:hover,[riot-tag="navigation"] li a:hover,navigation li.active a,[riot-tag="navigation"] li.active a { color: #666; } navigation li .line,[riot-tag="navigation"] li .line { content: \'\'; position: absolute; right: 0; top: 0; width: 2px; height: 0; background: #CCC; transition: height .2s, background .2s; margin-right: .5rem; } navigation li:hover .line,[riot-tag="navigation"] li:hover .line,navigation li.active .line,[riot-tag="navigation"] li.active .line { background: #666; } navigation ul,[riot-tag="navigation"] ul { height: 80vh; }', '', function(opts) {
+riot.tag2('navigation', '<ul> <li each="{items}" data-id="{id}" class="{active ? \'active\' : \'\'}"> <div class="line"></div> <a href="{url}">{name}</a> </li> </ul>', 'navigation,[riot-tag="navigation"] { position: fixed; top: 10rem; } navigation ul,[riot-tag="navigation"] ul { margin-top: 0; } navigation li,[riot-tag="navigation"] li { display: block; position: relative; text-align: right; padding-right: 1rem; margin-bottom: .5rem; } navigation li a,[riot-tag="navigation"] li a,navigation li a:visited,[riot-tag="navigation"] li a:visited { font-size: .8rem; color: #AAA; transition: color .2s; } navigation li a:hover,[riot-tag="navigation"] li a:hover,navigation li.active a,[riot-tag="navigation"] li.active a { color: #666; } navigation li .line,[riot-tag="navigation"] li .line { content: \'\'; position: absolute; right: 0; top: 0; width: 2px; height: 0; background: #CCC; transition: height .2s, background .2s; margin-right: .5rem; } navigation li:hover .line,[riot-tag="navigation"] li:hover .line,navigation li.active .line,[riot-tag="navigation"] li.active .line { background: #666; } navigation ul,[riot-tag="navigation"] ul { height: 80vh; }', '', function(opts) {
     var that = this
     this.items = [].map.call(document.querySelectorAll('h1'), function (el) {
       return {
@@ -46,10 +46,9 @@ riot.tag2('navigation', '<ul> <li each="{items}" data-id="{id}" class="{active ?
     }
 
     function calcPos () {
-      var main = that.root.parentNode.parentNode.children[1]
       that.root.style.right = (
-          getTopOffset(main, 'offsetLeft')
-          + main.clientWidth
+          getTopOffset(that.root.parentNode, 'offsetLeft')
+          + that.root.parentNode.clientWidth
       ) + 'px'
     }
 

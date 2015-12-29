@@ -8,7 +8,7 @@
   <style scoped>
     :scope {
       position: fixed;
-      top: 4.7rem;
+      top: 10rem;
     }
 
     :scope ul {
@@ -105,10 +105,9 @@
     }
 
     function calcPos () {
-      var main = that.root.parentNode.parentNode.children[1]
       that.root.style.right = (
-          getTopOffset(main, 'offsetLeft')
-          + main.clientWidth
+          getTopOffset(that.root.parentNode, 'offsetLeft')
+          + that.root.parentNode.clientWidth
       ) + 'px'
     }
 
