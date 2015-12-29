@@ -4,14 +4,14 @@
 
   <style scoped>
     :scope {
-      display: none;
+      top: -10rem;
       padding: 1rem;
       background-color: #EEE;
-      transition: opacity .2s .2s;
+      transition: top .2s, opacity .2s .2s;
     }
 
     :scope.visible {
-      display: block;
+      top: 0;
       opacity: 1;
     }
   </style>

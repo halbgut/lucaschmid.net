@@ -88,7 +88,6 @@ module.exports = {
   },
   ws: {
     lastCommit (socket) {
-      console.log(ratelimiter.get())
       if(ratelimiter.get() >= 10) {
         socket.close(1000, 'Sorry, I\'m over capacity.')
         return

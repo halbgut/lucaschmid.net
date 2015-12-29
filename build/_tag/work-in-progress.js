@@ -1,4 +1,4 @@
-riot.tag2('work-in-progress', '<p><b>Work in Progress.</b></p> <a target="_blank" href="{commit.html_url}">{commit.commit.committer.name}: {commit.commit.message}</a>', 'work-in-progress,[riot-tag="work-in-progress"] { display: none; padding: 1rem; background-color: #EEE; transition: opacity .2s .2s; } work-in-progress.visible,[riot-tag="work-in-progress"].visible { display: block; opacity: 1; }', 'class="{commit && hasnt_been_long ? \'visible\' : \'\'}"', function(opts) {
+riot.tag2('work-in-progress', '<p><b>Work in Progress.</b></p> <a target="_blank" href="{commit.html_url}">{commit.commit.committer.name}: {commit.commit.message}</a>', 'work-in-progress,[riot-tag="work-in-progress"] { top: -10rem; padding: 1rem; background-color: #EEE; transition: top .2s, opacity .2s .2s; } work-in-progress.visible,[riot-tag="work-in-progress"].visible { top: 0; opacity: 1; }', 'class="{commit && hasnt_been_long ? \'visible\' : \'\'}"', function(opts) {
     var that = this
 
     that.on('update', function () {
