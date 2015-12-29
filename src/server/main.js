@@ -7,7 +7,7 @@ var morgan = require('morgan')
 var _ = require('lodash')
 
 var initTLS = require(`${__dirname}/tls`)
-var ratelimiter = require(`${__dirname}/ratelimiter`)
+var ratelimiter = require(`${__dirname}/ratelimiter`)()
 var getArticles = require(`${__dirname}/../common/getArticles`)
 var config = require(`${__dirname}/../common/config.js`)
 
@@ -47,8 +47,12 @@ function onSocketConn (socket) {
   socket.on('message', (msg) => {
     var fn
     if(msg.type !== 'utf8') return
-    fn = apiFn(msg.utf8Data)
-    if(fn) fn(socket)
+    fn = apiFn(msg.utf8Data.substring(1))
+    if(fn) {
+      fn(socket)
+    } else {
+      socket.close(1007, 'API method not defined')
+    }
   })
 }
 

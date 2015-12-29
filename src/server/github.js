@@ -2,7 +2,7 @@ var EventEmitter = require('events')
 var GithubAPI = require('github')
 var _ = require('lodash')
 
-var ratelimiter = require(`${__dirname}/ratelimiter`)
+var ratelimiter = require(`${__dirname}/ratelimiter`)()
 var config = require(`${__dirname}/../common/config.js`)
 
 var github = new GithubAPI({
@@ -88,6 +88,7 @@ module.exports = {
   },
   ws: {
     lastCommit (socket) {
+      console.log(ratelimiter.get())
       if(ratelimiter.get() >= 10) {
         socket.close(1000, 'Sorry, I\'m over capacity.')
         return
