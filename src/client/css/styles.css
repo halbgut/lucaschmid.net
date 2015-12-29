@@ -29,7 +29,7 @@ section:not(:first-of-type)::before {
 }
 
 work-in-progress {
-  display: block;
+  height: auto;
   width: 100%;
 }
 

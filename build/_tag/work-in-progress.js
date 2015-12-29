@@ -1,15 +1,17 @@
-riot.tag2('work-in-progress', '<p><b>Work in Progress.</b></p> <a target="_blank" href="{commit.html_url}">{commit.commit.committer.name}: {commit.commit.message}</a>', 'work-in-progress,[riot-tag="work-in-progress"] { top: -10rem; padding: 1rem; background-color: #EEE; transition: top .2s, opacity .2s .2s; } work-in-progress.visible,[riot-tag="work-in-progress"].visible { top: 0; opacity: 1; }', 'class="{commit && hasnt_been_long ? \'visible\' : \'\'}"', function(opts) {
+riot.tag2('work-in-progress', '<p><b>Work in Progress.</b></p> <a target="_blank" href="{commit.html_url}">{commit.commit.committer.name}: {commit.commit.message}</a>', 'work-in-progress,[riot-tag="work-in-progress"] { box-sizing: content-box; height: 0; display: block; overflow: hidden; width: calc(100% - 2rem); padding: 0 1rem; background-color: #EEE; transition: height .2s, padding .2s; } work-in-progress.visible,[riot-tag="work-in-progress"].visible { padding: 1rem; } work-in-progress > a,[riot-tag="work-in-progress"] > a,work-in-progress > p,[riot-tag="work-in-progress"] > p { display: block; width: 100 %; }', '', function(opts) {
     var that = this
 
     that.on('update', function () {
-      if(that.hasnt_been_long !== undefined) return
-      that.update({
-        hasnt_been_long: !that.commit
+      if(
+        !that.commit
           ? undefined
           : (new Date).getTime()
             - (new Date(that.commit.commit.committer.date)).getTime()
             < (86400 * 2 * 1000)
-      })
+      ) {
+        that.root.style.height = (that.root.children[0].clientHeight + that.root.children[1].clientHeight) + 'px'
+        that.root.className += 'visible'
+      }
     })
 
     function requestViaXHR () {
