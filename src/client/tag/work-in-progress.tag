@@ -37,7 +37,7 @@
             < (86400 * 2 * 1000) // Last commit hasn't been longer than two days
       ) {
         that.root.style.height = (that.root.children[0].clientHeight + that.root.children[1].clientHeight) + 'px'
-        that.root.className += 'visible'
+        that.root.className = 'visible'
       }
     })
 

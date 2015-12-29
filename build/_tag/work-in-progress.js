@@ -10,7 +10,7 @@ riot.tag2('work-in-progress', '<p><b>Work in Progress.</b></p> <a target="_blank
             < (86400 * 2 * 1000)
       ) {
         that.root.style.height = (that.root.children[0].clientHeight + that.root.children[1].clientHeight) + 'px'
-        that.root.className += 'visible'
+        that.root.className = 'visible'
       }
     })
 
