@@ -3,6 +3,7 @@
     <p><b>Work in Progress.</b></p>
     <a target="_blank" href={commit.html_url}>{commit.commit.committer.name}: {commit.commit.message}</a>
   </div>
+  <div class="flashThingy"></div>
   <style scoped>
     :scope {
       display: block;
@@ -18,6 +19,18 @@
       display: block;
       width: 100 %;
     }
+
+    :scope .flashThingy {
+      display: none;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background: #aac;
+      z-index: 10;
+      opacity: .5;
+      left: 0;
+      top: 0;
+    }
   </style>
 
   <script>
@@ -32,7 +45,13 @@
               < (86400 * 2 * 1000) // Last commit hasn't been longer than two days
         )
       })
+      if(that.commit) flash(that.tags[1])
     })
+
+    function flash (el) {
+      el.style.display = 'block'
+      setTimeout(() => el.style.display = '' , 150)
+    }
 
     function requestViaXHR () {
       var req = new XMLHttpRequest
