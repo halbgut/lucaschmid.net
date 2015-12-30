@@ -1,4 +1,4 @@
-riot.tag2('work-in-progress', '<div if="{commit && recent}"> <p><b>Work in Progress.</b></p> <a target="_blank" href="{commit.html_url}">{commit.commit.committer.name}: {commit.commit.message}</a> </div>', 'work-in-progress,[riot-tag="work-in-progress"],work-in-progress div,[riot-tag="work-in-progress"] div { display: block; overflow: hidden; min-height: 5rem; background-color: #EEE; } work-in-progress div,[riot-tag="work-in-progress"] div { width: 100%; padding: 1rem; top: 0; left: 0; transition: opacity .2s; } work-in-progress > a,[riot-tag="work-in-progress"] > a,work-in-progress > p,[riot-tag="work-in-progress"] > p { display: block; width: 100 %; }', '', function(opts) {
+riot.tag2('work-in-progress', '<div if="{commit && recent}"> <p><b>Work in Progress.</b></p> <a target="_blank" href="{commit.html_url}">{commit.commit.committer.name}: {commit.commit.message}</a> </div>', 'work-in-progress,[riot-tag="work-in-progress"],work-in-progress div,[riot-tag="work-in-progress"] div { display: block; overflow: hidden; min-height: 5rem; background-color: #EEE; } work-in-progress div,[riot-tag="work-in-progress"] div { opacity: 1; width: 100%; padding: 1rem; top: 0; left: 0; transition: opacity .2s; } work-in-progress > a,[riot-tag="work-in-progress"] > a,work-in-progress > p,[riot-tag="work-in-progress"] > p { display: block; width: 100 %; }', '', function(opts) {
     var that = this
     var firstCommit = true
 
@@ -15,15 +15,18 @@ riot.tag2('work-in-progress', '<div if="{commit && recent}"> <p><b>Work in Progr
         if(firstCommit) {
           firstCommit = false
         } else {
-          flash(that.root.children[1])
+          flash(that.root.children[0])
         }
       }
     })
 
     function flash (el) {
+      console.log(el)
       el.style.opacity = 0
-      el.style.position = 'fixed'
-      setTimeout(function () { el.style.opacity = 1 , 200 })
+      setTimeout(function () {
+        el.style.position = 'fixed'
+        el.style.opacity = 1
+      }, 200)
       setTimeout(function () {
         el.style.opacity = 0
         setTimeout(function () {

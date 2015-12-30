@@ -13,6 +13,7 @@
     }
 
     :scope div {
+      opacity: 1;
       width: 100%;
       padding: 1rem;
       top: 0;
@@ -44,15 +45,18 @@
         if(firstCommit) {
           firstCommit = false
         } else {
-          flash(that.root.children[1])
+          flash(that.root.children[0])
         }
       }
     })
 
     function flash (el) {
+      console.log(el)
       el.style.opacity = 0
-      el.style.position = 'fixed'
-      setTimeout(function () { el.style.opacity = 1 , 200 })
+      setTimeout(function () {
+        el.style.position = 'fixed'
+        el.style.opacity = 1
+      }, 200)
       setTimeout(function () {
         el.style.opacity = 0
         setTimeout(function () {
