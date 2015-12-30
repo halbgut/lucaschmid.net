@@ -106,7 +106,8 @@ app.use('/', (req, res, next) => {
 // Set some security headers
 app.use((req, res, next) => {
   res.setHeader('Strict-Transport-Security', 'strict-transport-security: max-age=31536000; includeSubdomains')
-  res.setHeader('Content-Security-Policy', "default-src 'self'; default-src https")
+  res.setHeader('Content-Security-Policy', `default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'unsafe-eval' 'self'`)
+//  res.setHeader('X-Content-Security-Policy', "default-src 'self'")
   next()
 })
 

@@ -80,10 +80,7 @@
 
     function requestViaWebSockets (err) {
       try {
-        var proto = location.protocol === 'https:'
-          ? 'wss'
-          : 'ws'
-        var ws = new WebSocket(proto + '://' + location.host)
+        var ws = new WebSocket(location.host)
         ws.addEventListener('open', function () {
           ws.send('/_api/github/ws/lastCommit')
         })
