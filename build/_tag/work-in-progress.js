@@ -15,14 +15,14 @@ riot.tag2('work-in-progress', '<div if="{commit && recent}"> <p><b>Work in Progr
         if(firstCommit) {
           firstCommit = false
         } else {
-          flash(that.root.children[0])
+          flash(that.root.children[0], that.root)
         }
       }
     })
 
-    function flash (el) {
-      console.log(el)
+    function flash (el, parent) {
       el.style.opacity = 0
+      parent.style.height = parent.innerHeight + 'px'
       setTimeout(function () {
         el.style.position = 'fixed'
         el.style.opacity = 1
@@ -30,13 +30,12 @@ riot.tag2('work-in-progress', '<div if="{commit && recent}"> <p><b>Work in Progr
       setTimeout(function () {
         el.style.opacity = 0
         setTimeout(function () {
-          el.style.position = 'static'
-          el.style.opacity = 1
+          el.style.position = ''
+          el.style.opacity = ''
+          parent.style.height = ''
         }, 200)
       }, 4000)
     }
-
-    window.flash = flash
 
     function requestViaXHR () {
       var req = new XMLHttpRequest
