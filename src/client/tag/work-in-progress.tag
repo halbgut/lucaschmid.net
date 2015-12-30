@@ -35,6 +35,7 @@
 
   <script>
     var that = this
+    var firstCommit = true
 
     that.on('update', function () {
       that.update({
@@ -45,7 +46,13 @@
               < (86400 * 2 * 1000) // Last commit hasn't been longer than two days
         )
       })
-      if(that.commit) flash(that.root.children[1])
+      if(that.commit) {
+        if(firstCommit) {
+          firstCommit = false
+        } else {
+          flash(that.root.children[1])
+        }
+      }
     })
 
     function flash (el) {
