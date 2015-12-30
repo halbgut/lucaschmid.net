@@ -20,7 +20,7 @@ comp_browserify () {
       DEBUG="--debug"
     fi
     maybe_make_dir ${PROJECT_ROOT}build/_js
-    browserify ${FILE} -t babelify --presets es2015 ${DEBUG} > ${PROJECT_ROOT}build/_js/$(basename ${FILE})
+    browserify ${FILE} -t babelify --presets es2015 ${DEBUG} | uglifyjs - -c > ${PROJECT_ROOT}build/_js/$(basename ${FILE})
   fi
 }
 
