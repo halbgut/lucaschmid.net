@@ -22,7 +22,7 @@
 
     :scope .flashThingy {
       display: none;
-      position: absolute;
+      position: fixed;
       height: 100%;
       width: 100%;
       background: #aac;
