@@ -91,6 +91,7 @@ app.use(compression())
 // Set up a static file server
 app.use(express.static('./build/'))
 
+// Redirect all trafic to TLS
 app.use('/', (req, res, next) => {
   if(!req.client.encrypted && NODE_ENV === 'production') {
     res.writeHead(302, {
@@ -100,6 +101,13 @@ app.use('/', (req, res, next) => {
   } else {
     next()
   }
+})
+
+// Set some security headers
+app.use((req, res, next) => {
+  res.setHeader('Strict-Transport-Security', 'strict-transport-security: max-age=31536000; includeSubdomains')
+  res.setHeader('Content-Security-Policy', "default-src 'self'; default-src https")
+  next()
 })
 
 app.use(/^\/$/, (req, res) => {
