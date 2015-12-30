@@ -5,6 +5,7 @@ var express = require('express')
 var WebSocketServer = require('websocket').server
 var morgan = require('morgan')
 var _ = require('lodash')
+var compression = require('compression')
 
 var initTLS = require(`${__dirname}/tls`)
 var ratelimiter = require(`${__dirname}/ratelimiter`)()
@@ -73,6 +74,7 @@ server.listen(ports[0])
 // Start watching polling github for commits
 api.github.private.watchLastCommit()
 
+// Set up the view system
 app.engine('html', (filePath, options, cb) => {
   fs.readFile(filePath, {encoding: 'utf8'}, cb)
 })
@@ -80,8 +82,13 @@ app.engine('html', (filePath, options, cb) => {
 app.set('view engine', 'html')
 app.set('views', './build/_html')
 
+// Set up loging
 app.use(morgan('combined'))
 
+// Set up for gzip compression
+app.use(compression())
+
+// Set up a static file server
 app.use(express.static('./build/'))
 
 app.use('/', (req, res, next) => {
