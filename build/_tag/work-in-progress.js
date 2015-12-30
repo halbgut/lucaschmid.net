@@ -1,4 +1,4 @@
-riot.tag2('work-in-progress', '<div if="{commit && recent}"> <p><b>Work in Progress.</b></p> <a target="_blank" href="{commit.html_url}">{commit.commit.committer.name}: {commit.commit.message}</a> </div> <div class="flashThingy"></div>', 'work-in-progress,[riot-tag="work-in-progress"] { display: block; overflow: hidden; min-height: 5rem; width: 100%; padding: 1rem; background-color: #EEE; } work-in-progress > a,[riot-tag="work-in-progress"] > a,work-in-progress > p,[riot-tag="work-in-progress"] > p { display: block; width: 100 %; } work-in-progress .flashThingy,[riot-tag="work-in-progress"] .flashThingy { display: none; position: fixed; height: 100%; width: 100%; background: #aac; z-index: 10; opacity: .5; left: 0; top: 0; }', '', function(opts) {
+riot.tag2('work-in-progress', '<div if="{commit && recent}"> <p><b>Work in Progress.</b></p> <a target="_blank" href="{commit.html_url}">{commit.commit.committer.name}: {commit.commit.message}</a> </div>', 'work-in-progress,[riot-tag="work-in-progress"],work-in-progress div,[riot-tag="work-in-progress"] div { display: block; overflow: hidden; min-height: 5rem; background-color: #EEE; } work-in-progress div,[riot-tag="work-in-progress"] div { width: 100%; padding: 1rem; top: 0; left: 0; transition: opacity .2s; } work-in-progress > a,[riot-tag="work-in-progress"] > a,work-in-progress > p,[riot-tag="work-in-progress"] > p { display: block; width: 100 %; }', '', function(opts) {
     var that = this
     var firstCommit = true
 
@@ -21,9 +21,19 @@ riot.tag2('work-in-progress', '<div if="{commit && recent}"> <p><b>Work in Progr
     })
 
     function flash (el) {
-      el.style.display = 'block'
-      setTimeout(() => el.style.display = '' , 150)
+      el.style.opacity = 0
+      el.style.position = 'fixed'
+      setTimeout(function () { el.style.opacity = 1 , 200 })
+      setTimeout(function () {
+        el.style.opacity = 0
+        setTimeout(function () {
+          el.style.position = 'static'
+          el.style.opacity = 1
+        }, 200)
+      }, 4000)
     }
+
+    window.flash = flash
 
     function requestViaXHR () {
       var req = new XMLHttpRequest
@@ -42,7 +52,7 @@ riot.tag2('work-in-progress', '<div if="{commit && recent}"> <p><b>Work in Progr
           ? 'wss'
           : 'ws'
         var ws = new WebSocket(proto + '://' + location.host)
-        ws.addEventListener('open', () => {
+        ws.addEventListener('open', function () {
           ws.send('/_api/github/ws/lastCommit')
         })
         ws.addEventListener('message', function (e) {

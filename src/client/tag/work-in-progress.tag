@@ -3,33 +3,27 @@
     <p><b>Work in Progress.</b></p>
     <a target="_blank" href={commit.html_url}>{commit.commit.committer.name}: {commit.commit.message}</a>
   </div>
-  <div class="flashThingy"></div>
   <style scoped>
-    :scope {
+    :scope,
+    :scope div {
       display: block;
       overflow: hidden;
       min-height: 5rem;
+      background-color: #EEE;
+    }
+
+    :scope div {
       width: 100%;
       padding: 1rem;
-      background-color: #EEE;
+      top: 0;
+      left: 0;
+      transition: opacity .2s;
     }
 
     :scope > a,
     :scope > p {
       display: block;
       width: 100 %;
-    }
-
-    :scope .flashThingy {
-      display: none;
-      position: fixed;
-      height: 100%;
-      width: 100%;
-      background: #aac;
-      z-index: 10;
-      opacity: .5;
-      left: 0;
-      top: 0;
     }
   </style>
 
@@ -56,9 +50,19 @@
     })
 
     function flash (el) {
-      el.style.display = 'block'
-      setTimeout(() => el.style.display = '' , 150)
+      el.style.opacity = 0
+      el.style.position = 'fixed'
+      setTimeout(function () { el.style.opacity = 1 , 200 })
+      setTimeout(function () {
+        el.style.opacity = 0
+        setTimeout(function () {
+          el.style.position = 'static'
+          el.style.opacity = 1
+        }, 200)
+      }, 4000)
     }
+
+    window.flash = flash
 
     function requestViaXHR () {
       var req = new XMLHttpRequest
@@ -77,7 +81,7 @@
           ? 'wss'
           : 'ws'
         var ws = new WebSocket(proto + '://' + location.host)
-        ws.addEventListener('open', () => {
+        ws.addEventListener('open', function () {
           ws.send('/_api/github/ws/lastCommit')
         })
         ws.addEventListener('message', function (e) {
