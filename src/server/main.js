@@ -130,7 +130,7 @@ app.use(/^\/anotherblog\/?$/, (req, res) => {
 app.use('/anotherblog/:name', (req, res, next) => {
   res.render(`anotherblog-${req.params.name}`, (err, html) => {
     if(err) next()
-    res.end(html)
+    res.send(html)
   })
 })
 
