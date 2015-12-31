@@ -123,7 +123,7 @@ app.use(/^\/projects$/, (req, res) => {
   res.render('projects')
 })
 
-app.use(/^\/anotherblog$/, (req, res) => {
+app.use(/^\/anotherblog\/?$/, (req, res) => {
   res.render('blog')
 })
 
