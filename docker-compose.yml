@@ -1,0 +1,11 @@
+main:
+  build: ./
+  container_name: lucaschmid.net
+  volumes:
+    - ./:/var/app
+  ports:
+    - 443:443
+    - 3000:80
+  restart: always
+  env_file: .env
+

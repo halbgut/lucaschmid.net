@@ -11,9 +11,7 @@ CMD npm start
 ADD ./package.json /var/app/package.json
 
 RUN apk update
-RUN apk add nodejs
+RUN apk add python make nodejs g++
 
-ENV NODE_ENV=production
-
-CMD npm i && node ./src/server/main.js
+CMD npm i; if [[ ${NODE_ENVIRONMENT} == "production" ]]; then npm start; else npm run watch; fi
 
