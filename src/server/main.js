@@ -91,18 +91,6 @@ app.use(compression())
 // Set up a static file server
 app.use(express.static('./build/'))
 
-// Redirect all trafic to TLS
-app.use('/', (req, res, next) => {
-  if(!req.client.encrypted && NODE_ENV === 'production') {
-    res.writeHead(302, {
-      Location: `${config.defaultProto}://${FQDN}${req.url}`
-    })
-    res.end()
-  } else {
-    next()
-  }
-})
-
 // Set some security headers
 app.use((req, res, next) => {
   var csp = `default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'unsafe-eval' 'self'`
