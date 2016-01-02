@@ -4,6 +4,7 @@ var _ = require('lodash')
 
 var config = require(`${__dirname}/../../common/config`)
 
+handlebars.registerHelper('getFullUrl', config.getFullUrl)
 handlebars.registerHelper('inlineCSS', (path) => {
   var css = fs.readFileSync(`${__dirname}/../../../build/${path}`, 'utf8')
   return new handlebars.SafeString(`<style>${css}</style>`)

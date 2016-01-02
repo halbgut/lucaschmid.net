@@ -8,6 +8,8 @@
   {{#each meta}}
     <meta name="{{@key}}" content="{{this}}"/>
   {{/each}}
+  <link rel="alternate" title="Atom Feed" href="{{ getFullUrl feed/atom.xml }}">
+  <link rel="alternate" title="RSS Feed" href="{{ getFullUrl feed/rss.xml }}">
 </head>
 <body>
   <work-in-progress></work-in-progress>
