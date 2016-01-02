@@ -1,10 +1,10 @@
 {{#each articles}}
-  <article>
+  <article itemscope itemtype="https://schema.org/Blog">
     {{{teaser}}}
     <p><b><a href="{{ url }}">...read it!</a></b></p>
     <p>
-      <i>– By <a href="author.url">{{ author.name }}</a></i><br>
-      <i>Created on {{ created }}</i>
+      <i>– By <a href="author.url" itemprop="https://schema.org/Author">{{ author.name }}</a></i><br>
+      <i>Created on <span itemprop="name">{{ created }}</span></i>
     </p>
   </article>
   <section>

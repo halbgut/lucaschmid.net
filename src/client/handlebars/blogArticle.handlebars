@@ -1,9 +1,9 @@
 {{#each articles}}
-  <article>
+  <article itemscope itemtype="http://schema.org/Article">
     {{{content}}}
     <p>
-      <i>– By <a href="author.url">{{ author.name }}</a></i><br>
-      <i>Created on {{ created }}</i>
+      <i>– By <a href="author.url" itemprop="author" itemtype="http://schema.org/Person">{{ author.name }}</a></i><br>
+      <i>Created on <span itemprop="name">{{ created }}</span></i>
     </p>
   </article>
 {{/each}}
