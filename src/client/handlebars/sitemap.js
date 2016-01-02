@@ -19,7 +19,6 @@ sitemapObj = sitemap.createSitemap(
   })
 sitemapObj.toXML((err, xml) => {
   if(err) return console.error(err)
-  console.error(config.getBuildPath('sitemap.xml'))
   fs.writeFile(config.getBuildPath('sitemap.xml'), xml, () => {})
 })
 
