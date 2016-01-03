@@ -2,8 +2,8 @@
   <article itemscope itemtype="http://schema.org/Article">
     {{{content}}}
     <p>
-      <i>– By <a href="author.url" itemprop="author" itemtype="http://schema.org/Person">{{ author.name }}</a></i><br>
-      <i>Created on <span itemprop="name">{{ created }}</span></i>
+      <i>– By <a href="author.url" itemprop="author" itemtype="https://schema.org/Author"><span itemprop="name">{{ author.name }}</span></a></i><br>
+      <i>Created on <span itemprop="dataPublished" content="{{ createdISO }}">{{ created }}</span></i>
     </p>
   </article>
 {{/each}}
