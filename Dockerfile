@@ -13,5 +13,5 @@ ADD ./package.json /var/app/package.json
 RUN apk update
 RUN apk add python make nodejs g++
 
-CMD npm i; if [[ ${NODE_ENVIRONMENT} == "production" ]]; then npm start; else npm run watch; fi
+CMD npm i; npm run watch
 
