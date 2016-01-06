@@ -35,7 +35,6 @@ work-in-progress {
 
 main {
   margin: 1.5rem auto;
-  -webkit-transition: margin-top .2s;
   transition: margin-top .2s;
 }
 
