@@ -1,10 +1,9 @@
-#!/bin/bash
 
 # Kriegslustig <github@kriegslustig.me>
 #yolo
 
 ACTION=${1}
-NODE_ENVIRONMENT=${NODE_ENVIRONMENT:-'PRODUCTION'}
+NODE_ENVIRONMENT=${NODE_ENVIRONMENT:-'production'}
 PROJECT_ROOT=${PROJECT_ROOT:-./}
 
 start_express () {
@@ -14,13 +13,12 @@ start_express () {
 
 comp_browserify () {
   local FILE=${1}
-  local DEBUG=''
   if [ -f "${FILE}" ]; then
-    if [[ ${NODE_ENVIRONMENT} != 'PRODUCTION' ]]; then
-      DEBUG="--debug"
+    if [[ ${NODE_ENVIRONMENT} == "production" ]]; then
+    browserify ${FILE} -t babelify --presets es2015 | uglifyjs - -c > ${PROJECT_ROOT}build/_js/$(basename ${FILE})
+    else
+      browserify ${FILE} -t babelify --presets es2015 --debug > ${PROJECT_ROOT}build/_js/$(basename ${FILE})
     fi
-    maybe_make_dir ${PROJECT_ROOT}build/_js
-    browserify ${FILE} -t babelify --presets es2015 ${DEBUG} | uglifyjs - -c > ${PROJECT_ROOT}build/_js/$(basename ${FILE})
   fi
 }
 
@@ -40,7 +38,7 @@ comp_riot () {
   local DEBUG=''
   maybe_make_dir build/_tag
   if [ -f "${FILE}" ]; then
-    if [[ ${NODE_ENVIRONMENT} != 'PRODUCTION' ]]; then
+    if [[ ${NODE_ENVIRONMENT} != 'production' ]]; then
       DEBUG="--debug"
     fi
     maybe_make_dir ${PROJECT_ROOT}build/_js
