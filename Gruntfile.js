@@ -5,10 +5,11 @@ module.exports = grunt => {
     : false
 
   const files = {
-    js: [
+    clientJs: [
       [ 'client/js/**/*.js', 'common/js/**/*.js' ],
       'client/_build/bundle.js'
     ],
+    serverJs: [ [ 'server/**/*.js' ] ],
     css: [
       [ 'client/css/**/*.css' ],
       'client/_build/bundle.min.css'
@@ -21,9 +22,13 @@ module.exports = grunt => {
         files: files.css[0],
         tasks: ['postcss']
       },
-      js: {
-        files: files.js[0],
+      clientJs: {
+        files: files.clientJs[0],
         tasks: ['standard', 'browserify']
+      },
+      serverJs: {
+        files: files.serverJs[0],
+        tasks: ['standard']
       }
     },
     pkg: grunt.file.readJSON('package.json'),
@@ -36,11 +41,11 @@ module.exports = grunt => {
           debug: isDev
         }
       },
-      dist: { files: { [ files.js[1] ]: files.js[0] } }
+      dist: { files: { [ files.clientJs[1] ]: files.clientJs[0] } }
     },
 
     standard: {
-      dist: { src: files.js[0] }
+      dist: { src: files.clientJs[0].concat(files.serverJs[0]) }
     },
 
     postcss: {
