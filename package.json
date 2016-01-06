@@ -31,12 +31,6 @@
     "xml": "~1.0.0"
   },
   "scripts": {
-    "start": "./tools/build.bash start",
-    "watch": "./tools/watch.js"
-  },
-  "babel": {
-    "presets": [
-      "es2015"
-    ]
+    "watch": "gulp watch"
   }
 }
