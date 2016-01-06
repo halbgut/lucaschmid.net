@@ -23,24 +23,24 @@ module.exports = grunt => {
       },
       js: {
         files: files.js[0],
-        tasks: ['browserify']
+        tasks: ['standard', 'browserify']
       }
     },
     pkg: grunt.file.readJSON('package.json'),
     browserify: {
-      dist: {
-        options: {
-          transform: [
-            [ 'babelify', { presets: 'es2015' } ],
-          ],
-          browserifyOptions: {
-            debug: isDev
-          }
-        },
-        files: {
-          [ files.js[1] ]: files.js[0]
+      options: {
+        transform: [
+          [ 'babelify', { presets: 'es2015' } ],
+        ],
+        browserifyOptions: {
+          debug: isDev
         }
-      }
+      },
+      dist: { files: { [ files.js[1] ]: files.js[0] } }
+    },
+
+    standard: {
+      dist: { src: files.js[0] }
     },
 
     postcss: {
@@ -53,17 +53,14 @@ module.exports = grunt => {
           require('cssnano')()
         ]
       },
-      dist: {
-        files: {
-          [ files.css[1] ]: files.css[0]
-        }
-      }
+      dist: { files: { [ files.css[1] ]: files.css[0] } }
     }
   })
 
   grunt.loadNpmTasks('grunt-postcss');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-standard');
 
   grunt.registerTask('default', ['postcss', 'browserify']);
 }

@@ -1,27 +1,30 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
+var _ = require('lodash');
+
 module.exports = function () {
   _.each(document.querySelectorAll('nav a'), function (el) {
-    if (location.pathname === el.getAttribute('href')) {
+    if (window.location.pathname === el.getAttribute('href')) {
       el.className += ' current';
     }
   });
 };
 
-},{}],2:[function(require,module,exports){
+},{"lodash":3}],2:[function(require,module,exports){
 'use strict';
 
-window._ = require('lodash');
-window.riot = require('riot/riot.min.js'); // Globally available
 var nav = require('./lib/nav');
+var riot;
 
-addEventListener('load', function () {
+window.riot = riot = require('riot/riot.min.js'); // Globally available
+
+window.addEventListener('load', function () {
   nav();
   riot.mount('*');
 });
 
-},{"./lib/nav":1,"lodash":3,"riot/riot.min.js":4}],3:[function(require,module,exports){
+},{"./lib/nav":1,"riot/riot.min.js":4}],3:[function(require,module,exports){
 (function (global){
 /**
  * @license
