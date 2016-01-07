@@ -7,7 +7,7 @@ module.exports = grunt => {
   const files = {
     clientJs: [
       [ 'client/js/**/*.js', 'common/js/**/*.js' ],
-      'client/_build/bundle.js'
+      'client/_build/bundle.min.js'
     ],
     serverJs: [ [ 'server/**/*.js' ] ],
     css: [
