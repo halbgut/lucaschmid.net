@@ -28,6 +28,6 @@ node_modules
 
 tls
 
-src/config.json
+config.json
 build/va
 
