@@ -11,6 +11,7 @@
   "dev": {
     "ports": [3000, 3001],
     "hostname": "localhost"
-  }
+  },
+  "keywords": "luca nils schmid, kriegslustig, webdevelopment, node.js"
 }
 

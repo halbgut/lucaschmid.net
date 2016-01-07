@@ -3,7 +3,7 @@ var fs = require('fs')
 
 var mdConverter = new showdown.Converter
 
-var path = `${__dirname}/../data/`
+var path = `${__dirname}/data/`
 
 module.exports = {
   render (name) {

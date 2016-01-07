@@ -1,5 +1,5 @@
-var conf = require(`${__dirname}/../config.json`)
-var _ = require('lodash')
+const _ = require('lodash')
+const conf = require(`../config.json`)
 
 if (process.NODE_ENV !== 'production') {
   conf = _.extend(conf, conf.dev)

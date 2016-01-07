@@ -3,11 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>{{ title }}</title>
-  {{ inlineCSS "_css/writ.css" }}
-  {{ inlineCSS "_css/styles.css" }}
-  {{#each meta}}
-    <meta name="{{@key}}" content="{{this}}"/>
-  {{/each}}
   <link rel="alternate" title="Atom Feed" href="{{ getFullUrl feed/atom.xml }}">
   <link rel="alternate" title="RSS Feed" href="{{ getFullUrl feed/rss.xml }}">
 </head>
