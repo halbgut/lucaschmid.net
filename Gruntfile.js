@@ -7,12 +7,16 @@ module.exports = grunt => {
   const files = {
     clientJs: [
       [ 'client/js/**/*.js', 'common/js/**/*.js' ],
-      'client/_build/bundle.min.js'
+      'client/_build/bundle.js'
     ],
     serverJs: [ [ 'server/**/*.js' ] ],
     css: [
       [ 'client/css/**/*.css' ],
-      'client/_build/bundle.min.css'
+      'client/_build/bundle.css'
+    ],
+    tags: [
+      [ 'client/tags/**/*.tag' ],
+      'client/_build/tags.js'
     ]
   }
 
@@ -29,9 +33,23 @@ module.exports = grunt => {
       serverJs: {
         files: files.serverJs[0],
         tasks: ['standard']
+      },
+      tags: {
+        files: files.tags[0],
+        tasks: ['riot']
       }
     },
     pkg: grunt.file.readJSON('package.json'),
+    riot: {
+      options: {
+        concat: true,
+        type: 'es6'
+      },
+      dist: {
+        src: files.tags[0],
+        dest: files.tags[1]
+      }
+    },
     browserify: {
       options: {
         transform: [
@@ -66,7 +84,8 @@ module.exports = grunt => {
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-standard');
+  grunt.loadNpmTasks('grunt-riot');
 
-  grunt.registerTask('default', ['postcss', 'browserify']);
+  grunt.registerTask('default', ['postcss', 'browserify', 'riot', 'watch']);
 }
 

@@ -74,7 +74,7 @@
           commit: JSON.parse(req.responseText)
         })
       })
-      req.open('GET', '/_api/github/json/lastCommit')
+      req.open('GET', '/api/github/xhrLastCommit')
       req.send()
     }
 
@@ -82,7 +82,7 @@
       try {
         var ws = new WebSocket(location.host)
         ws.addEventListener('open', function () {
-          ws.send('/_api/github/ws/lastCommit')
+          ws.send('/api/github/wsLastCommit')
         })
         ws.addEventListener('message', function (e) {
           that.update({
