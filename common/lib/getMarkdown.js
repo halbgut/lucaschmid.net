@@ -3,14 +3,14 @@ const fs = require('fs')
 const glob = require('glob')
 const async = require('async')
 
-const config = require('./config')
+const config = require('../config')
 
 const mdConverter = new showdown.Converter
 
 module.exports = pattern => {
   return new Promise((res, rej) => {
     var md
-    glob(`${__dirname}/../${config.dataDir}/${pattern}.md`, (err, files) => {
+    glob(`${__dirname}/../../${config.dataDir}/${pattern}.md`, (err, files) => {
       if(err) return rej(err)
       async.map(
         files,

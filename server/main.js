@@ -36,19 +36,28 @@ server.connection({
 
 server.method(
   'cachedRender',
-  (view, action, next) => server.render(view, _.extend(config, action()), next),
+  (action, next) => {
+    const res = action()
+    res[1]()
+      .then((data) => {
+        server.render(res[0], _.extend(config, data), next)
+      })
+  },
   {
     cache: { generateTimeout: 1000, expiresIn: 31536000000 },
-    generateKey: (view, action) => view
+    generateKey: action => {
+      const res = action()
+      return res[2] || res[0]
+    }
   }
 )
 
-_.each(staticRoutes, (params, route) => {
+_.each(staticRoutes, (action, route) => {
   server.route({
     path: route,
     method: 'GET',
     handler: (request, reply) => {
-      server.methods.cachedRender(params[0], params[1], (err, html) => {
+      server.methods.cachedRender(action.bind(null, request.params), (err, html) => {
         if (err) throw err
         reply(html)
       })

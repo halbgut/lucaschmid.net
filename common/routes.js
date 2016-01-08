@@ -1,17 +1,27 @@
 const _ = require('lodash')
-
-const getMarkdown = require(`./getMarkdown`)
+const parallelPromise = require('./lib/parallelPromise')
+const getMarkdown = require(`./lib/getMarkdown`)
 
 module.exports = {
-  '/': [
+  '/': params => [
     'start',
-    () => {
-      return { sections: [
-        getMarkdown.render('start').html,
-        getMarkdown.render('skills').html,
-        getMarkdown.render('references').html
-      ] }
-    }
+    () => new Promise((res, rej) => {
+      parallelPromise([
+        getMarkdown('start'),
+        getMarkdown('skills'),
+        getMarkdown('references')
+      ])
+        .then((mdArr) => {
+          res({ sections: mdArr.map((md) => md[0].html) })
+        })
+    })
+  ],
+  '/projects': params => [
+    'projects',
+    () => new Promise((res, rej) => {
+      getMarkdown('projects/*')
+        .then((mdArr) => res({ projects: mdArr.map((md) => md.html) }))
+    })
   ]
 }
 

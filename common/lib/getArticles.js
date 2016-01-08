@@ -1,6 +1,6 @@
 var fs = require('fs')
-var getMarkdown = require(`${__dirname}/getMarkdown`)
-var config = require(`${__dirname}/config.js`)
+var getMarkdown = require(`./getMarkdown`)
+var config = require(`../config.js`)
 
 module.exports = (root) => {
   return fs.readdirSync(`${getMarkdown.getPath()}/${root}`)
