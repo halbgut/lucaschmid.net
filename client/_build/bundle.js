@@ -263,7 +263,7 @@ if (process.NODE_ENV !== 'production') {
 }
 
 if (env === 'server') {
-  conf = _.extend(conf, require('../server/config.json'));
+  conf = _.extend(conf, require('../' + env + '/config.json'));
 }
 
 module.exports = _.extend(conf, {
@@ -276,7 +276,7 @@ module.exports = _.extend(conf, {
 });
 
 }).call(this,require('_process'),"/common")
-},{"../config.json":15,"../server/config.json":84,"./lib/env":10,"_process":78,"lodash":71}],10:[function(require,module,exports){
+},{"../config.json":15,"./lib/env":10,"_process":78,"lodash":71}],10:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
@@ -29865,13 +29865,5 @@ function wrappy (fn, cb) {
     return ret
   }
 }
-
-},{}],84:[function(require,module,exports){
-module.exports={
-  "github": {
-    "token": "7e680af368bd397ed9dd2b0f24e159bb722552db"
-  }
-}
-
 
 },{}]},{},[2,3,4,5,6,7,8,1]);

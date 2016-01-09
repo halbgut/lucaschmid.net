@@ -8,7 +8,7 @@ if (process.NODE_ENV !== 'production') {
 }
 
 if(env === 'server') {
-  conf = _.extend(conf, require('../server/config.json'))
+  conf = _.extend(conf, require(`../${env}/config.json`))
 }
 
 module.exports = _.extend(conf, {
