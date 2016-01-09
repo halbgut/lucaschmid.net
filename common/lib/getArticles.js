@@ -12,7 +12,7 @@ module.exports = root => new Promise((res, rej) => {
             url: config.getFullUrl(`anotherblog/${md.name}`),
             title: md.title,
             teaser: md.paragraphs[0],
-            content: md.html,
+            articleContent: md.html,
             author: {
               name: 'Luca Nils Schmid',
               url: config.getFullUrl(),

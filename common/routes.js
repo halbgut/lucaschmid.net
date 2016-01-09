@@ -34,6 +34,17 @@ module.exports = {
         .catch(rej)
     })
   ],
+  '/anotherblog/{article*}': params => [
+    'blogArticle',
+    () => new Promise((res, rej) => {
+      getArticles('blog')
+        .then(articles =>
+          res(articles.filter(el => el.name === params.article)[0])
+        )
+        .catch(rej)
+    }),
+    `blogArticle/${params.article}`
+  ],
   '/{p*}': params => [
     '404',
     () => new Promise(res => res({}))
