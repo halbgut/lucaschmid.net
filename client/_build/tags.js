@@ -105,8 +105,9 @@ function flash(el, parent) {
   }, 4000);
 }
 
-function requestViaXHR() {
+function requestViaXHR(e) {
   var req = new XMLHttpRequest();
+  console.error(e);
   req.addEventListener('load', function (e) {
     that.update({
       commit: JSON.parse(req.responseText)
@@ -118,18 +119,21 @@ function requestViaXHR() {
 
 function requestViaWebSockets(err) {
   try {
-    var ws = new WebSocket(location.host);
-    ws.addEventListener('open', function () {
-      ws.send('/api/github/wsLastCommit');
-    });
-    ws.addEventListener('message', function (e) {
-      that.update({
-        commit: JSON.parse(e.data)
+    (function () {
+      var proto = location.protocol === 'http:' ? 'ws' : 'wss';
+      var ws = new WebSocket(proto + '://' + location.host);
+      ws.addEventListener('open', function () {
+        ws.send('/api/github/wsLastCommit');
       });
-    });
-    ws.addEventListener('close', function (e) {
-      err(e);
-    });
+      ws.addEventListener('message', function (e) {
+        that.update({
+          commit: JSON.parse(e.data)
+        });
+      });
+      ws.addEventListener('close', function (e) {
+        err(e);
+      });
+    })();
   } catch (e) {
     err(e);
   }

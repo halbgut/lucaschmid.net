@@ -1,21 +1,25 @@
 const _ = require('lodash')
 const Handlebars = require('handlebars')
-const vision = require('vision')
-const Inert = require('inert')
-const hapi = require('hapi')
+const WebSocket = require('websocket')
 
+const Vision = require('vision')
+const Inert = require('inert')
+const Hapi = require('hapi')
+
+const dynRoutes = require('./routes')
+const websocketHandler = require('./lib/websocketHandler')
 const staticRoutes = require('../common/routes')
 const config = require('../common/config')
 
-// Create a new server instance
-const server = new hapi.Server({
+// CreaTe a new server instance
+const server = new Hapi.Server({
   connections: { routes: { files: {
     relativeTo: `${__dirname}/../client/_build`
   } } }
 })
 
 // Register vision
-server.register(vision, (err) => {
+server.register(Vision, (err) => {
   if (err) throw err
   server.views({
     engines: { html: Handlebars },
@@ -34,6 +38,7 @@ server.connection({
   port: config.ports[0]
 })
 
+// Add the cachedRender method
 server.method(
   'cachedRender',
   (action, next) => {
@@ -52,6 +57,13 @@ server.method(
   }
 )
 
+// Add WebSocket listeners
+server.connections.forEach((connection) => {
+  new WebSocket.server({ httpServer: connection.listener })
+    .on('request', websocketHandler.onSocketReq)
+    .on('connect', websocketHandler.onSocketConn)
+})
+
 _.each(staticRoutes, (action, route) => {
   server.route({
     path: route,
@@ -62,6 +74,14 @@ _.each(staticRoutes, (action, route) => {
         reply(html)
       })
     }
+  })
+})
+
+_.each(dynRoutes, (action, route) => {
+  server.route({
+    path: route,
+    method: 'GET',
+    handler: action
   })
 })
 

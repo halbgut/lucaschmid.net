@@ -1,2 +1,2 @@
-module.exports = window ? 'client' : 'server'
+module.exports = typeof window === 'object' ? 'client' : 'server'
 

@@ -11,7 +11,7 @@ module.exports = grunt => {
     ],
     serverJs: [ [ 'server/**/*.js' ] ],
     css: [
-      [ 'client/css/**/*.css' ],
+      [ 'client/css/*.css' ],
       'client/_build/bundle.css'
     ],
     tags: [
@@ -76,7 +76,7 @@ module.exports = grunt => {
           require('cssnano')()
         ]
       },
-      dist: { files: { [ files.css[1] ]: files.css[0] } }
+      dist: { dest: files.css[1], src: files.css[0] }
     }
   })
 

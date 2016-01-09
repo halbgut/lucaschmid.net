@@ -29,7 +29,7 @@
   </style>
 
   <script>
-    var that = this
+    const that = this
     var firstCommit = true
 
     that.on('update', function () {
@@ -67,8 +67,9 @@
       }, 4000)
     }
 
-    function requestViaXHR () {
-      var req = new XMLHttpRequest
+    function requestViaXHR (e) {
+      const req = new XMLHttpRequest
+      console.error(e)
       req.addEventListener('load', function (e) {
         that.update({
           commit: JSON.parse(req.responseText)
@@ -80,7 +81,8 @@
 
     function requestViaWebSockets (err) {
       try {
-        var ws = new WebSocket(location.host)
+        const proto = location.protocol === 'http:' ? 'ws' : 'wss'
+        const ws = new WebSocket(`${proto}://${location.host}`)
         ws.addEventListener('open', function () {
           ws.send('/api/github/wsLastCommit')
         })
