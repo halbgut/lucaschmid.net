@@ -97,10 +97,15 @@ _.each(staticRoutes, (action, route) => {
     path: route,
     method: 'GET',
     handler: (request, reply) => {
-      server.methods.cachedRender(action.bind(null, request.params), (err, html) => {
-        if (err) throw err
-        reply(html)
-      })
+      server.methods.cachedRender(
+        action.bind(null, request.params),
+        (err, html) => {
+          if (err) throw err
+          const response = reply(html)
+          response.type('text/html')
+          response.code(404)
+        }
+      )
     }
   })
 })

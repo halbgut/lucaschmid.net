@@ -3,7 +3,7 @@ var strip = require('strip')
 var _ = require('lodash')
 
 var defaults = {
-  generator: 'Handmade by Luca Nils Schmid',
+  generator: 'Handmade by Luca Nils Schmid'
 }
 
 function genFeeds (options, items) {
@@ -30,7 +30,7 @@ function genRSS (options, entries) {
         mergeArrs(
           _.map(entries, (entry) => {
             return {
-              item: mergeArrs( _.map(generators.item, (fn) => fn(entry)) )
+              item: mergeArrs(_.map(generators.item, (fn) => fn(entry)))
             }
           })
         )
@@ -46,7 +46,7 @@ function genAtom (options, entries) {
       mergeArrs(
         _.map(entries, (entry) => {
           return {
-            entry: mergeArrs( _.map(generators.entry, (fn) => fn(entry)) )
+            entry: mergeArrs(_.map(generators.entry, (fn) => fn(entry)))
           }
         })
       )
@@ -62,7 +62,7 @@ var generators = {
     (options) => [{ description: strip(options.subtitle) }],
     (options) => [{ generator: options.generator || defaults.generator }],
     (options) => options.language ? [{ language: options.language }] : [],
-    (options) => [{ lastBuildDate: (options.updated || new Date).toUTCString() }],
+    (options) => [{ lastBuildDate: (options.updated || new Date()).toUTCString() }]
     // TODO: Implement image
   ],
   item: [
@@ -80,15 +80,17 @@ var generators = {
     (options) => [{ title: strip(options.title) }],
     (options) => [{ subtitle: strip(options.subtitle) }],
     (options) => [{ id: options.atomId }],
-    (options) => [{ updated: (options.updated || new Date).toISOString() }],
-    (options) => options.author ? [{ author: genAtomAuthor(options.author) }] : [],
+    (options) => [{ updated: (options.updated || new Date()).toISOString() }],
+    (options) => options.author
+      ? [{ author: genAtomAuthor(options.author) }]
+      : [],
     (options) => [{ link: genAtomLink([options.atomId, 'self']) }],
     (options) => [{ generator: options.generator || defaults.generator }],
     (options) => options.language
       ? [{ _attr: {
-          'xml:lang': options.language,
-          xmlns: 'http://www.w3.org/2005/Atom'
-        } }]
+        'xml:lang': options.language,
+        xmlns: 'http://www.w3.org/2005/Atom'
+      } }]
       : [],
     (options) => options.icon ? [{ icon: options.icon }] : [],
     (options) => options.logo ? [{ logo: options.logo }] : []
@@ -100,7 +102,7 @@ var generators = {
     (entry) => [{ author: genAtomAuthor(entry.author) }],
     (entry) => [{ link: genAtomLink([entry.id, 'self']) }],
     (entry) => [{ summary: strip(entry.summary) }],
-    (entry) => [{ content: [ { _attr: { type: 'html'} }, entry.content ] }]
+    (entry) => [{ content: [ { _attr: { type: 'html' } }, entry.content ] }]
   ]
 }
 
@@ -110,20 +112,15 @@ function mergeArrs (arrs, withArr) {
 
 function genAtomLink (link) {
   var res = { _attr: { href: link[0] } }
-  if(link[1]) res._attr.rel = link[1]
+  if (link[1]) res._attr.rel = link[1]
   return [res]
-}
-
-function optional (x, val) {
-  if(x === undefined) return []
-  return val
 }
 
 function genAtomAuthor (author) {
   var res = []
-  if(author.name) res.push({ name: author.name })
-  if(author.email) res.push({ email: author.email })
-  if(author.uri) res.push({ uri: author.uri })
+  if (author.name) res.push({ name: author.name })
+  if (author.email) res.push({ email: author.email })
+  if (author.uri) res.push({ uri: author.uri })
   return res
 }
 
