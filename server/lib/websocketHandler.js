@@ -7,7 +7,13 @@ function apiFn (path) {
   return path
     .split('/')
     .slice(1)
-    .reduce((mem, val) => val !== 'private' && mem[val] || 0, api)
+    .reduce((mem, val) => {
+      if (val === 'private') return null
+      if (typeof mem === 'function') return mem.bind(val)
+      return mem && mem[val]
+        ? mem[val]
+        : null
+    }, api)
 }
 
 module.exports = {
