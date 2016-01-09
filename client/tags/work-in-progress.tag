@@ -30,6 +30,7 @@
 
   <script>
     const that = this
+    const xhr = require('../js/lib/xhr')
     var firstCommit = true
 
     that.on('update', function () {
@@ -68,19 +69,19 @@
     }
 
     function requestViaXHR (e) {
-      const req = new XMLHttpRequest
       console.error(e)
-      req.addEventListener('load', function (e) {
-        that.update({
-          commit: JSON.parse(req.responseText)
+      xhr('/api/github/xhrLastCommit')
+        .then(res => {
+          that.update({
+            commit: JSON.parse(req.responseText)
+          })
         })
-      })
-      req.open('GET', '/api/github/xhrLastCommit')
-      req.send()
+        .catch(e => console.error(e))
     }
 
     function requestViaWebSockets (err) {
       try {
+        throw Error('Err')
         const proto = location.protocol === 'http:' ? 'ws' : 'wss'
         const ws = new WebSocket(`${proto}://${location.host}`)
         ws.addEventListener('open', function () {

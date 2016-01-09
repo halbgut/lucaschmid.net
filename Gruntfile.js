@@ -6,7 +6,7 @@ module.exports = grunt => {
 
   const files = {
     clientJs: [
-      [ 'client/js/**/*.js', 'common/js/**/*.js' ],
+      [ 'client/js/**/*.js', 'common/js/**/*.js', 'client/_build/tags.js' ],
       'client/_build/bundle.js'
     ],
     serverJs: [ [ 'server/**/*.js' ] ],
@@ -42,8 +42,7 @@ module.exports = grunt => {
     pkg: grunt.file.readJSON('package.json'),
     riot: {
       options: {
-        concat: true,
-        type: 'es6'
+        concat: true
       },
       dist: {
         src: files.tags[0],
@@ -63,7 +62,7 @@ module.exports = grunt => {
     },
 
     standard: {
-      dist: { src: files.clientJs[0].concat(files.serverJs[0]) }
+      dist: { src: files.clientJs[0].slice(0, -1).concat(files.serverJs[0]) }
     },
 
     postcss: {
