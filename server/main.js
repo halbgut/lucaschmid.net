@@ -87,7 +87,7 @@ _.each(dynRoutes, (action, route) => {
 
 server.route({
   method: 'GET',
-  path: '/{param*}',
+  path: '/client/{param*}',
   handler: { directory: {
     path: '.'
   } }

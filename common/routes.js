@@ -22,6 +22,10 @@ module.exports = {
       getMarkdown('projects/*')
         .then((mdArr) => res({ projects: mdArr.map((md) => md.html) }))
     })
+  ],
+  '/{p*}': params => [
+    '404',
+    () => new Promise(res => res({}))
   ]
 }
 
