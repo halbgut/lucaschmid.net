@@ -72,22 +72,26 @@ var getCommit = (() => {
 })()
 
 module.exports = {
-  xhrLastCommit (reply) {
-    getCommit()
-      .then((data) => reply(data))
-      .catch(err => reply(err))
-  },
-  wsLastCommit (socket) {
-    if (ratelimiter.get() >= 10) {
-      socket.close(1000, 'Sorry, I\'m over capacity.')
-      return
+  xhr: {
+    lastCommit (reply) {
+      getCommit()
+        .then((data) => reply(data))
+        .catch(err => reply(err))
     }
-    ratelimiter.inc()
-    socket.on('close', ratelimiter.dec)
-    getCommit()
-      .then((data) => socket.send(data))
-      .catch(console.error.bind(console))
-    emitter.on('newCommit', (data) => socket.send(data))
+  },
+  ws: {
+    lastCommit (socket) {
+      if (ratelimiter.get() >= 10) {
+        socket.close(1000, 'Sorry, I\'m over capacity.')
+        return
+      }
+      ratelimiter.inc()
+      socket.on('close', ratelimiter.dec)
+      getCommit()
+        .then((data) => socket.send(data))
+        .catch(console.error.bind(console))
+      emitter.on('newCommit', (data) => socket.send(data))
+    }
   },
   private: {
     watchLastCommit () {

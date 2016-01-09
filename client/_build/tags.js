@@ -67,7 +67,7 @@ riot.tag('example-riot', '<p>{time}</p>', function(opts) {
 
 riot.tag('work-in-progress', '<div if="{commit && recent}"><p><b>Work in Progress.</b></p><a target="_blank" href="{commit.html_url}">{commit.commit.committer.name}: {commit.commit.message}</a></div>', 'work-in-progress, [riot-tag="work-in-progress"],work-in-progress div, [riot-tag="work-in-progress"] div{ display: block; overflow: hidden; min-height: 5rem; background-color: #EEE; } work-in-progress div, [riot-tag="work-in-progress"] div{ opacity: 1; width: 100%; padding: 1rem; top: 0; left: 0; transition: opacity .2s; } work-in-progress > a, [riot-tag="work-in-progress"] > a,work-in-progress > p, [riot-tag="work-in-progress"] > p{ display: block; width: 100 %; }', function(opts) {
     const that = this
-    const xhr = require('../js/lib/xhr')
+    const api = require('../js/lib/api')
     var firstCommit = true
 
     that.on('update', function () {
@@ -105,38 +105,9 @@ riot.tag('work-in-progress', '<div if="{commit && recent}"><p><b>Work in Progres
       }, 4000)
     }
 
-    function requestViaXHR (e) {
-      console.error(e)
-      xhr('/api/github/xhrLastCommit')
-        .then(res => {
-          that.update({
-            commit: JSON.parse(res)
-          })
-        })
-        .catch(e => console.error(e))
-    }
-
-    function requestViaWebSockets (err) {
-      try {
-        const proto = location.protocol === 'http:' ? 'ws' : 'wss'
-        const ws = new WebSocket(`${proto}://${location.host}`)
-        ws.addEventListener('open', function () {
-          ws.send('/api/github/wsLastCommit')
-        })
-        ws.addEventListener('message', function (e) {
-          that.update({
-            commit: JSON.parse(e.data)
-          })
-        })
-        ws.addEventListener('close', function (e) {
-          err(e)
-        })
-      } catch (e) {
-        err(e)
-      }
-    }
-
-    requestViaWebSockets(requestViaXHR)
+    api('github', 'lastCommit')
+      .then(commit => that.update({ commit }))
+      .catch(err => { throw err })
 
   
 });
