@@ -47,6 +47,10 @@ server.method(
       .then((data) => {
         server.render(res[0], _.extend(config, data), next)
       })
+      .catch(err => {
+        console.error(err)
+        throw err
+      })
   },
   {
     cache: { generateTimeout: 1000, expiresIn: 31536000000 },

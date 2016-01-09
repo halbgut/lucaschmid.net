@@ -22,7 +22,9 @@ module.exports = pattern => {
             next(null, {
               html,
               paragraphs: /<p>(.*)<\/p>/g.exec(html),
-              title: /<h1 (id=\"\w*\")?>(.*)<\/h1>/g.exec(html)[2] // The regex narrow implementation that only works well for showdown
+              title: /<h1 (id=\"\w*\")?>(.*)<\/h1>/g.exec(html)[2], // The regex narrow implementation that only works well for showdown
+              name: file.split('.').slice(0, -1).join('.'),
+              file
             })
           })
         },

@@ -1,6 +1,7 @@
 const _ = require('lodash')
 const parallelPromise = require('./lib/parallelPromise')
 const getMarkdown = require(`./lib/getMarkdown`)
+const getArticles = require(`./lib/getArticles`)
 
 module.exports = {
   '/': params => [
@@ -14,6 +15,7 @@ module.exports = {
         .then((mdArr) => {
           res({ sections: mdArr.map((md) => md[0].html) })
         })
+        .catch(rej)
     })
   ],
   '/projects': params => [
@@ -21,6 +23,15 @@ module.exports = {
     () => new Promise((res, rej) => {
       getMarkdown('projects/*')
         .then((mdArr) => res({ projects: mdArr.map((md) => md.html) }))
+        .catch(rej)
+    })
+  ],
+  '/anotherblog': params => [
+    'blog',
+    () => new Promise((res, rej) => {
+      getArticles('blog')
+        .then(articles => res({ articles }))
+        .catch(rej)
     })
   ],
   '/{p*}': params => [
