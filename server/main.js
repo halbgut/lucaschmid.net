@@ -64,19 +64,6 @@ server.connections.forEach((connection) => {
     .on('connect', websocketHandler.onSocketConn)
 })
 
-_.each(staticRoutes, (action, route) => {
-  server.route({
-    path: route,
-    method: 'GET',
-    handler: (request, reply) => {
-      server.methods.cachedRender(action.bind(null, request.params), (err, html) => {
-        if (err) throw err
-        reply(html)
-      })
-    }
-  })
-})
-
 _.each(dynRoutes, (action, route) => {
   server.route({
     path: route,
@@ -99,6 +86,19 @@ server.route({
   handler: { directory: {
     path: 'common'
   } }
+})
+
+_.each(staticRoutes, (action, route) => {
+  server.route({
+    path: route,
+    method: 'GET',
+    handler: (request, reply) => {
+      server.methods.cachedRender(action.bind(null, request.params), (err, html) => {
+        if (err) throw err
+        reply(html)
+      })
+    }
+  })
 })
 
 server.start((err) => {
