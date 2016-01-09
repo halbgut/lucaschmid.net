@@ -1,5 +1,3 @@
-const fs = require('fs')
-
 const getArticles = require(`../../common/lib/getArticles`)
 const config = require(`../../common/config`)
 const rssAtom = require(`./rss-atom`)
