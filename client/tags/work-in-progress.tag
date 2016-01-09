@@ -81,7 +81,6 @@
 
     function requestViaWebSockets (err) {
       try {
-        throw Error('Err')
         const proto = location.protocol === 'http:' ? 'ws' : 'wss'
         const ws = new WebSocket(`${proto}://${location.host}`)
         ws.addEventListener('open', function () {

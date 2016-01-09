@@ -118,7 +118,6 @@ riot.tag('work-in-progress', '<div if="{commit && recent}"><p><b>Work in Progres
 
     function requestViaWebSockets (err) {
       try {
-        throw Error('Err')
         const proto = location.protocol === 'http:' ? 'ws' : 'wss'
         const ws = new WebSocket(`${proto}://${location.host}`)
         ws.addEventListener('open', function () {
