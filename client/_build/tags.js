@@ -110,7 +110,7 @@ riot.tag('work-in-progress', '<div if="{commit && recent}"><p><b>Work in Progres
       xhr('/api/github/xhrLastCommit')
         .then(res => {
           that.update({
-            commit: JSON.parse(req.responseText)
+            commit: JSON.parse(res)
           })
         })
         .catch(e => console.error(e))

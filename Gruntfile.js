@@ -28,7 +28,7 @@ module.exports = grunt => {
       },
       clientJs: {
         files: files.clientJs[0],
-        tasks: ['standard', 'browserify']
+        tasks: ['browserify', 'standard']
       },
       serverJs: {
         files: files.serverJs[0],

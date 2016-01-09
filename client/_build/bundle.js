@@ -99,7 +99,7 @@ riot.tag('work-in-progress', '<div if="{commit && recent}"><p><b>Work in Progres
     console.error(e);
     xhr('/api/github/xhrLastCommit').then(function (res) {
       that.update({
-        commit: JSON.parse(req.responseText)
+        commit: JSON.parse(res)
       });
     }).catch(function (e) {
       return console.error(e);
@@ -135,7 +135,7 @@ riot.tag('work-in-progress', '<div if="{commit && recent}"><p><b>Work in Progres
 },{"../js/lib/xhr":4}],2:[function(require,module,exports){
 'use strict';
 
-//const view = require('./view')
+// const view = require('./view')
 var parallelPromise = require('../../../common/lib/parallelPromise');
 
 var getContainer = function getContainer() {
@@ -177,7 +177,7 @@ module.exports = function () {
 
 module.exports = function (url) {
   return new Promise(function (res, rej) {
-    var req = new XMLHttpRequest();
+    var req = new window.XMLHttpRequest();
     req.addEventListener('load', function (e) {
       return res(req.responseText);
     });
