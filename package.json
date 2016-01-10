@@ -39,7 +39,7 @@
     "xml": "^1.0.0"
   },
   "scripts": {
-    "watch": "grunt watch",
+    "watch": "grunt",
     "start": "nodemon server/main.js"
   }
 }
