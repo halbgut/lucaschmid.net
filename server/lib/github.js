@@ -88,8 +88,8 @@ module.exports = {
       ratelimiter.inc()
       socket.on('close', ratelimiter.dec)
       getCommit()
-        .then((data) => socket.send(data))
-        .catch(console.error.bind(console))
+        .then(data => socket.send(data))
+        .catch(err => console.error(err))
       emitter.on('newCommit', (data) => socket.send(data))
     }
   },
