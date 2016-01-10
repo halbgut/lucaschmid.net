@@ -9,7 +9,7 @@ require('./lib/feeds')
 module.exports = {
   '/api/github/xhr/{command}': (request, reply) => {
     github.xhr[request.params.command]
-      ? github[request.params.command](reply)
+      ? github.xhr[request.params.command](reply)
       : reply.continue()
   },
   '/api/view/xhr/{name}': (request, reply) => {
