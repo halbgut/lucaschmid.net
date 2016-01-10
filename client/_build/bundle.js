@@ -246,7 +246,7 @@ window.riot = require('riot/riot.min.js'); // Globally available
 
 window.addEventListener('load', function () {
   nav();
-  riot.mount('*');
+  window.riot.mount('*');
 });
 
 },{"../../common/routes":14,"./lib/hapi2page":3,"./lib/nav":4,"page":74,"riot/riot.min.js":79}],9:[function(require,module,exports){
@@ -380,6 +380,7 @@ var _ = require('lodash');
 var parallelPromise = require('./lib/parallelPromise');
 var getMarkdown = require('./lib/getMarkdown');
 var getArticles = require('./lib/getArticles');
+var env = require('./lib/env');
 
 module.exports = {
   '/': function _(params) {
@@ -423,17 +424,10 @@ module.exports = {
         }).catch(rej);
       });
     }, 'blogArticle/' + params.article];
-  },
-  '/{p*}': function p(params) {
-    return ['404', function () {
-      return new Promise(function (res) {
-        return res({});
-      });
-    }];
   }
 };
 
-},{"./lib/getArticles":11,"./lib/getMarkdown":12,"./lib/parallelPromise":13,"lodash":71}],15:[function(require,module,exports){
+},{"./lib/env":10,"./lib/getArticles":11,"./lib/getMarkdown":12,"./lib/parallelPromise":13,"lodash":71}],15:[function(require,module,exports){
 module.exports={
   "defaultProto": "https",
   "hostname": "lucaschmid.net",

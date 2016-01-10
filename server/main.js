@@ -14,7 +14,7 @@ const config = require('../common/config')
 // CreaTe a new server instance
 const server = new Hapi.Server({
   connections: { routes: { files: {
-    relativeTo: `${__dirname}/../client/_build`
+    relativeTo: `${__dirname}/../client`
   } } }
 })
 
@@ -101,9 +101,7 @@ _.each(staticRoutes, (action, route) => {
         action.bind(null, request.params),
         (err, html) => {
           if (err) throw err
-          const response = reply(html)
-          response.type('text/html')
-          response.code(404)
+          reply(html)
         }
       )
     }

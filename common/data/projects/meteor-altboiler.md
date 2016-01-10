@@ -6,8 +6,8 @@ It was a very interesting exprerience and my first time diving this deep into a 
 
 I basically ended up implementing server-side rendering for Blaze. So the Package lets you serve static HTML with some undynamic content and load the Meteor core at the bottom of the page. I got the following results from a Google-Pagespeed test on the [example-page](http://altboiler.meteor.com/):
 
-![A Google-Pagespeed test without altboiler](/_img/pagespeed_without.png)
-![A Google-Pagespeed test with altboiler activated](/_img/pagespeed_with.png)
+![A Google-Pagespeed test without altboiler](/client/img/pagespeed_without.png)
+![A Google-Pagespeed test with altboiler activated](/client/img/pagespeed_with.png)
 
 So the advantages are pretty clear. Better load times, better searchengine ratings and best of all, a way to provide a gracefull fallback for no-script browsers.
 

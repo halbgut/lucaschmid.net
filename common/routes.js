@@ -2,6 +2,7 @@ const _ = require('lodash')
 const parallelPromise = require('./lib/parallelPromise')
 const getMarkdown = require(`./lib/getMarkdown`)
 const getArticles = require(`./lib/getArticles`)
+const env = require('./lib/env')
 
 module.exports = {
   '/': params => [
@@ -45,9 +46,5 @@ module.exports = {
     }),
     `blogArticle/${params.article}`
   ],
-  '/{p*}': params => [
-    '404',
-    () => new Promise(res => res({}))
-  ]
 }
 

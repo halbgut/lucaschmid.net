@@ -12,6 +12,6 @@ window.riot = require('riot/riot.min.js') // Globally available
 
 window.addEventListener('load', () => {
   nav()
-  riot.mount('*')
+  window.riot.mount('*')
 })
 

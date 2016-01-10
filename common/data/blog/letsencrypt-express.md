@@ -96,5 +96,5 @@ Now go on!
 [6]: https://github.com/letsencrypt/boulder/issues/1046
 [7]: https://letsencrypt.org/
 
-[image-1]: https://lucaschmid.net/_img/certificate.png
+[image-1]: https://lucaschmid.net/client/img/certificate.png
 

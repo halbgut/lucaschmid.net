@@ -25,6 +25,11 @@ module.exports = {
     if (request.params.type === 'atom') return reply(feeds[0])
     if (request.params.type === 'rss') return reply(feeds[1])
     reply.continue()
+  },
+  '/{p*}': (request, reply) => {
+    const response = reply.view('404')
+    response.type('text/html')
+    response.code(404)
   }
 }
 
