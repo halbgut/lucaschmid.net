@@ -8,14 +8,19 @@ require('./lib/feeds')
 
 module.exports = {
   '/api/github/xhr/{command}': (request, reply) => {
-    github.xhr[request.params.command]
-      ? github.xhr[request.params.command](reply)
-      : reply.continue()
+    if (github.xhr[request.params.command]) {
+      github.xhr[request.params.command](reply)
+        .then(response => {
+          response.type('application/javascript')
+        })
+        .catch(err => reply(err))
+    } else {
+      reply.continue()
+    }
   },
   '/api/view/xhr/{name}': (request, reply) => {
     view.xhr(request.params.name, request, reply)
       .then(js => {
-        console.log(js)
         const response = reply(js)
         response.type('text/plain')
       })
