@@ -1,7 +1,7 @@
 var fs = require('fs')
 var https = require('https')
 
-module.exports = (keyPath, certPath, app, port) => {
+module.exports = (keyPath, certPath, callback, port) => {
   return new Promise((res, rej) => {
     var key
     var cert
@@ -9,18 +9,18 @@ module.exports = (keyPath, certPath, app, port) => {
     fs.readFile(keyPath, (err, data) => {
       if (err) return rej(err)
       key = data
-      if (cert) res(initTLS(key, cert, app, port))
+      if (cert) res(initTLS(key, cert, callback, port))
     })
 
     fs.readFile(certPath, (err, data) => {
       if (err) return rej(err)
       cert = data
-      if (key) res(initTLS(key, cert, app, port))
+      if (key) res(initTLS(key, cert, callback, port))
     })
   })
 }
 
-function initTLS (key, cert, app, port) {
-  return https.createServer({key, cert}, app).listen(port)
+function initTLS (key, cert, callback, port) {
+  return https.createServer({key, cert}, callback).listen(port)
 }
 
