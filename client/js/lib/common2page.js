@@ -6,7 +6,7 @@ const getContainer = () => document.getElementsByClassName('content')[0]
 const reload = () => window.location = window.location
 
 module.exports = routes => _.map(routes, (getParams, route) => [
-  route.replace(/{(\w)\*}/g, match => `:${match[1]}`),
+  route,
   (context, next) => {
     const params = getParams(context)
     const container = getContainer()
