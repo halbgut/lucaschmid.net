@@ -9,36 +9,45 @@ require('./lib/feeds')
   .then(res => feeds = res)
 
 module.exports = {
-  '/api/github/xhr/:command': (next) => {
-    if (github.xhr[this.params.command]) {
-      github.xhr[this.params.command]()
-        .then(res => {
-          this.body = res
+  '/api/github/xhr/:command': context => new Promise((res, rej) => {
+    if (github.xhr[context.params.command]) {
+      github.xhr[context.params.command]()
+        .then(json => {
+          context.body = json
+          res(true)
         })
         .catch(err => fail(err))
     } else {
-      next()
+      res(false)
     }
-  },
-  '/api/view/xhr/:name': (next) => {
-    view.xhr(this.params.name)
+  }),
+  '/api/view/xhr/:name': context => new Promise((res, rej) => {
+    view.xhr(context.params.name)
       .then(html => {
-        this.response = html
-        this.response.type('text/plain')
+        context.response = html
+        context.response.type = 'text/plain'
+        res(true)
       })
       .catch(e => {
         console.error(e)
-        next()
+        res(false)
       })
-  },
-  '/feed/:type': (next) => {
-    if (this.params.type === 'atom') this.body = feeds[0]
-    if (this.params.type === 'rss') this.body = feeds[1]
-    next()
-  },
-  '/{p*}': (next) => {
+  }),
+  '/feed/:type': context => new Promise((res, rej) => {
+    if (context.params.type === 'atom') {
+      context.body = feeds[0]
+      res(true)
+    } else if (context.params.type === 'rss') {
+      context.body = feeds[1]
+      res(true)
+    } else {
+      res(false)
+    }
+  }),
+  '/{p*}': context => new Promise((res, rej) => {
     // TODO Render 404
-    this.response.code = 404
-  }
+    context.response.code = 404
+    res(true)
+  })
 }
 

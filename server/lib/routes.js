@@ -27,7 +27,8 @@ module.exports = () => {
   })
   _.each(serverRoutes, (action, route) => {
     router.get(route, function *(next) {
-      action(next)
+      const res = yield action(this)
+      if(!res) yield next
     })
   })
   return router
