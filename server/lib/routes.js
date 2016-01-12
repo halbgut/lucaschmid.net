@@ -27,12 +27,12 @@ module.exports = () => {
   })
   _.each(serverRoutes, (action, route) => {
     router.get(route, function *(next) {
-      const shouldContinue = yield new Promise ((res, rej) => {
+      const shouldContinue = yield new Promise((res, rej) => {
         action(this)
           .then(() => res(false))
           .catch(() => res(true))
       })
-      if(shouldContinue) yield next
+      if (shouldContinue) yield next
     })
   })
   return router
