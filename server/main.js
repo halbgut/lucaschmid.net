@@ -10,6 +10,7 @@ const fresh = require('koa-fresh')
 
 const websocketHandler = require('./lib/websocketHandler')
 const initTLS = require('./lib/tls')
+const security = require('./lib/security')
 const routes = require('./lib/routes')()
 
 // Set NODE_ENV
@@ -26,24 +27,27 @@ const ports = NODE_ENV === 'production'
 // Save the http server inside a const in order to use it later for the wss
 const server = http.createServer(app.callback()).listen(ports[0])
 
+// Logging
+app.use(morgan.middleware('combined'))
+
 // add etag support
 app.use(fresh())
 app.use(etag())
 
+// compression
+app.use(compress())
+
+// Mount the security headers
+app.use(security)
 // Static files
 app.use(koaStatic(`${__dirname}/../client`))
 app.use(koaStatic(`${__dirname}/../common`))
-
-// Logging
-app.use(morgan.middleware('combined'))
-
-// compression
-app.use(compress())
 
 // Add router
 app.use(routes.routes())
 app.use(routes.allowedMethods())
 
+// Mount the TLS-Server and the WebSocket servers
 initTLS('./tls/key.pem', './tls/cert.pem', app.callback(), ports[1])
   .then((tlsServer) => {
     new WebSocket.server({ httpServer: tlsServer })
