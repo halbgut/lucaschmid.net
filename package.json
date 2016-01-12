@@ -41,7 +41,7 @@
   },
   "scripts": {
     "watch": "grunt",
-    "build": "grunt build",
+    "postinstall": "NODE_ENV='production' grunt build",
     "start": "nodemon server/main.js"
   }
 }
