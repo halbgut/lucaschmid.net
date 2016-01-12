@@ -30,7 +30,10 @@ module.exports = () => {
       const shouldContinue = yield new Promise((res, rej) => {
         action(this)
           .then(() => res(false))
-          .catch(() => res(true))
+          .catch((e) => {
+            if (e) fail(e)
+            if (!e) res(true)
+          })
       })
       if (shouldContinue) yield next
     })

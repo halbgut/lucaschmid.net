@@ -3,8 +3,10 @@ const http = require('http')
 
 const koa = require('koa')
 const koaStatic = require('koa-static')
-const koaMorgan = require('koa-morgan')
-const koaCompress = require('koa-compress')
+const morgan = require('koa-morgan')
+const compress = require('koa-compress')
+const etag = require('koa-etag')
+const fresh = require('koa-fresh')
 
 const websocketHandler = require('./lib/websocketHandler')
 const initTLS = require('./lib/tls')
@@ -24,15 +26,19 @@ const ports = NODE_ENV === 'production'
 // Save the http server inside a const in order to use it later for the wss
 const server = http.createServer(app.callback()).listen(ports[0])
 
+// add etag support
+app.use(fresh())
+app.use(etag())
+
 // Static files
 app.use(koaStatic(`${__dirname}/../client`))
 app.use(koaStatic(`${__dirname}/../common`))
 
 // Logging
-app.use(koaMorgan.middleware('combined'))
+app.use(morgan.middleware('combined'))
 
 // compression
-app.use(koaCompress())
+app.use(compress())
 
 // Add router
 app.use(routes.routes())
