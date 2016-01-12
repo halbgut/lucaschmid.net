@@ -27,7 +27,7 @@ module.exports = () => {
       ])
         .then(results => {
           const content = handlebars.compile(results[0][1])(results[1])
-          that.body = cache[cacheKey] = handlebars.compile(results[0][0], config)({ content })
+          that.body = cache[cacheKey] = handlebars.compile(results[0][0], _.extend(config, results[1]))({ content })
         })
         .catch(err => fail(err))
     })
