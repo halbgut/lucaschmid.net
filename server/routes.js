@@ -1,40 +1,44 @@
 const github = require('./lib/github')
 const view = require('./lib/view')
+const fail = require('./lib/fail')
 
 var feeds
 
+// Feed cache
 require('./lib/feeds')
   .then(res => feeds = res)
 
 module.exports = {
-  '/api/github/xhr/{command}': (request, reply) => {
-    if (github.xhr[request.params.command]) {
-      github.xhr[request.params.command](reply)
-        .then(response => {
-          response.type('application/javascript')
+  '/api/github/xhr/:command': (next) => {
+    if (github.xhr[this.params.command]) {
+      github.xhr[this.params.command]()
+        .then(res => {
+          this.body = res
         })
-        .catch(err => reply(err))
+        .catch(err => fail(err))
     } else {
-      reply.continue()
+      next()
     }
   },
-  '/api/view/xhr/{name}': (request, reply) => {
-    view.xhr(request.params.name, request, reply)
-      .then(js => {
-        const response = reply(js)
-        response.type('text/plain')
+  '/api/view/xhr/:name': (next) => {
+    view.xhr(this.params.name)
+      .then(html => {
+        this.response = html
+        this.response.type('text/plain')
       })
-      .catch(e => console.error(e) && reply.continue())
+      .catch(e => {
+        console.error(e)
+        next()
+      })
   },
-  '/feed/{type}.xml': (request, reply) => {
-    if (request.params.type === 'atom') return reply(feeds[0])
-    if (request.params.type === 'rss') return reply(feeds[1])
-    reply.continue()
+  '/feed/:type': (next) => {
+    if (this.params.type === 'atom') this.body = feeds[0]
+    if (this.params.type === 'rss') this.body = feeds[1]
+    next()
   },
-  '/{p*}': (request, reply) => {
-    const response = reply.view('404')
-    response.type('text/html')
-    response.code(404)
+  '/{p*}': (next) => {
+    // TODO Render 404
+    this.response.code = 404
   }
 }
 

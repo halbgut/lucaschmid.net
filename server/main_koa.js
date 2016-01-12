@@ -9,6 +9,7 @@ const koaCompress = require('koa-compress')
 
 const websocketHandler = require('./lib/websocketHandler')
 const initTLS = require('./lib/tls')
+const routes = require('./lib/routes')
 
 // Set NODE_ENV
 const NODE_ENV = process.env.NODE_ENV || 'development'
@@ -33,6 +34,10 @@ app.use(koaMorgan('combined'))
 
 // compression
 app.use(koaCompress())
+
+// Add router
+app.use(routes.routes())
+app.use(routes.allowedMethods())
 
 initTLS('./tls/key.pem', './tls/cert.pem', app.callback(), ports[1])
   .then((tlsServer) => {

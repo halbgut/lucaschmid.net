@@ -73,9 +73,9 @@ var getCommit = (() => {
 
 module.exports = {
   xhr: {
-    lastCommit: (reply) => new Promise((res, rej) => {
+    lastCommit: () => new Promise((res, rej) => {
       getCommit()
-        .then(data => res(reply(data)))
+        .then(data => res(data))
         .catch(err => rej(err))
     })
   },

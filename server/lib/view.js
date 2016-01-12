@@ -11,7 +11,7 @@ const getTemplate = name => new Promise((res, rej) => {
 })
 
 module.exports = {
-  xhr: (name, request, reply) => new Promise((res, rej) => {
+  xhr: (name) => new Promise((res, rej) => {
     getTemplate(name)
       .then(res)
       .catch(rej)
