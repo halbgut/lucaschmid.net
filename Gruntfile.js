@@ -1,6 +1,6 @@
 module.exports = grunt => {
 
-  const isDev = process.env.NODE_ENV === 'production'
+  const isDev = process.env.NODE_ENV !== 'production'
     ? true
     : false
 
@@ -49,6 +49,7 @@ module.exports = grunt => {
         dest: files.tags[1]
       }
     },
+
     browserify: {
       options: {
         transform: [
@@ -59,6 +60,10 @@ module.exports = grunt => {
         }
       },
       dist: { files: { [ files.clientJs[1] ]: files.clientJs[0] } }
+    },
+
+    uglify: {
+      dist: { files: { [ files.clientJs[1] ]: files.clientJs[1] } }
     },
 
     standard: {
@@ -84,7 +89,9 @@ module.exports = grunt => {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-standard');
   grunt.loadNpmTasks('grunt-riot');
+  grunt.loadNpmTasks('grunt-contrib-uglify')
 
   grunt.registerTask('default', ['postcss', 'browserify', 'riot', 'watch']);
+  grunt.registerTask('build', ['postcss', 'browserify', 'riot', 'uglify']);
 }
 
