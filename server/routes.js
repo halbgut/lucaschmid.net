@@ -14,11 +14,11 @@ module.exports = {
       github.xhr[context.params.command]()
         .then(json => {
           context.body = json
-          res(true)
+          res()
         })
         .catch(err => fail(err))
     } else {
-      res(false)
+      rej()
     }
   }),
   '/api/view/xhr/:name': context => new Promise((res, rej) => {
@@ -26,28 +26,28 @@ module.exports = {
       .then(html => {
         context.response = html
         context.response.type = 'text/plain'
-        res(true)
+        res()
       })
       .catch(e => {
         console.error(e)
-        res(false)
+        rej()
       })
   }),
   '/feed/:type': context => new Promise((res, rej) => {
     if (context.params.type === 'atom') {
       context.body = feeds[0]
-      res(true)
+      res()
     } else if (context.params.type === 'rss') {
       context.body = feeds[1]
-      res(true)
+      res()
     } else {
-      res(false)
+      rej()
     }
   }),
   '/{p*}': context => new Promise((res, rej) => {
     // TODO Render 404
     context.response.code = 404
-    res(true)
+    res()
   })
 }
 
