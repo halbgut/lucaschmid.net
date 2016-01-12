@@ -57,7 +57,7 @@
     }
   </style>
   <script>
-    var that = this
+    const _ = require('lodash')
     this.items = [].map.call(document.querySelectorAll('h1'), function (el) {
       return {
         id: el.id,
@@ -67,22 +67,22 @@
       }
     })
 
-    this.on('mount', function () {
+    this.on('mount', () => {
       calcPos()
-      _.each(that.root.getElementsByTagName('li'), function (el, i) {
-        var elem = document.getElementById(el.getAttribute('data-id')).parentNode
-        var center = innerHeight / 3
-        var containerHeight = center > elem.clientHeight
+      _.each(this.root.getElementsByTagName('li'), (el, i) => {
+        const elem = document.getElementById(el.getAttribute('data-id')).parentNode
+        const center = innerHeight / 3
+        const containerHeight = center > elem.clientHeight
           ? elem.clientHeight
           : elem.clientHeight - innerHeight / 3
-        var topOffset = getTopOffset(elem) - center
-        var factor = ( containerHeight / 100 )
-        var updateBarHeight = _.throttle(function (e) {
+        const topOffset = getTopOffset(elem) - center
+        const factor = ( containerHeight / 100 )
+        const updateBarHeight = _.throttle(e => {
           var res = calcPercent(scrollY, factor, topOffset)
           if(res < 0) res = 0
           if(res > 100) res = 100
-          that.items[i].active = !!(res > 0 && res < 100)
-          that.update()
+          this.items[i].active = !!(res > 0 && res < 100)
+          this.update()
           el.children[0].style.height = res + '%'
         }, 30)
         addEventListener('scroll', updateBarHeight)
@@ -92,22 +92,22 @@
 
     addEventListener('resize', calcPos)
 
-    function calcPercent (offset, factor, top) {
+    const calcPercent = (offset, factor, top) => {
       return Math.round(( offset - top ) / factor)
     }
 
 
-    function getTopOffset (el, prop, n) {
+    const getTopOffset = (el, prop, n) => {
       n = n || 0
       prop = prop || 'offsetTop'
       if(!el.offsetParent) return n
       return getTopOffset(el.offsetParent, prop, n + el[prop])
     }
 
-    function calcPos () {
-      that.root.style.right = (
-          getTopOffset(that.root.parentNode, 'offsetLeft')
-          + that.root.parentNode.clientWidth
+    const calcPos = () => {
+      this.root.style.right = (
+          getTopOffset(this.root.parentNode, 'offsetLeft')
+          + this.root.parentNode.clientWidth
       ) + 'px'
     }
 
