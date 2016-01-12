@@ -35,7 +35,7 @@ module.exports = {
         .catch(rej)
     })
   ],
-  '/anotherblog/{article*}': params => [
+  '/anotherblog/:article': params => [
     'blogArticle',
     () => new Promise((res, rej) => {
       getArticles('blog')

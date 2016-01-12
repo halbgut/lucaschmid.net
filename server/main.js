@@ -1,115 +1,52 @@
-const _ = require('lodash')
-const Handlebars = require('handlebars')
 const WebSocket = require('websocket')
+const http = require('http')
 
-const Vision = require('vision')
-const Inert = require('inert')
-const Hapi = require('hapi')
+const koa = require('koa')
+const koaStatic = require('koa-static')
+const koaMorgan = require('koa-morgan')
+const koaCompress = require('koa-compress')
 
-const dynRoutes = require('./routes')
 const websocketHandler = require('./lib/websocketHandler')
-const staticRoutes = require('../common/routes')
-const config = require('../common/config')
+const initTLS = require('./lib/tls')
+const routes = require('./lib/routes')()
 
-// CreaTe a new server instance
-const server = new Hapi.Server({
-  connections: { routes: { files: {
-    relativeTo: `${__dirname}/../client`
-  } } }
-})
+// Set NODE_ENV
+const NODE_ENV = process.env.NODE_ENV || 'development'
 
-// Register vision
-server.register(Vision, (err) => {
-  if (err) throw err
-  server.views({
-    engines: { html: Handlebars },
-    relativeTo: `${__dirname}/../common`,
-    path: 'templates',
-    helpersPath: 'helpers',
-    layout: 'layout'
+// Initialize app
+const app = koa()
+
+// Set the ports TODO: move this to the config somehow
+const ports = NODE_ENV === 'production'
+  ? [80, 443]
+  : [3000, 3001]
+
+// Save the http server inside a const in order to use it later for the wss
+const server = http.createServer(app.callback()).listen(ports[0])
+
+// Static files
+app.use(koaStatic(`${__dirname}/../client`))
+app.use(koaStatic(`${__dirname}/../common`))
+
+// Logging
+app.use(koaMorgan.middleware('combined'))
+
+// compression
+app.use(koaCompress())
+
+// Add router
+app.use(routes.routes())
+app.use(routes.allowedMethods())
+
+initTLS('./tls/key.pem', './tls/cert.pem', app.callback(), ports[1])
+  .then((tlsServer) => {
+    new WebSocket.server({ httpServer: tlsServer })
+      .on('request', websocketHandler.onSocketReq)
+      .on('connect', websocketHandler.onSocketConn)
   })
-})
-
-// Register inert
-server.register(Inert, () => {})
-
-server.connection({
-  host: config.hostname,
-  port: config.ports[0]
-})
-
-// Add the cachedRender method
-server.method(
-  'cachedRender',
-  (action, next) => {
-    const res = action()
-    res[1]()
-      .then((data) => {
-        server.render(res[0], _.extend(config, data), next)
-      })
-      .catch(err => {
-        console.error(err)
-        throw err
-      })
-  },
-  {
-    cache: { generateTimeout: 1000, expiresIn: 31536000000 },
-    generateKey: action => {
-      const res = action()
-      return res[2] || res[0]
-    }
-  }
-)
-
-// Add WebSocket listeners
-server.connections.forEach((connection) => {
-  new WebSocket.server({ httpServer: connection.listener })
-    .on('request', websocketHandler.onSocketReq)
-    .on('connect', websocketHandler.onSocketConn)
-})
-
-_.each(dynRoutes, (action, route) => {
-  server.route({
-    path: route,
-    method: 'GET',
-    handler: action
+  .catch(() => {
+    new WebSocket.server({ httpServer: server })
+      .on('request', websocketHandler.onSocketReq)
+      .on('connect', websocketHandler.onSocketConn)
   })
-})
-
-server.route({
-  method: 'GET',
-  path: '/client/{param*}',
-  handler: { directory: {
-    path: '.'
-  } }
-})
-
-server.route({
-  method: 'GET',
-  path: '/common/{param*}',
-  handler: { directory: {
-    path: 'common'
-  } }
-})
-
-_.each(staticRoutes, (action, route) => {
-  server.route({
-    path: route,
-    method: 'GET',
-    handler: (request, reply) => {
-      server.methods.cachedRender(
-        action.bind(null, request.params),
-        (err, html) => {
-          if (err) throw err
-          reply(html)
-        }
-      )
-    }
-  })
-})
-
-server.start((err) => {
-  if (err) throw err
-  console.log(`Server was started on ${config.hostname}:${config.ports[0]} and ${config.hostname}:${config.ports[1]}`)
-})
 
