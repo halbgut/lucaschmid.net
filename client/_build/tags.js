@@ -65,6 +65,37 @@ riot.tag('example-riot', '<p>{time}</p>', function(opts) {
 });
 
 
+riot.tag('gistogram', '<p>I like code.</p><div class="chart__item" each="{day in days}"><div class="chart__number">{day.length}</div><div class="chart__commits" each="{day}"><a href="{url}" class="chart__commit">{comment}</a></div></div>', 'gistogram, [riot-tag="gistogram"]{ display: block; padding: 1rem; float: left; width: 100%; height: 100vh; background-color: hsl(240, 30%, 90%); } gistogram .chart, [riot-tag="gistogram"] .chart{ width: 100%; } gistogram .chart__item, [riot-tag="gistogram"] .chart__item{ display: inline-block; position: relative; height: calc(100% - 3rem); width: 2rem; margin: 3rem .8rem 0 .8rem; background-color: #fff; transform: //scaleY(0); transition: transform .4s; } gistogram .chart__number, [riot-tag="gistogram"] .chart__number{ position: absolute; top: -3rem; right: 0; height: 2rem; width: 2rem; line-height: 2rem; text-align: center; border: none; border-radius: .25rem; color: #000; background-color: #EEE; transform: scaleY(0) translateY(7rem); transition: transform .2s; } gistogram .chart__item:hover .chart__number, [riot-tag="gistogram"] .chart__item:hover .chart__number{ transform: scaleY(1) translateY(0); } gistogram .chart__number:after, [riot-tag="gistogram"] .chart__number:after{ content: \'\'; position: absolute; bottom: -.5rem; left: .5rem; height: 1rem; width: 1rem; background-color: #EEE; transform: rotate(45deg); } gistogram .chart__commits, [riot-tag="gistogram"] .chart__commits{ position: absolute; opacity: 0; }', function(opts) {
+    this.days = [
+      [
+        {
+          comment: 'Hi!',
+          url: '/'
+        },
+        {
+          comment: 'bye!',
+          url: '/'
+        },
+      ],
+      [
+        {
+          comment: 'Hi!',
+          url: '/'
+        },
+        {
+          comment: 'bye!',
+          url: '/'
+        },
+        {
+          comment: 'yoo!',
+          url: '/'
+        }
+      ]
+    ]
+  
+});
+
+
 riot.tag('work-in-progress', '<div if="{commit && recent}"><p><b>Work in Progress.</b></p><a target="_blank" href="{commit.html_url}">{commit.commit.committer.name}: {commit.commit.message}</a></div>', 'work-in-progress, [riot-tag="work-in-progress"],work-in-progress div, [riot-tag="work-in-progress"] div{ display: block; overflow: hidden; min-height: 5rem; background-color: #EEE; } work-in-progress div, [riot-tag="work-in-progress"] div{ opacity: 1; width: 100%; padding: 1rem; top: 0; left: 0; transition: opacity .2s; } work-in-progress > a, [riot-tag="work-in-progress"] > a,work-in-progress > p, [riot-tag="work-in-progress"] > p{ display: block; width: 100 %; }', function(opts) {
     const that = this
     const api = require('../js/lib/api')
