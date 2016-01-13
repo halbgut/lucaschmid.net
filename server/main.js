@@ -12,17 +12,13 @@ const websocketHandler = require('./lib/websocketHandler')
 const initTLS = require('./lib/tls')
 const security = require('./lib/security')
 const routes = require('./lib/routes')()
-
-// Set NODE_ENV
-const NODE_ENV = process.env.NODE_ENV || 'development'
+const config = require('../common/config.js')
 
 // Initialize app
 const app = koa()
 
 // Set the ports TODO: move this to the config somehow
-const ports = NODE_ENV === 'production'
-  ? [80, 443]
-  : [3000, 3001]
+const ports = config.ports
 
 // Save the http server inside a const in order to use it later for the wss
 const server = http.createServer(app.callback()).listen(ports[0])
