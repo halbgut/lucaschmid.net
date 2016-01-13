@@ -1,5 +1,7 @@
 riot.tag('custom-navigation', '<ul><li each="{items}" data-id="{id}" class="{active ? \'active\' : \'\'}"><div class="line"></div><a href="{url}">{name}</a></li></ul>', 'custom-navigation, [riot-tag="custom-navigation"]{ position: fixed; z-index: -1; top: 10rem; } custom-navigation ul, [riot-tag="custom-navigation"] ul{ margin-top: 0; } custom-navigation li, [riot-tag="custom-navigation"] li{ display: block; position: relative; text-align: right; padding-right: 1rem; margin-bottom: .5rem; } custom-navigation li a, [riot-tag="custom-navigation"] li a,custom-navigation li a:visited, [riot-tag="custom-navigation"] li a:visited{ font-size: .8rem; color: #AAA; transition: color .2s; } custom-navigation li a:hover, [riot-tag="custom-navigation"] li a:hover,custom-navigation li.active a, [riot-tag="custom-navigation"] li.active a{ color: #666; } custom-navigation li .line, [riot-tag="custom-navigation"] li .line{ content: \'\'; position: absolute; right: 0; top: 0; width: 2px; height: 0; background: #CCC; transition: height .2s, background .2s; margin-right: .5rem; } custom-navigation li:hover .line, [riot-tag="custom-navigation"] li:hover .line,custom-navigation li.active .line, [riot-tag="custom-navigation"] li.active .line{ background: #666; } custom-navigation ul, [riot-tag="custom-navigation"] ul{ height: 80vh; }', function(opts) {
     const _ = require('lodash')
+    const dom = require('../js/lib/domHelpers')
+
     this.items = [].map.call(document.querySelectorAll('h1'), function (el) {
       return {
         id: el.id,
@@ -17,7 +19,7 @@ riot.tag('custom-navigation', '<ul><li each="{items}" data-id="{id}" class="{act
         const containerHeight = center > elem.clientHeight
           ? elem.clientHeight
           : elem.clientHeight - innerHeight / 3
-        const topOffset = getTopOffset(elem) - center
+        const topOffset = dom.getTopOffset(elem) - center
         const factor = ( containerHeight / 100 )
         const updateBarHeight = _.throttle(e => {
           var res = calcPercent(scrollY, factor, topOffset)
@@ -38,17 +40,9 @@ riot.tag('custom-navigation', '<ul><li each="{items}" data-id="{id}" class="{act
       return Math.round(( offset - top ) / factor)
     }
 
-
-    const getTopOffset = (el, prop, n) => {
-      n = n || 0
-      prop = prop || 'offsetTop'
-      if(!el.offsetParent) return n
-      return getTopOffset(el.offsetParent, prop, n + el[prop])
-    }
-
     const calcPos = () => {
       this.root.style.right = (
-          getTopOffset(this.root.parentNode, 'offsetLeft')
+          dom.getTopOffset(this.root.parentNode, 'offsetLeft')
           + this.root.parentNode.clientWidth
       ) + 'px'
     }
@@ -116,7 +110,11 @@ riot.tag('gistogram', '<p>I like code.</p><div class="container"><div class="ite
 riot.tag('work-in-progress', '<div if="{commit && recent}"><p><b>Work in Progress.</b></p><a target="_blank" href="{commit.html_url}">{commit.commit.committer.name}: {commit.commit.message}</a></div>', 'work-in-progress, [riot-tag="work-in-progress"],work-in-progress div, [riot-tag="work-in-progress"] div{ position: absolute; bottom: 0; left: 0; width: 100%; display: block; overflow: hidden; min-height: 5rem; background-color: #EEE; } work-in-progress div, [riot-tag="work-in-progress"] div{ opacity: 1; width: 100%; padding: 1rem; top: 0; left: 0; transition: opacity .2s; } work-in-progress > a, [riot-tag="work-in-progress"] > a,work-in-progress > p, [riot-tag="work-in-progress"] > p{ display: block; width: 100 %; }', function(opts) {
     const that = this
     const api = require('../js/lib/api')
+    const dom = require('../js/lib/domHelpers')
+
     var firstCommit = true
+
+    const tagOnScreen = () => dom.getTopOffset(this.root) > (window.scrollY - this.root.clientHeight)
 
     that.on('update', function () {
       that.update({
@@ -128,7 +126,7 @@ riot.tag('work-in-progress', '<div if="{commit && recent}"><p><b>Work in Progres
         )
       })
       if(that.commit) {
-        if(firstCommit) {
+        if(firstCommit || !tagOnScreen()) {
           firstCommit = false
         } else {
           flash(that.root.children[0], that.root)

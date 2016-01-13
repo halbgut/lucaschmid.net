@@ -59,6 +59,8 @@
   </style>
   <script>
     const _ = require('lodash')
+    const dom = require('../js/lib/domHelpers')
+
     this.items = [].map.call(document.querySelectorAll('h1'), function (el) {
       return {
         id: el.id,
@@ -76,7 +78,7 @@
         const containerHeight = center > elem.clientHeight
           ? elem.clientHeight
           : elem.clientHeight - innerHeight / 3
-        const topOffset = getTopOffset(elem) - center
+        const topOffset = dom.getTopOffset(elem) - center
         const factor = ( containerHeight / 100 )
         const updateBarHeight = _.throttle(e => {
           var res = calcPercent(scrollY, factor, topOffset)
@@ -97,17 +99,9 @@
       return Math.round(( offset - top ) / factor)
     }
 
-
-    const getTopOffset = (el, prop, n) => {
-      n = n || 0
-      prop = prop || 'offsetTop'
-      if(!el.offsetParent) return n
-      return getTopOffset(el.offsetParent, prop, n + el[prop])
-    }
-
     const calcPos = () => {
       this.root.style.right = (
-          getTopOffset(this.root.parentNode, 'offsetLeft')
+          dom.getTopOffset(this.root.parentNode, 'offsetLeft')
           + this.root.parentNode.clientWidth
       ) + 'px'
     }

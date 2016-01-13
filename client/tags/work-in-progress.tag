@@ -35,7 +35,11 @@
   <script>
     const that = this
     const api = require('../js/lib/api')
+    const dom = require('../js/lib/domHelpers')
+
     var firstCommit = true
+
+    const tagOnScreen = () => dom.getTopOffset(this.root) > (window.scrollY - this.root.clientHeight)
 
     that.on('update', function () {
       that.update({
@@ -47,7 +51,7 @@
         )
       })
       if(that.commit) {
-        if(firstCommit) {
+        if(firstCommit || !tagOnScreen()) {
           firstCommit = false
         } else {
           flash(that.root.children[0], that.root)
