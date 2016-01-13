@@ -2,6 +2,17 @@ riot.tag('custom-navigation', '<ul><li each="{items}" data-id="{id}" class="{act
     const _ = require('lodash')
     const dom = require('../js/lib/domHelpers')
 
+    const calcPercent = (offset, factor, top) => {
+      return Math.round(( offset - top ) / factor)
+    }
+
+    const calcPos = () => {
+      this.root.style.right = (
+          dom.getTopOffset(this.root.parentNode, 'offsetLeft')
+          + this.root.parentNode.clientWidth
+      ) + 'px'
+    }
+
     this.items = [].map.call(document.querySelectorAll('h1'), function (el) {
       return {
         id: el.id,
@@ -34,19 +45,7 @@ riot.tag('custom-navigation', '<ul><li each="{items}" data-id="{id}" class="{act
       })
     })
 
-    addEventListener('resize', calcPos)
-
-    const calcPercent = (offset, factor, top) => {
-      return Math.round(( offset - top ) / factor)
-    }
-
-    const calcPos = () => {
-      this.root.style.right = (
-          dom.getTopOffset(this.root.parentNode, 'offsetLeft')
-          + this.root.parentNode.clientWidth
-      ) + 'px'
-    }
-
+    window.addEventListener('resize', calcPos)
   
 });
 

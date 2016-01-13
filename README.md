@@ -4,5 +4,5 @@ My Portfolio. Created with the [glue-stack](https://github.com/Kriegslustig/glue
 
 ## TODO
 
-* Fix the resizing of <custom-navigation> (when making it bigger)
+* Modernize tags
 
