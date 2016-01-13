@@ -46,5 +46,17 @@ module.exports = {
     }),
     `blogArticle/${params.article}`
   ],
+  '/ipa/': params => [
+    'ipa',
+    () => new Promise((res, rej) => {
+      getMarkdown('dispo_interaktiver_news_artikel')
+        .then(md => res({
+          title: 'Interaktiver News-Artikel',
+          dispo: md[0].html
+        }))
+        .catch(rej)
+
+    })
+  ]
 }
 
