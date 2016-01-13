@@ -1,9 +1,13 @@
 <gistogram>
   <p>I like code.</p>
-  <div class="chart__item" each={day in days}>
-    <div class="chart__number">{day.length}</div>
-    <div class="chart__commits" each={day}>
-      <a href={url} class="chart__commit">{comment}</a>
+  <div class="container">
+    <div class="item__container" each={day in days}>
+      <div class="item">
+        <div class="number">{day.length}</div>
+        <div class="commits" each={day}>
+          <a href={url} class="commit">{comment}</a>
+        </div>
+      </div>
     </div>
   </div>
   <style scoped>
@@ -16,22 +20,35 @@
       background-color: hsl(240, 30%, 90%);
     }
 
-    :scope .chart {
-      width: 100%;
+    :scope p {
+      padding-bottom: 3rem;
     }
 
-    :scope .chart__item {
+    :scope .container {
+      direction: rtl;
+      height: calc(100vh - 5.6rem);
+    }
+
+    :scope .item {
+      display: block;
+      position: absolute;
+      height: 0;
+      width: 100%;
+      left: 0;
+      bottom: 0;
+      background-color: #fff;
+      transition: height .4s;
+    }
+
+    :scope .item__container {
       display: inline-block;
       position: relative;
-      height: calc(100% - 3rem);
       width: 2rem;
-      margin: 3rem .8rem 0 .8rem;
-      background-color: #fff;
-      transform: //scaleY(0);
-      transition: transform .4s;
+      height: 100%;
+      margin: 0 .8rem;
     }
 
-    :scope .chart__number {
+    :scope .number {
       position: absolute;
       top: -3rem;
       right: 0;
@@ -47,11 +64,11 @@
       transition: transform .2s;
     }
 
-    :scope .chart__item:hover .chart__number {
+    :scope .item:hover .number {
       transform: scaleY(1) translateY(0);
     }
 
-    :scope .chart__number:after {
+    :scope .number:after {
       content: '';
       position: absolute;
       bottom: -.5rem;
@@ -62,12 +79,14 @@
       transform: rotate(45deg);
     }
 
-    :scope .chart__commits {
+    :scope .commits {
       position: absolute;
       opacity: 0;
     }
   </style>
   <script>
+    const _ = require('lodash')
+
     this.days = [
       [
         {
@@ -94,6 +113,21 @@
         }
       ]
     ]
+    const updateHeights = () => {
+      const highest = _.map(this.days, day => day.length)
+        .sort()
+        .reverse()[0]
+      _.chain(this.root.querySelectorAll('.item'))
+        .map((item, i) => {
+          const height = Math.round(this.days[i].length / highest * 100)
+          item.style.height = `${height}%`
+        })
+        .value()
+    }
+    this.on('mount', () => {
+      setTimeout(updateHeights, 0)
+    })
+    this.on('update', updateHeights)
   </script>
 </gistogram>
 

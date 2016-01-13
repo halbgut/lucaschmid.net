@@ -65,7 +65,9 @@ riot.tag('example-riot', '<p>{time}</p>', function(opts) {
 });
 
 
-riot.tag('gistogram', '<p>I like code.</p><div class="chart__item" each="{day in days}"><div class="chart__number">{day.length}</div><div class="chart__commits" each="{day}"><a href="{url}" class="chart__commit">{comment}</a></div></div>', 'gistogram, [riot-tag="gistogram"]{ display: block; padding: 1rem; float: left; width: 100%; height: 100vh; background-color: hsl(240, 30%, 90%); } gistogram .chart, [riot-tag="gistogram"] .chart{ width: 100%; } gistogram .chart__item, [riot-tag="gistogram"] .chart__item{ display: inline-block; position: relative; height: calc(100% - 3rem); width: 2rem; margin: 3rem .8rem 0 .8rem; background-color: #fff; transform: //scaleY(0); transition: transform .4s; } gistogram .chart__number, [riot-tag="gistogram"] .chart__number{ position: absolute; top: -3rem; right: 0; height: 2rem; width: 2rem; line-height: 2rem; text-align: center; border: none; border-radius: .25rem; color: #000; background-color: #EEE; transform: scaleY(0) translateY(7rem); transition: transform .2s; } gistogram .chart__item:hover .chart__number, [riot-tag="gistogram"] .chart__item:hover .chart__number{ transform: scaleY(1) translateY(0); } gistogram .chart__number:after, [riot-tag="gistogram"] .chart__number:after{ content: \'\'; position: absolute; bottom: -.5rem; left: .5rem; height: 1rem; width: 1rem; background-color: #EEE; transform: rotate(45deg); } gistogram .chart__commits, [riot-tag="gistogram"] .chart__commits{ position: absolute; opacity: 0; }', function(opts) {
+riot.tag('gistogram', '<p>I like code.</p><div class="container"><div class="item__container" each="{day in days}"><div class="item"><div class="number">{day.length}</div><div class="commits" each="{day}"><a href="{url}" class="commit">{comment}</a></div></div></div></div>', 'gistogram, [riot-tag="gistogram"]{ display: block; padding: 1rem; float: left; width: 100%; height: 100vh; background-color: hsl(240, 30%, 90%); } gistogram p, [riot-tag="gistogram"] p{ padding-bottom: 3rem; } gistogram .container, [riot-tag="gistogram"] .container{ direction: rtl; height: calc(100vh - 5.6rem); } gistogram .item, [riot-tag="gistogram"] .item{ display: block; position: absolute; height: 0; width: 100%; left: 0; bottom: 0; background-color: #fff; transition: height .4s; } gistogram .item__container, [riot-tag="gistogram"] .item__container{ display: inline-block; position: relative; width: 2rem; height: 100%; margin: 0 .8rem; } gistogram .number, [riot-tag="gistogram"] .number{ position: absolute; top: -3rem; right: 0; height: 2rem; width: 2rem; line-height: 2rem; text-align: center; border: none; border-radius: .25rem; color: #000; background-color: #EEE; transform: scaleY(0) translateY(7rem); transition: transform .2s; } gistogram .item:hover .number, [riot-tag="gistogram"] .item:hover .number{ transform: scaleY(1) translateY(0); } gistogram .number:after, [riot-tag="gistogram"] .number:after{ content: \'\'; position: absolute; bottom: -.5rem; left: .5rem; height: 1rem; width: 1rem; background-color: #EEE; transform: rotate(45deg); } gistogram .commits, [riot-tag="gistogram"] .commits{ position: absolute; opacity: 0; }', function(opts) {
+    const _ = require('lodash')
+
     this.days = [
       [
         {
@@ -92,6 +94,21 @@ riot.tag('gistogram', '<p>I like code.</p><div class="chart__item" each="{day in
         }
       ]
     ]
+    const updateHeights = () => {
+      const highest = _.map(this.days, day => day.length)
+        .sort()
+        .reverse()[0]
+      _.chain(this.root.querySelectorAll('.item'))
+        .map((item, i) => {
+          const height = Math.round(this.days[i].length / highest * 100)
+          item.style.height = `${height}%`
+        })
+        .value()
+    }
+    this.on('mount', () => {
+      setTimeout(updateHeights, 0)
+    })
+    this.on('update', updateHeights)
   
 });
 
