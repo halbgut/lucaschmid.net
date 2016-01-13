@@ -1,4 +1,4 @@
-riot.tag('custom-navigation', '<ul><li each="{items}" data-id="{id}" class="{active ? \'active\' : \'\'}"><div class="line"></div><a href="{url}">{name}</a></li></ul>', 'custom-navigation, [riot-tag="custom-navigation"]{ position: fixed; z-index: -1; top: 10rem; } custom-navigation ul, [riot-tag="custom-navigation"] ul{ margin-top: 0; } custom-navigation li, [riot-tag="custom-navigation"] li{ display: block; position: relative; text-align: right; padding-right: 1rem; margin-bottom: .5rem; } custom-navigation li a, [riot-tag="custom-navigation"] li a,custom-navigation li a:visited, [riot-tag="custom-navigation"] li a:visited{ font-size: .8rem; color: #AAA; transition: color .2s; } custom-navigation li a:hover, [riot-tag="custom-navigation"] li a:hover,custom-navigation li.active a, [riot-tag="custom-navigation"] li.active a{ color: #666; } custom-navigation li .line, [riot-tag="custom-navigation"] li .line{ content: \'\'; position: absolute; right: 0; top: 0; width: 2px; height: 0; background: #CCC; transition: height .2s, background .2s; margin-right: .5rem; } custom-navigation li:hover .line, [riot-tag="custom-navigation"] li:hover .line,custom-navigation li.active .line, [riot-tag="custom-navigation"] li.active .line{ background: #666; } custom-navigation ul, [riot-tag="custom-navigation"] ul{ height: 80vh; }', function(opts) {
+riot.tag('custom-navigation', '<ul><li each="{items}" data-id="{id}" class="{active ? \'active\' : \'\'}"><div class="line"></div><a href="{url}">{name}</a></li></ul>', 'custom-navigation, [riot-tag="custom-navigation"]{ position: fixed; z-index: -1; top: 10rem; width: 140px; padding: 1rem; } custom-navigation ul, [riot-tag="custom-navigation"] ul{ margin-top: 0; } custom-navigation li, [riot-tag="custom-navigation"] li{ display: block; position: relative; text-align: right; margin-bottom: .5rem; } custom-navigation li a, [riot-tag="custom-navigation"] li a,custom-navigation li a:visited, [riot-tag="custom-navigation"] li a:visited{ font-size: .8rem; color: #AAA; transition: color .2s; } custom-navigation li a:hover, [riot-tag="custom-navigation"] li a:hover,custom-navigation li.active a, [riot-tag="custom-navigation"] li.active a{ color: #666; } custom-navigation li .line, [riot-tag="custom-navigation"] li .line{ content: \'\'; position: absolute; right: -1rem; top: 0; width: 2px; height: 0; background: #CCC; transition: height .2s, background .2s; margin-right: .5rem; } custom-navigation li:hover .line, [riot-tag="custom-navigation"] li:hover .line,custom-navigation li.active .line, [riot-tag="custom-navigation"] li.active .line{ background: #666; } custom-navigation ul, [riot-tag="custom-navigation"] ul{ height: 80vh; }', function(opts) {
     const _ = require('lodash')
     const dom = require('../js/lib/domHelpers')
 
@@ -7,9 +7,9 @@ riot.tag('custom-navigation', '<ul><li each="{items}" data-id="{id}" class="{act
     }
 
     const calcPos = () => {
-      this.root.style.right = (
+      this.root.style.left = (
           dom.getTopOffset(this.root.parentNode, 'offsetLeft')
-          + this.root.parentNode.clientWidth
+          - this.root.clientWidth
       ) + 'px'
     }
 

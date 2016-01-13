@@ -10,6 +10,8 @@
       position: fixed;
       z-index: -1;
       top: 10rem;
+      width: 140px;
+      padding: 1rem;
     }
 
     :scope ul {
@@ -20,7 +22,6 @@
       display: block;
       position: relative;
       text-align: right;
-      padding-right: 1rem;
       margin-bottom: .5rem;
     }
 
@@ -39,7 +40,7 @@
     :scope li .line {
       content: '';
       position: absolute;
-      right: 0;
+      right: -1rem;
       top: 0;
       width: 2px;
       height: 0;
@@ -66,9 +67,9 @@
     }
 
     const calcPos = () => {
-      this.root.style.right = (
+      this.root.style.left = (
           dom.getTopOffset(this.root.parentNode, 'offsetLeft')
-          + this.root.parentNode.clientWidth
+          - this.root.clientWidth
       ) + 'px'
     }
 
