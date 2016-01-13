@@ -43,16 +43,17 @@ app.use(koaStatic(`${__dirname}/../common`))
 app.use(routes.routes())
 app.use(routes.allowedMethods())
 
-// Mount the TLS-Server and the WebSocket servers
+// Initialize ws://
+new WebSocket.server({ httpServer: server })
+  .on('request', websocketHandler.onSocketReq)
+  .on('connect', websocketHandler.onSocketConn)
+
+// Mount the TLS-Server and the wss://
 initTLS('./tls/key.pem', './tls/cert.pem', app.callback(), ports[1])
   .then((tlsServer) => {
     new WebSocket.server({ httpServer: tlsServer })
       .on('request', websocketHandler.onSocketReq)
       .on('connect', websocketHandler.onSocketConn)
   })
-  .catch(() => {
-    new WebSocket.server({ httpServer: server })
-      .on('request', websocketHandler.onSocketReq)
-      .on('connect', websocketHandler.onSocketConn)
-  })
+  .catch(() => console.log('Server started without TLS'))
 
