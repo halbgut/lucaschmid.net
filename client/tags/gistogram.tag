@@ -10,21 +10,21 @@
       </div>
     </div>
   </div>
+  <yield/>
   <style scoped>
     :scope {
       display: block;
-      padding: 1rem;
-      float: left;
       width: 100%;
       height: 100vh;
       background-color: hsl(240, 30%, 90%);
     }
 
-    :scope p {
-      padding-bottom: 3rem;
+    :scope > p {
+      padding: 1rem;
     }
 
     :scope .container {
+      padding: 1rem;
       direction: rtl;
       height: calc(100vh - 5.6rem);
     }
