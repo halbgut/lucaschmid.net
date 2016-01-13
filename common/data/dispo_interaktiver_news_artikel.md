@@ -16,13 +16,13 @@ Um ein Ansprechendes Produkt zu bekommen, müsste ich mich zur Vorbereitung mit 
 
 ## Beispiele
 
-<article> <p>Die App wäre ähnlich Komplex wie dieser Artikel</p> <a target="_blank" href="https://fleximize.com/morning-rituals/"><img src="./morningritual.png" alt=""></a> </article>
+<article> <p>Die App wäre ähnlich Komplex wie dieser Artikel</p> <a target="_blank" href="https://fleximize.com/morning-rituals/"><img src="/img/morningritual.png" alt=""></a> </article>
 
-<article> <p>Ein schönes Beispiel eines interaktiven News-Artikel von <em>Verge</em></p> <a target="_blank" href="http://www.theverge.com/a/2014-verge-50"><img src="./theverge50.png" alt=""></a></article>
+<article> <p>Ein schönes Beispiel eines interaktiven News-Artikel von <em>Verge</em></p> <a target="_blank" href="http://www.theverge.com/a/2014-verge-50"><img src="/img/theverge50.png" alt=""></a></article>
 
-<article> <p>Ein sehr einfache Webapp die Zeigt was David Bowie in einem bestimmten Lebensjahr tat. Die Site ist sehr leicht zu implementieren, ist aber trotzdem ziemlich eindrücklich.</p> <a target="_blank" href="http://supbowie.com/"><img src="./supbowie.png" alt="What did David Bowie do at your age?"></a> </article>
+<article> <p>Ein sehr einfache Webapp die Zeigt was David Bowie in einem bestimmten Lebensjahr tat. Die Site ist sehr leicht zu implementieren, ist aber trotzdem ziemlich eindrücklich.</p> <a target="_blank" href="http://supbowie.com/"><img src="/img/supbowie.png" alt="What did David Bowie do at your age?"></a> </article>
 
-<article><p>Diese Grafik zum Klimawandel wäre etwa die Komplexität die ich anstreben würde.</p><a target="_blank" href="http://www.bloomberg.com/graphics/2015-whats-warming-the-world/"><img src="./global_warming.png" alt=""></a></article>
+<article><p>Diese Grafik zum Klimawandel wäre etwa die Komplexität die ich anstreben würde.</p><a target="_blank" href="http://www.bloomberg.com/graphics/2015-whats-warming-the-world/"><img src="/img/global_warming.png" alt=""></a></article>
 
 Einige der Beispiele sind von [/r/InternetIsBeautiful](https://www.reddit.com/r/InternetIsBeautiful/). Eine weitere hilfreiche ressource war [Wild Mood Swings](http://www.sean.co.uk/a/javascriptgames/wildmoodswings/index.shtm).
 
