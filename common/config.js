@@ -3,7 +3,7 @@ const env = require('./lib/env')
 
 var conf = require(`../config.json`)
 
-if (process.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production') {
   conf = _.extend(conf, conf.dev)
 }
 
