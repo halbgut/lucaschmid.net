@@ -9,6 +9,8 @@
     "grunt-contrib-uglify": "^0.11.0",
     "koa": "^1.1.2",
     "koa-compress": "^1.0.8",
+    "koa-etag": "^2.1.0",
+    "koa-fresh": "0.0.3",
     "koa-morgan": "^0.4.0",
     "koa-router": "^5.3.0",
     "koa-static": "^2.0.0",
