@@ -26,8 +26,17 @@ module.exports = () => {
         params[1]()
       ])
         .then(results => {
+          // Compile the content of the layout
           const content = handlebars.compile(results[0][1])(results[1])
-          that.body = cache[cacheKey] = handlebars.compile(results[0][0], _.extend(config, results[1]))({ content })
+          // Compile the layout
+          that.body = cache[cacheKey] = handlebars.compile(
+            results[0][0]
+          )(
+            _.chain(config)
+              .assign(results[1])
+              .assign({ content })
+              .value()
+          )
         })
         .catch(err => fail(err))
     })
