@@ -8,6 +8,7 @@
   <style scoped>
     :scope {
       position: fixed;
+      z-index: -1;
       top: 10rem;
     }
 
