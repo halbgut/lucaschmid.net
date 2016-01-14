@@ -4,5 +4,4 @@ My Portfolio. Created with the [glue-stack](https://github.com/Kriegslustig/glue
 
 ## TODO
 
-* Modernize tags
 

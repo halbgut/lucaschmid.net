@@ -33,7 +33,6 @@
   </style>
 
   <script>
-    const that = this
     const api = require('../js/lib/api')
     const dom = require('../js/lib/domHelpers')
 
@@ -41,25 +40,7 @@
 
     const tagOnScreen = () => dom.getTopOffset(this.root) > (window.scrollY - this.root.clientHeight)
 
-    that.on('update', function () {
-      that.update({
-        recent: (
-          !that.commit
-            ? false
-            : (new Date).getTime() - (new Date(that.commit.commit.committer.date)).getTime()
-              < (86400 * 2 * 1000) // Last commit hasn't been longer than two days
-        )
-      })
-      if(that.commit) {
-        if(firstCommit || !tagOnScreen()) {
-          firstCommit = false
-        } else {
-          flash(that.root.children[0], that.root)
-        }
-      }
-    })
-
-    function flash (el, parent) {
+    const flash = (el, parent) => {
       el.style.opacity = 0
       parent.style.height = parent.innerHeight + 'px'
       setTimeout(function () {
@@ -76,8 +57,26 @@
       }, 4000)
     }
 
+    this.on('update', () => {
+      this.update({
+        recent: (
+          !this.commit
+            ? false
+            : (new Date).getTime() - (new Date(this.commit.commit.committer.date)).getTime()
+              < (86400 * 2 * 1000) // Last commit hasn't been longer than two days
+        )
+      })
+      if (this.commit) {
+        if (firstCommit || !tagOnScreen()) {
+          firstCommit = false
+        } else {
+          flash(this.root.children[0], this.root)
+        }
+      }
+    })
+
     api('github', 'lastCommit')
-      .then(commit => that.update({ commit }))
+      .then(commit => this.update({ commit }))
       .catch(err => { throw err })
 
   </script>

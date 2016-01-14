@@ -73,7 +73,7 @@
       ) + 'px'
     }
 
-    this.items = [].map.call(document.querySelectorAll('h1'), function (el) {
+    this.items = _.map(document.querySelectorAll('h1'), el => {
       return {
         id: el.id,
         name: el.textContent,
