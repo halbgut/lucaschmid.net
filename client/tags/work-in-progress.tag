@@ -37,6 +37,7 @@
     const dom = require('../js/lib/domHelpers')
 
     var firstCommit = true
+    var currentCommit
 
     const tagOnScreen = () => dom.getTopOffset(this.root) > (window.scrollY - this.root.clientHeight)
 
@@ -67,11 +68,12 @@
         )
       })
       if (this.commit) {
-        if (firstCommit || !tagOnScreen()) {
+        if (firstCommit) {
           firstCommit = false
-        } else {
+        } else if(!tagOnScreen() && currentCommit !== this.commit.sha) {
           flash(this.root.children[0], this.root)
         }
+        currentCommit = this.commit.sha
       }
     })
 
