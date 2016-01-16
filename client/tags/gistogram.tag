@@ -27,6 +27,7 @@
       padding: 1rem;
       direction: rtl;
       height: calc(100vh - 5.6rem);
+      white-space: nowrap;
     }
 
     :scope .item {
@@ -113,21 +114,26 @@
         }
       ]
     ]
+
     const updateHeights = () => {
+      if(!this.root.children[1]) return
       const highest = _.map(this.days, day => day.length)
         .sort()
         .reverse()[0]
-      _.chain(this.root.querySelectorAll('.item'))
+      _.chain(this.root.children[1].querySelectorAll('.item'))
         .map((item, i) => {
           const height = Math.round(this.days[i].length / highest * 100)
           item.style.height = `${height}%`
         })
         .value()
     }
+
     this.on('mount', () => {
       setTimeout(updateHeights, 0)
     })
-    this.on('update', updateHeights)
+
+    this.on('updated', updateHeights)
+
   </script>
 </gistogram>
 
