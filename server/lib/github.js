@@ -44,6 +44,7 @@ var getCommit = (() => {
           lastCommit &&
           (new Date()).getTime() - lastCommit.updated < 60000 // cache for a minute
         ) ||
+        lastCommit &&
         updating
       ) return res(lastCommit.data)
       updating = true
