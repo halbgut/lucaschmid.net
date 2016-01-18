@@ -11,7 +11,7 @@ My favourite hobby is programming. I started my apprenticeship as a _mediamatic 
 29
 ```
 
-Around April I joined the Linux system administration team at work. There I got to know Apache, MySQL and Linux. In December I went to a Dupal team. At the time of this writing I'm still part of that team.
+Around April I joined the Linux system administration team at work. There I got to know Apache, MySQL and Linux. In December I went to a Drupal team. At the time of this writing I'm still part of that team.
 
 In August 2016 I'm going to graduate from my apprenticeship. I'll then start searching for a job as a JavaScript Developer.
 
