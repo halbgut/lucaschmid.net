@@ -1,6 +1,7 @@
 const github = require('./lib/github')
 const view = require('./lib/view')
 const fail = require('./lib/fail')
+const webdevquiz = require('./lib/webdevquiz')
 
 var feeds
 
@@ -44,9 +45,13 @@ module.exports = {
       rej()
     }
   }),
-  '/{p*}': context => new Promise((res, rej) => {
+  '/webdevquiz': context => new Promise ((res, rej) => {
+    webdevquiz(context)
+    res()
+  }),
+  '/:p': context => new Promise((res, rej) => {
     // TODO Render 404
-    context.response.code = 404
+    context.response.status = 404
     res()
   })
 }
