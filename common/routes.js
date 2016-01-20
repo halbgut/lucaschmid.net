@@ -46,17 +46,30 @@ module.exports = {
     }),
     `blogArticle/${params.article}`
   ],
-  '/ipa/': params => [
-    'ipa',
+  '/ipa': params => [
+    'generic',
     () => new Promise((res, rej) => {
       getMarkdown('dispo_interaktiver_news_artikel')
         .then(md => res({
           title: 'Interaktiver News-Artikel',
-          dispo: md[0].html
+          generic: md[0].html
         }))
         .catch(rej)
 
-    })
+    }),
+    'ipa'
+  ],
+  '/peopleidliketoworkwith': params => [
+    'generic',
+    () => new Promise((res, rej) => {
+      getMarkdown('peopleidliketoworkwith')
+        .then(md => res({
+          title: 'peopleidliketoworkwith',
+          generic: md[0].html
+        }))
+        .catch(rej)
+    }),
+    'peopleidliketoworkwith'
   ]
 }
 
