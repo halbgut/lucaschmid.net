@@ -6,10 +6,6 @@
   <style scoped>
     :scope,
     :scope div {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
       display: block;
       overflow: hidden;
       min-height: 5rem;

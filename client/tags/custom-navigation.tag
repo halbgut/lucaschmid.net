@@ -8,7 +8,6 @@
   <style scoped>
     :scope {
       position: fixed;
-      z-index: -1;
       top: 10rem;
       width: 140px;
       padding: 1rem;
