@@ -49,6 +49,11 @@ module.exports = {
     webdevquiz(context)
     res()
   }),
+  '/ip': context => new Promise((res, rej) => {
+    context.response.status = 200
+    context.body = context.req.connection.remoteAddress
+    res()
+  }),
   '/:p': context => new Promise((res, rej) => {
     // TODO Render 404
     context.response.status = 404
