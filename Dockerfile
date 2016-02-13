@@ -11,5 +11,5 @@ CMD npm i; npm start
 ADD ./package.json /var/app/package.json
 
 RUN apk update
-RUN apk add python make nodejs g++
+RUN apk add nodejs
 
