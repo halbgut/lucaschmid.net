@@ -35,10 +35,10 @@ module.exports = {
       })
   }),
   '/feed/:type': context => new Promise((res, rej) => {
-    if (context.params.type === 'atom') {
+    if (context.params.type === 'atom.xml') {
       context.body = feeds[0]
       res()
-    } else if (context.params.type === 'rss') {
+    } else if (context.params.type === 'rss.xml') {
       context.body = feeds[1]
       res()
     } else {
