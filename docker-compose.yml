@@ -1,5 +1,6 @@
 main:
   build: ./
+  container_name: lucaschmid.net
   volumes:
     - ./:/var/app
   ports:
