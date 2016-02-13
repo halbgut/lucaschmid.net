@@ -1,5 +1,6 @@
 const WebSocket = require('websocket')
 const http = require('http')
+const fs = require('fs')
 
 const koa = require('koa')
 const koaStatic = require('koa-static')
@@ -40,11 +41,13 @@ app.use(koaStatic(`${__dirname}/../client`))
 app.use(koaStatic(`${__dirname}/../common`))
 
 try {
-  const elmIntroRoot = '/var/app/elm-intro'
+  const elmIntroRoot = '/var/elm-intro'
   const elmIntro = require(`${elmIntroRoot}/server/main.js`)
   elmIntro(app, '/elm')
   app.use(koaStatic(`${elmIntroRoot}/client/assets`))
-} catch (e) {}
+} catch (e) {
+  console.log('starting without elm intro')
+}
 
 // Add router
 app.use(routes.routes())
