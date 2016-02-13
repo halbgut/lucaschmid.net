@@ -44,6 +44,6 @@
   },
   "scripts": {
     "watch": "grunt",
-    "start": "nodemon server/main.js || NODE_ENV='production' node server/main.js"
+    "start": "if [ ${NODE_ENV} = \"production\" ]; then node server/main.js; else nodemon -L server/main.js; fi"
   }
 }
