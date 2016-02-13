@@ -39,6 +39,13 @@ app.use(security)
 app.use(koaStatic(`${__dirname}/../client`))
 app.use(koaStatic(`${__dirname}/../common`))
 
+try {
+  const elmIntroRoot = '/var/app/elm-intro'
+  const elmIntro = require(`${elmIntroRoot}/server/main.js`)
+  elmIntro(app, '/elm')
+  app.use(koaStatic(`${elmIntroRoot}/client/assets`))
+} catch (e) {}
+
 // Add router
 app.use(routes.routes())
 app.use(routes.allowedMethods())
