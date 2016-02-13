@@ -22,7 +22,7 @@ module.exports = (api, method) => new Promise((res, rej) => {
           .catch(rej)
       })
       .catch(e => {
-        xhr(`/api/${api}/ws/${method}`)
+        xhr(`/api/${api}/xhr/${method}`)
           .then(data => res(JSON.parse(data)))
           .catch(rej)
       })
