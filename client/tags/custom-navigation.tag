@@ -9,8 +9,8 @@
     :scope {
       position: fixed;
       top: 10rem;
-      width: 140px;
-      padding: 1rem;
+      width: 170px;
+      padding: 0 1.2rem 0 0;
     }
 
     :scope ul {
@@ -22,6 +22,7 @@
       position: relative;
       text-align: right;
       margin-bottom: .5rem;
+      line-height: 1.2rem;
     }
 
     :scope li a,

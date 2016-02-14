@@ -7,6 +7,7 @@
 body {
   background: #FFF;
   margin: 0;
+  letter-spacing: .2px;
 }
 
 p:first-child {
@@ -44,7 +45,7 @@ nav a.current {
   text-decoration: underline;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 940px) {
   custom-navigation {
     display: none;
   }
