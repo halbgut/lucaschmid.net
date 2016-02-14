@@ -32,9 +32,14 @@ module.exports = () => {
           that.body = cache[cacheKey] = handlebars.compile(
             results[0][0]
           )(
-            _.chain(config)
+            _.chain(_.clone(config))
               .assign(results[1])
               .assign({ content })
+              .assign({
+                title: results[1].title
+                  ? `${config.title} | ${results[1].title}`
+                  : config.title
+              })
               .value()
           )
         })

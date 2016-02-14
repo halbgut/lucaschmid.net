@@ -1,7 +1,7 @@
 <h2>Another Blog</h2>
 {{#each articles}}
   <article itemscope itemtype="https://schema.org/Blog">
-    <h2>{{{title}}}</h2>
+    <h2><a href="{{ url }}">{{{ title }}}</a></h2>
     {{{teaser}}}
     <p><b><a href="{{ url }}">...read it!</a></b></p>
     <p>
