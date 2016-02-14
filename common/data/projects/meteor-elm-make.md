@@ -4,11 +4,11 @@
 
 Having to basically mirror the file structure of packages inside `.elm` made the package more complex than I initially expected. When iterating over the files `elm:make` goes through 14 conditions. These grew organically so I initially wrote it as a huge, yet fairly efficient _tree_ of `if`/`else` statements. When I encountered an edge case not covered by the conditional structure it was really hard to cover.
 
-![The code before I refactored it](https://lucaschmid.net/img/unclean_code.png)
+![The code before I refactored it](https://lucaschmid.net/img/meteor-elm-make/unclean_code.png)
 
 There were too many complex relationships between the conditions. So I refactored it. This was extremely hard to do. To get an overview of the problem I tried various methods. It was a hopeless task. Whenever I figured out a partial problem inside the structure, I either forgot about the context I was working in or discovered that there was some evaluation done multiple times. So I tried a radically different approach. First I split the problem in two. Even though it would introduce some redundant code, I split the process of compilation and moving files into the `.elm` directory, into two functions [1]. Then I removed any conditions that could only be evaluated if other conditions were met. I did this to be able to create constants containing the results of the various conditions. Like `shouldCompile` or `isNative`. This made the code somewhat less DRY. Because some conditions only need to be evaluated if others are met. But having the conditions as constants let me concentrate on the core problem and not worry about performance. The third big change I made was to remove all nested conditions. Instead of nesting then, I simply combined the condition with `&&`. That didn't harm performance very much since the condition itself was evaluated before hand. With those three changes I was able to produce very readable code.
 
-![The current implementation](https://lucaschmid.net/img/clean_code.png)
+![The current implementation](https://lucaschmid.net/img/meteor-elm-make/clean_code.png)
 
 `elm:make` is working pretty well so far. My current Projects are [`elm:meteor`](https://github.com/Kriegslustig/meteor-elm-meteor) and [`elm:mongo`](https://github.com/Kriegslustig/meteor-elm-mongo), these packages provide bindings for Elm. Implementing these bindings is pretty hard, since I have to redesign a lot of the APIs to be purely functional.
 
