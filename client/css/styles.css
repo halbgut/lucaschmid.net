@@ -23,7 +23,8 @@ section:not(:first-of-type) {
   margin-top: 3rem;
 }
 
-section:not(:first-of-type)::before {
+section:not(:first-of-type)::before,
+article:not(:first-of-type)::before {
   content: '';
   display: block;
   height: 1px;
