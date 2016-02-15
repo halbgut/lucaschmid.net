@@ -5,10 +5,10 @@ Here are things I spent considerable time on learning. They are orderd by skill-
 ## Languages
 
 - JavaScript
-- CSS
-- SASS/SCSS
+- CSS/SASS/SCSS/LESS
 - PHP
 - Bash
+- Elm
 - C (~1000 LOC)
 - Python (~500 LOC)
 - Rust (~700 LOC)
@@ -16,22 +16,31 @@ Here are things I spent considerable time on learning. They are orderd by skill-
 ## Frameworks
 
 - Meteor
+- MEAN(-ish)[1]
 - WordPress
 - Drupal
 
 ## Workflow
 
 - VIM
-- Git
+- Git/hg
+- tmux
 
 ## Tools
 
 - Node.js
-- MongoDB
-- Express
+- Express/Koa
+- Grunt/Gulp/Webpack
+- Docker
 - PostCSS
-- Handlebars
 - Riot.js
 - React
 - Angular
+
+## Databases
+
+- MongoDB
+- MySQL
+
+[1] Without the `A`
 
