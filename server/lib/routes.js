@@ -43,7 +43,7 @@ module.exports = () => {
               .value()
           )
         })
-        .catch(err => fail(err))
+        .catch(err => fail(this, err))
     })
   })
   _.each(serverRoutes, (action, route) => {
@@ -52,7 +52,7 @@ module.exports = () => {
         action(this)
           .then(() => res(false))
           .catch((e) => {
-            if (e) fail(e)
+            if (e) fail(this, e)
             if (!e) res(true)
           })
       })

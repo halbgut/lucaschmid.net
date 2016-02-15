@@ -1,6 +1,6 @@
-module.exports = (err, code) => {
+module.exports = (context, err, code) => {
   console.error(err)
-  this.body = `Failed: ${err}`
-  this.response.code = code || 500
+  context.body = `Failed: ${err}`
+  context.response.status = code || 500
 }
 

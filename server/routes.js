@@ -17,7 +17,7 @@ module.exports = {
           context.body = json
           res()
         })
-        .catch(err => fail(err))
+        .catch(err => fail(context, err))
     } else {
       rej()
     }

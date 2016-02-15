@@ -6,6 +6,10 @@ const async = require('async')
 
 const config = require('../config')
 
+const ctimeExp = /\[ctime:(\d+)\]/
+const paragraphsExp = /<p>(.*)<\/p>/
+const titleExp = /<h1( id=\"\w*\")?>(.*)<\/h1>/ // The regex narrow implementation that only works well for showdown
+
 const mdConverter = new showdown.Converter
 
 module.exports = pattern => {
@@ -17,14 +21,16 @@ module.exports = pattern => {
         files,
         (file, next) => {
           fs.readFile(file, { encoding: 'utf8' }, (err, data) => {
-            var html
             if(err) next(err)
-            html = mdConverter.makeHtml(data),
+            const ctime = new Date()
+            const html = mdConverter.makeHtml(data.replace(ctimeExp, ''))
+            ctime.setTime((ctimeExp.exec(data) || [])[1] || 0)
             next(null, {
               html,
-              paragraphs: /<p>(.*)<\/p>/g.exec(html),
-              title: /<h1 (id=\"\w*\")?>(.*)<\/h1>/g.exec(html)[2], // The regex narrow implementation that only works well for showdown
+              paragraphs: paragraphsExp.exec(html),
+              title: titleExp.exec(html)[2],
               name: path.basename(file).split('.').slice(0, -1).join('.'),
+              ctime,
               file
             })
           })

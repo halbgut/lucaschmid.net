@@ -18,7 +18,7 @@ module.exports = root => new Promise((res, rej) => {
               url: config.getFullUrl(),
               email: 'allspamhere@kriegslustig.me'
             },
-            created: fs.statSync(md.file).ctime
+            created: md.ctime
           }
         })
         .sort((a, b) => {
