@@ -1,6 +1,7 @@
+'use strict'
+
 const WebSocket = require('websocket')
 const http = require('http')
-const fs = require('fs')
 
 const koa = require('koa')
 const koaStatic = require('koa-static')
@@ -36,9 +37,21 @@ app.use(compress())
 
 // Mount the security headers
 app.use(security)
+
 // Static files
 app.use(koaStatic(`${__dirname}/../client`))
 app.use(koaStatic(`${__dirname}/../common`))
+
+// TLS redirect
+let tls = false
+app.use(function *(next) {
+  if (tls && !this.request.secure) {
+    this.set('Location', `${config.defaultProto}://${config.hostname}${this.request.url}`)
+    this.status = 302
+  } else {
+    yield next
+  }
+})
 
 try {
   const elmIntroRoot = '/var/elm-intro'
@@ -61,6 +74,7 @@ new WebSocket.server({ httpServer: server })
 // Mount the TLS-Server and the wss://
 initTLS('./tls/key.pem', './tls/cert.pem', app.callback(), ports[1])
   .then((tlsServer) => {
+    tls = true
     new WebSocket.server({ httpServer: tlsServer })
       .on('request', websocketHandler.onSocketReq)
       .on('connect', websocketHandler.onSocketConn)
