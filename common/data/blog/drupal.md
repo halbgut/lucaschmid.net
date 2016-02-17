@@ -1,4 +1,4 @@
-# My experience working with Durpal (a rant)
+# My experience working with Durpal _– a rant_
 
 [ctime:1455563400866]
 

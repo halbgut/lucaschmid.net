@@ -16,7 +16,7 @@ Here are things I spent considerable time on learning. They are orderd by skill-
 ## Frameworks
 
 - Meteor
-- MEAN(-ish)[1]
+- MEAN(-ish)[^1]
 - WordPress
 - Drupal
 
@@ -42,5 +42,5 @@ Here are things I spent considerable time on learning. They are orderd by skill-
 - MongoDB
 - MySQL
 
-[1] Without the `A`
+[^1]: Without the `A`
 

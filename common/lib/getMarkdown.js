@@ -1,4 +1,5 @@
 const showdown = require('showdown')
+const footnotes = require('showdown-footnotes')
 const fs = require('fs')
 const path = require('path')
 const glob = require('glob')
@@ -10,7 +11,7 @@ const ctimeExp = /\[ctime:(\d+)\]/
 const paragraphsExp = /<p>(.*)<\/p>/
 const titleExp = /<h1( id=\"\w*\")?>(.*)<\/h1>/ // The regex narrow implementation that only works well for showdown
 
-const mdConverter = new showdown.Converter
+const mdConverter = new showdown.Converter({ extensions: [footnotes] })
 
 module.exports = pattern => {
   return new Promise((res, rej) => {
