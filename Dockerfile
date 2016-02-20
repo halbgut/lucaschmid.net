@@ -18,4 +18,9 @@ RUN cd /var && \
   mv elm-intro-master elm-intro && \
   rm master.zip
 RUN cd /var/elm-intro && NODE_ENV=production npm i
+RUN cd /var && \
+  wget -q https://github.com/Kriegslustig/vim-shortcut-viewer/archive/master.zip && \
+  unzip -q master.zip && \
+  mv vim-shortcut-viewer-master vim-shortcut-viewer && \
+  rm master.zip
 

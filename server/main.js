@@ -5,6 +5,7 @@ const http = require('http')
 
 const koa = require('koa')
 const koaStatic = require('koa-static')
+const mount = require('koa-mount')
 const morgan = require('koa-morgan')
 const compress = require('koa-compress')
 const etag = require('koa-etag')
@@ -53,14 +54,9 @@ app.use(function *(next) {
   }
 })
 
-try {
-  const elmIntroRoot = '/var/elm-intro'
-  const elmIntro = require(`${elmIntroRoot}/server/main.js`)
-  elmIntro(app, '/elm')
-  app.use(koaStatic(`${elmIntroRoot}/client/assets`))
-} catch (e) {
-  console.log('starting without elm intro')
-}
+require('/var/elm-intro/server/main.js')(app, '/elm')
+app.use(koaStatic('/var/elm-intro/client/assets'))
+app.use(mount('/vim-shortcut-viewer', koaStatic('/var/vim-shortcut-viewer')))
 
 // Add router
 app.use(routes.routes())

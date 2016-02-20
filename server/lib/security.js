@@ -1,5 +1,5 @@
 const csp =
-  "default-src 'self' https:;"
+  "default-src 'self' raw.githubusercontent.com https:;"
   + "style-src 'self' https: 'unsafe-inline';"
   + "script-src 'self' https: 'unsafe-eval';"
   + "connect-src 'self' ws: wss:`"
