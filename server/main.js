@@ -57,6 +57,7 @@ app.use(function *(next) {
 require('/var/elm-intro/server/main.js')(app, '/elm')
 app.use(koaStatic('/var/elm-intro/client/assets'))
 app.use(mount('/vim-shortcut-viewer', koaStatic('/var/vim-shortcut-viewer')))
+app.use(mount('/elm-pomodoro', koaStatic('/var/elm-pomodoro')))
 
 // Add router
 app.use(routes.routes())

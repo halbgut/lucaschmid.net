@@ -23,4 +23,10 @@ RUN cd /var && \
   unzip -q master.zip && \
   mv vim-shortcut-viewer-master vim-shortcut-viewer && \
   rm master.zip
+RUN cd /var && \
+  wget -q https://github.com/Kriegslustig/elm-pomodoro/archive/master.zip && \
+  unzip -q master.zip && \
+  mv elm-pomodoro-master elm-pomodoro && \
+  rm master.zip
+RUN ls /var/elm-pomodoro
 

@@ -1,7 +1,7 @@
 const csp =
   "default-src 'self' https:;"
   + "style-src 'self' https: 'unsafe-inline';"
-  + "script-src 'self' https: 'unsafe-eval';"
+  + "script-src 'self' https: 'unsafe-eval' 'unsafe-inline';"
   + "connect-src 'self' raw.githubusercontent.com https: ws: wss:`"
 
 module.exports = function *(next) {
