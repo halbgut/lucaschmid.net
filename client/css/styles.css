@@ -19,6 +19,15 @@ footer {
   text-align: right;
 }
 
+footer li::after {
+  content: '/';
+  margin-left: 1.5ch;
+}
+
+footer li:last-child::after {
+  display: none;
+}
+
 section:not(:first-of-type) {
   margin-top: 3rem;
 }
