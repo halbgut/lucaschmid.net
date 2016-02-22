@@ -12,7 +12,8 @@ module.exports = grunt => {
     serverJs: [ [ 'server/**/*.js' ] ],
     css: [
       [ 'client/css/*.css' ],
-      'client/_build/bundle.css'
+      'client/_build/bundle.css',
+      [ 'client/css/**/*.css' ]
     ],
     tags: [
       [ 'client/tags/**/*.tag' ],
@@ -23,7 +24,7 @@ module.exports = grunt => {
   grunt.initConfig({
     watch: {
       css: {
-        files: files.css[0],
+        files: files.css[2],
         tasks: ['postcss']
       },
       clientJs: {
