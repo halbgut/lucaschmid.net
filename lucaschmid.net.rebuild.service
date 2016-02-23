@@ -1,0 +1,6 @@
+[Unit]
+Type=simple
+
+[Service]
+ExecStart=/var/app/lucaschmid.net/watch-rebuild.sh
+
