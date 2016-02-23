@@ -3,6 +3,7 @@
 const WebSocket = require('websocket')
 const WebSocketServer = WebSocket.server
 const http = require('http')
+const fs = require('fs')
 
 const koa = require('koa')
 const koaStatic = require('koa-static')
@@ -11,6 +12,7 @@ const morgan = require('koa-morgan')
 const compress = require('koa-compress')
 const etag = require('koa-etag')
 const fresh = require('koa-fresh')
+const bodyParser = require('koa-bodyparser')
 
 const websocketHandler = require('./lib/websocketHandler')
 const initTLS = require('./lib/tls')
@@ -39,6 +41,24 @@ app.use(compress())
 
 // Mount the security headers
 app.use(security)
+
+// Parse POST body
+app.use(bodyParser())
+
+app.use(function *(next) {
+  if (
+    this.method === 'POST' &&
+    this.url === '/restart'// &&
+    this.body.hook.config.secret === config.restartKey
+  ) {
+    fs.writeFileSync('restart', '.')//this.body.hook.zen)
+    this.status = 200
+    this.body = ''
+  } else {
+    yield next
+    return
+  }
+})
 
 // Static files
 app.use(koaStatic(`${__dirname}/../client`))
