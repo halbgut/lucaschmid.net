@@ -48,7 +48,7 @@ app.use(bodyParser())
 app.use(function *(next) {
   if (
     this.method === 'POST' &&
-    this.url === '/restart'// &&
+    this.url === '/restart' &&
     this.body.hook.config.secret === config.restartKey
   ) {
     fs.writeFileSync('restart', '.')//this.body.hook.zen)
