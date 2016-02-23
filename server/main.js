@@ -1,6 +1,7 @@
 'use strict'
 
 const WebSocket = require('websocket')
+const WebSocketServer = WebSocket.server
 const http = require('http')
 
 const koa = require('koa')
@@ -64,7 +65,7 @@ app.use(routes.routes())
 app.use(routes.allowedMethods())
 
 // Initialize ws://
-new WebSocket.server({ httpServer: server })
+new WebSocketServer({ httpServer: server })
   .on('request', websocketHandler.onSocketReq)
   .on('connect', websocketHandler.onSocketConn)
 
@@ -72,7 +73,7 @@ new WebSocket.server({ httpServer: server })
 initTLS('./tls/key.pem', './tls/cert.pem', app.callback(), ports[1])
   .then((tlsServer) => {
     tls = true
-    new WebSocket.server({ httpServer: tlsServer })
+    new WebSocketServer({ httpServer: tlsServer })
       .on('request', websocketHandler.onSocketReq)
       .on('connect', websocketHandler.onSocketConn)
   })

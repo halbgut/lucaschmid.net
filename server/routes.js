@@ -45,7 +45,7 @@ module.exports = {
       rej()
     }
   }),
-  '/webdevquiz': context => new Promise ((res, rej) => {
+  '/webdevquiz': context => new Promise((res, rej) => {
     webdevquiz(context)
     res()
   }),

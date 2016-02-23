@@ -1,17 +1,12 @@
-// const page = require('page')
-const nav = require('./lib/nav')
-// const routes = require('./lib/common2page')(require('../../common/routes'))
-//
-// window.page = page
-//
-// routes.forEach(route => {
-//   page(route[0], route[1])
-// })
+import nav from './lib/nav'
+import footnotes from './lib/footnotes'
+import riot from 'riot/riot.min.js'
 
-window.riot = require('riot/riot.min.js') // Globally available
+window.riot = riot // Globally available
 
 window.addEventListener('load', () => {
   nav()
+  footnotes()
   window.riot.mount('*')
 })
 
