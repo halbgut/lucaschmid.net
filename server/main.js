@@ -54,7 +54,7 @@ app.use(function *(next) {
   ) {
     const hmac = crypto.createHmac('sha1', config.restartKey)
     const hash = hmac.update(JSON.stringify(this.request.body))
-    if (scmp('sha1=' + hash.digest('hex'), this.request['x-hub-signature'])) {
+    if (scmp('sha1=' + hash.digest('hex'), this.request.headers['x-hub-signature'])) {
       fs.writeFileSync('restart', '.')
       this.status = 200
       this.body = ''
