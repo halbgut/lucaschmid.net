@@ -28,5 +28,4 @@ RUN cd /var && \
   unzip -q master.zip && \
   mv elm-pomodoro-master elm-pomodoro && \
   rm master.zip
-RUN ls /var/elm-pomodoro
 
