@@ -3,7 +3,9 @@
 const WebSocket = require('websocket')
 const WebSocketServer = WebSocket.server
 const http = require('http')
+const crypto = require('crypto')
 const fs = require('fs')
+const scmp = require('scmp')
 
 const koa = require('koa')
 const koaStatic = require('koa-static')
@@ -48,15 +50,19 @@ app.use(bodyParser())
 app.use(function *(next) {
   if (
     this.method === 'POST' &&
-    this.url === '/restart' &&
-    this.body.hook.config.secret === config.restartKey
+    this.url === '/restart'
   ) {
-    fs.writeFileSync('restart', '.')//this.body.hook.zen)
-    this.status = 200
-    this.body = ''
+    const hmac = crypto.createHmac('sha1', config.restartKey)
+    const hash = hmac.update(JSON.stringify(this.request.body))
+    if (scmp('sha1=' + hash.digest('hex'), this.request['x-hub-signature'])) {
+      fs.writeFileSync('restart', '.')
+      this.status = 200
+      this.body = ''
+    } else {
+      yield next
+    }
   } else {
     yield next
-    return
   }
 })
 

@@ -2,9 +2,12 @@
 
 APP_DIR=/var/app/lucaschmid.net/
 
-while $(inotifywait -me CREATE ${APP_DIR}restart); do
-  cd ${APP_DIR} && \
-    git pull && \
-    docker-compose restart
+while RES=$(inotifywait -e create $APP_DIR --format %f); do
+  if [[ "restart" == $(basename ${RES}) ]]; then
+    cd ${APP_DIR} && \
+      git pull && \
+      docker-compose restart && \
+      rm restart
+  fi
 done
 
