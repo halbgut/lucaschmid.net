@@ -47,6 +47,10 @@ app.use(security)
 // Parse POST body
 app.use(bodyParser())
 
+// Github `push` webhook
+// This simple writes a file when the hook is called. The systemd-unit defined
+// in lucaschmid.net.restart.service pulls the latest version from the github
+// repo and restarts the docker container.
 app.use(function *(next) {
   if (
     this.method === 'POST' &&
