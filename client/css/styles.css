@@ -1,5 +1,6 @@
 @import "lib/writ";
 @import "lib/footnotes";
+@import "../../node_modules/highlight.js/styles/github.css";
 
 *, *::before, *::after {
   box-sizing: border-box;

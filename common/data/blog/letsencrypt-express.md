@@ -12,7 +12,7 @@ First of all lets get our certificate. I basically just followed the [README ins
 
 We'll need to install the utility. This will become easier once it's released as stable. You'll then be able to use your package-manager.
 
-```
+```bash
 git clone https://github.com/letsencrypt/letsencrypt
 cd letsencrypt
 ./letsencrypt-auto --help
@@ -20,19 +20,19 @@ cd letsencrypt
 
 Then we can request the certificate. Here's what I did for this site.
 
-```
+```bash
 ./letsencrypt-auto certonly --standalone --email not_an_email_address@lucaschmid.net -d lucaschmid.net
 ```
 
 This threw an error on my server because I had IPv6 enabled. If [this issue][6] hasn't been resolved yet, **you might need to do deactivate IPv6**, before running the last command.
 
-```
+```bash
 sysctl -w net.ipv6.conf.all.disable_ipv6=1
 ```
 
 When you now run the last command again, you should recieve the certificate. After that, you can enable IPv6 again.
 
-```
+```bash
 sysctl -w net.ipv6.conf.all.disable_ipv6=0
 ```
 
@@ -40,7 +40,7 @@ sysctl -w net.ipv6.conf.all.disable_ipv6=0
 
 Inside my app's directory I created a directory called `tls`. I then created some symlinks for the certificate and the key.
 
-```
+```bash
 mkdir tls
 cd tls
 ln -s /etc/letsencrypt/live/lucaschmid.net/cert.pem
@@ -53,7 +53,7 @@ _I'm using Docker to run this site, so the symlinks won't work inside the contai
 
 Now we can integrate the `https` module into our Express server. Here's a simple example:
 
-```
+```js
 var express = require('express')
 var fs = require('fs')
 var https = require('https')
