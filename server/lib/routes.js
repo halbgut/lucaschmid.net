@@ -1,3 +1,5 @@
+'use strict'
+
 const _ = require('lodash')
 const router = require('koa-router')()
 
@@ -8,9 +10,19 @@ const config = require('../../common/config')
 const serverRoutes = require('../routes')
 const commonRoutes = require('../../common/routes')
 const fail = require('./fail')
-const cache = {}
+let cache = {}
 
 module.exports = () => {
+  router.get('/clear-cache', function *(next) {
+    if(this.query.key === config.cacheKey) {
+      cache = {}
+      this.body = 'Cache cleared!'
+      this.status = 200
+    } else {
+      yield next
+    }
+  })
+
   _.each(commonRoutes, (genParams, route) => {
     router.get(route, function *(next) {
       const that = this
@@ -19,6 +31,7 @@ module.exports = () => {
       // Use cached version if it's around
       if (cache[cacheKey]) {
         that.body = cache[cacheKey]
+        that.status = 200
         return
       }
       yield parallelPromise([
