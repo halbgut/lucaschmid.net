@@ -10,7 +10,7 @@
       position: fixed;
       top: 10rem;
       width: 170px;
-      padding: 0 1.2rem 0 0;
+      padding: 0 1rem 0 0;
     }
 
     :scope ul {
