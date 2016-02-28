@@ -14,7 +14,7 @@ let cache = {}
 
 module.exports = () => {
   router.get('/clear-cache', function *(next) {
-    if(this.query.key === config.cacheKey) {
+    if (this.query.key === config.cacheKey) {
       cache = {}
       this.body = 'Cache cleared!'
       this.status = 200

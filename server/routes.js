@@ -60,12 +60,8 @@ module.exports = {
       res()
     }
     context.response.status = 200
-    if (addr.substr(7).match(/^(\d{1,3}\.){3}\d{1,3}$/)) {
-      addr = addr.substr(7)
-      dns.resolve4(addr, cb)
-    } else {
-      dns.resolve6(addr, cb)
-    }
+    if (addr.substr(7).match(/^(\d{1,3}\.){3}\d{1,3}$/)) addr = addr.substr(7)
+    dns.reverse(addr, cb)
   }),
   '/:p': context => new Promise((res, rej) => {
     // TODO Render 404
