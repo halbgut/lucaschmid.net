@@ -1,3 +1,7 @@
+'use strict'
+
+const dns = require('dns')
+
 const github = require('./lib/github')
 const view = require('./lib/view')
 const fail = require('./lib/fail')
@@ -50,9 +54,18 @@ module.exports = {
     res()
   }),
   '/ip': context => new Promise((res, rej) => {
+    let addr = context.req.connection.remoteAddress
+    const cb = (err, name) => {
+      context.body = `${addr}\n${name || err.code}`
+      res()
+    }
     context.response.status = 200
-    context.body = context.req.connection.remoteAddress
-    res()
+    if (addr.substr(7).match(/^(\d{1,3}\.){3}\d{1,3}$/)) {
+      addr = addr.substr(7)
+      dns.resolve4(addr, cb)
+    } else {
+      dns.resolve6(addr, cb)
+    }
   }),
   '/:p': context => new Promise((res, rej) => {
     // TODO Render 404
