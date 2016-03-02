@@ -33,4 +33,5 @@ build/va
 
 webdevquiz.js
 .env
+clear.blacklist.json
 
