@@ -69,7 +69,7 @@ module.exports = {
         }))
         .catch(rej)
     })
-  ]
+  ],
   '/blacklist': params => [
     'generic',
     () => new Promise((res, rej) => {
