@@ -1,0 +1,12 @@
+{
+  "defaultProto": "https",
+  "hostname": "lucaschmid.net",
+  "ports": [80, 443],
+  "description": "My name is Luca Nils Schmid. This is my portfolio.",
+  "title": "Luca Nils Schmid",
+  "dataDir": "common/data",
+  "buildDir": "client/_build",
+  "templateDir": "common/templates",
+  "keywords": "luca nils schmid, kriegslustig, webdevelopment, node.js"
+}
+

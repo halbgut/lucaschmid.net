@@ -28,7 +28,7 @@ node_modules
 
 tls
 
-config.json
+server/config.json
 build/va
 
 webdevquiz.js
