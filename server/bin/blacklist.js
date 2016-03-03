@@ -6,7 +6,7 @@ const config = require('../config.json')
 
 const arg = process.argv[2]
 
-if(!fs.statSync(arg)) process.exit()
+if (!fs.statSync(arg)) process.exit()
 const enc = JSON.stringify(
   aes(config.blacklistKey)
     .encrypt(

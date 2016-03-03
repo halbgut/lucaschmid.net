@@ -68,8 +68,16 @@ module.exports = {
           generic: md[0].html
         }))
         .catch(rej)
-    }),
-    'peopleidliketoworkwith'
+    })
+  ]
+  '/blacklist': params => [
+    'generic',
+    () => new Promise((res, rej) => {
+      res({
+        title: 'peopleidliketoworkwith',
+        generic: md[0].html
+      })
+    })
   ]
 }
 
