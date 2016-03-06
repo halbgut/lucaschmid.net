@@ -1,3 +1,26 @@
+riot.tag2('commentform', '<form onsubmit="{submit}"><input type="text" name="author" placeholder="Name"><textarea name="text" cols="30" rows="10" placeholder="Comment"></textarea><input type="submit" name="submit"></form>', '', '', function(opts) {
+const xhr = require('../js/lib/xhr')
+this.submit = function (e) {
+  const data = Array.from(this.root.querySelectorAll('input,textarea'))
+    .reduce((mem, el) => {
+      if (el.type === 'submit') return mem
+      mem[el.name] = el.value
+      return mem
+    }, {})
+
+  data.post = window.location.href
+    .split('/')
+    .reverse()[0]
+
+  xhr.post('/api/comments/postComment', data)
+    .then(e => console.log(e))
+    .catch(e => console.error(e))
+
+  return false
+}.bind(this)
+}, '{ }');
+
+
 riot.tag2('comments', '<ul><li each="{comments}"><p class="author">{author}</p><p class="text">{text}</p></li></ul>', '', '', function(opts) {
 const xhr = require('../js/lib/xhr')
 const post = window.location.href
