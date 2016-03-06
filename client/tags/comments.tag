@@ -15,7 +15,7 @@ const post = window.location.href
 this.on('mount', () => {
   xhr(`/api/comments/getComments/${post}`)
     .then(JSON.parse)
-    .then(comments => console.log(comments[0].text) || this.update({ comments }))
+    .then(comments => this.update({ comments }))
     .catch(err => console.error(err))
 })
 </script>
