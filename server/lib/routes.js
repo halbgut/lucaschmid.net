@@ -29,7 +29,7 @@ module.exports = () => {
       const params = genParams(this.params)
       const cacheKey = params[2] || params[1]
       // Use cached version if it's around
-      if (cache[cacheKey]) {
+      if (config.shouldCache && cache[cacheKey]) {
         that.body = cache[cacheKey]
         that.status = 200
         return

@@ -1,3 +1,18 @@
+riot.tag2('comments', '<ul><li each="{comments}"><p class="author">{author}</p><p class="text">{text}</p></li></ul>', '', '', function(opts) {
+const xhr = require('../js/lib/xhr')
+const post = window.location.href
+  .split('/')
+  .reverse()[0]
+
+this.on('mount', () => {
+  xhr(`/api/comments/getComments/${post}`)
+    .then(JSON.parse)
+    .then(comments => console.log(comments[0].text) || this.update({ comments }))
+    .catch(err => console.error(err))
+})
+}, '{ }');
+
+
 riot.tag2('custom-navigation', '<ul><li each="{items}" data-id="{id}" class="{active ? \'active\' : \'\'}"><div class="line"></div><a href="{url}">{name}</a></li></ul>', 'custom-navigation,[riot-tag="custom-navigation"] { position: fixed; top: 10rem; width: 170px; padding: 0 1rem 0 0; } custom-navigation ul,[riot-tag="custom-navigation"] ul { margin-top: 0; } custom-navigation li,[riot-tag="custom-navigation"] li { display: block; position: relative; text-align: right; margin-bottom: .5rem; line-height: 1.2rem; } custom-navigation li a,[riot-tag="custom-navigation"] li a,custom-navigation li a:visited,[riot-tag="custom-navigation"] li a:visited { font-size: .8rem; color: #AAA; transition: color .2s; } custom-navigation li a:hover,[riot-tag="custom-navigation"] li a:hover,custom-navigation li.active a,[riot-tag="custom-navigation"] li.active a { color: #666; } custom-navigation li .line,[riot-tag="custom-navigation"] li .line { content: \'\'; position: absolute; right: -1rem; top: 0; width: 2px; height: 0; background: #CCC; transition: height .2s, background .2s; margin-right: .5rem; } custom-navigation li:hover .line,[riot-tag="custom-navigation"] li:hover .line,custom-navigation li.active .line,[riot-tag="custom-navigation"] li.active .line { background: #666; } custom-navigation ul,[riot-tag="custom-navigation"] ul { height: 80vh; }', '', function(opts) {
     const _ = require('lodash')
     const dom = require('../js/lib/domHelpers')
