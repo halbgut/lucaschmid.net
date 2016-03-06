@@ -59,19 +59,27 @@ module.exports = () => {
         .catch(err => fail(this, err))
     })
   })
-  _.each(serverRoutes, (action, route) => {
-    router.get(route, function *(next) {
-      const shouldContinue = yield new Promise((res, rej) => {
-        action(this)
-          .then(() => res(false))
-          .catch((e) => {
-            if (e) fail(this, e)
-            if (!e) res(true)
-          })
-      })
-      if (shouldContinue) yield next
+
+  const actioner = action => function *(next) {
+    const shouldContinue = yield new Promise((res, rej) => {
+      action(this)
+        .then(() => res(false))
+        .catch((e) => {
+          if (e) fail(this, e)
+          if (!e) res(true)
+        })
     })
-  })
+    if (shouldContinue) yield next
+  }
+
+  _.each(serverRoutes.get, (action, route) =>
+    router.get(route, actioner(action))
+  )
+
+  _.each(serverRoutes.post, (action, route) =>
+    router.post(route, actioner(action))
+  )
+
   return router
 }
 

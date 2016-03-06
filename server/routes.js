@@ -3,6 +3,7 @@
 const dns = require('dns')
 
 const github = require('./lib/github')
+const comments = require('./lib/comments')
 const view = require('./lib/view')
 const fail = require('./lib/fail')
 const webdevquiz = require('./lib/webdevquiz')
@@ -14,59 +15,78 @@ require('./lib/feeds')
   .then(res => feeds = res)
 
 module.exports = {
-  '/api/github/xhr/:command': context => new Promise((res, rej) => {
-    if (github.xhr[context.params.command]) {
-      github.xhr[context.params.command]()
-        .then(json => {
-          context.body = json
+  post: {
+    '/api/comments/postComment': context => new Promise((res, rej) => {
+      comments.postComment(context.request.body)
+        .then(res)
+        .catch(err => {
+          context.status = 400
+          context.response = err
           res()
         })
-        .catch(err => fail(context, err))
-    } else {
-      rej()
-    }
-  }),
-  '/api/view/xhr/:name': context => new Promise((res, rej) => {
-    view.xhr(context.params.name)
-      .then(html => {
-        context.response = html
-        context.response.type = 'text/plain'
-        res()
-      })
-      .catch(e => {
-        console.error(e)
+    })
+  },
+  get: {
+    '/api/github/xhr/:command': context => new Promise((res, rej) => {
+      if (github.xhr[context.params.command]) {
+        github.xhr[context.params.command]()
+          .then(json => {
+            context.body = json
+            res()
+          })
+          .catch(err => fail(context, err))
+      } else {
         rej()
-      })
-  }),
-  '/feed/:type': context => new Promise((res, rej) => {
-    if (context.params.type === 'atom.xml') {
-      context.body = feeds[0]
+      }
+    }),
+    '/api/comments/getComments/:post': context =>
+      comments.getComments(context.params.post)
+        .then(data => {
+          context.body = data
+          context.status = 200
+        }),
+    '/api/view/xhr/:name': context => new Promise((res, rej) => {
+      view.xhr(context.params.name)
+        .then(html => {
+          context.body = html
+          context.response.type = 'text/plain'
+          res()
+        })
+        .catch(e => {
+          console.error(e)
+          rej()
+        })
+    }),
+    '/feed/:type': context => new Promise((res, rej) => {
+      if (context.params.type === 'atom.xml') {
+        context.body = feeds[0]
+        res()
+      } else if (context.params.type === 'rss.xml') {
+        context.body = feeds[1]
+        res()
+      } else {
+        rej()
+      }
+    }),
+    '/webdevquiz': context => new Promise((res, rej) => {
+      webdevquiz(context)
       res()
-    } else if (context.params.type === 'rss.xml') {
-      context.body = feeds[1]
+    }),
+    '/ip': context => new Promise((res, rej) => {
+      let addr = context.req.connection.remoteAddress
+      const cb = (err, name) => {
+        context.body = `${addr}\n${name || err.code}`
+        res()
+      }
+      context.response.status = 200
+      if (addr.substr(7).match(/^(\d{1,3}\.){3}\d{1,3}$/)) addr = addr.substr(7)
+      dns.reverse(addr, cb)
+    }),
+    '/:p': context => new Promise((res, rej) => {
+      // TODO Render 404
+      context.response.status = 404
       res()
-    } else {
-      rej()
-    }
-  }),
-  '/webdevquiz': context => new Promise((res, rej) => {
-    webdevquiz(context)
-    res()
-  }),
-  '/ip': context => new Promise((res, rej) => {
-    let addr = context.req.connection.remoteAddress
-    const cb = (err, name) => {
-      context.body = `${addr}\n${name || err.code}`
-      res()
-    }
-    context.response.status = 200
-    if (addr.substr(7).match(/^(\d{1,3}\.){3}\d{1,3}$/)) addr = addr.substr(7)
-    dns.reverse(addr, cb)
-  }),
-  '/:p': context => new Promise((res, rej) => {
-    // TODO Render 404
-    context.response.status = 404
-    res()
-  })
+    })
+  }
 }
 

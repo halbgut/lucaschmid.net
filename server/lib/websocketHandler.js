@@ -1,7 +1,7 @@
-const ratelimiter = require(`./ratelimiter`)()
+const ratelimiter = require('./ratelimiter')()
 
 var api = {}
-api.github = require(`./github`)
+api.github = require('./github')
 
 function apiFn (path) {
   return path
