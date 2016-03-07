@@ -1,14 +1,11 @@
-// const _ = require('lodash')
-
-// const enc = window.encodeURIComponent
-// const encodeObj = obj =>
-//   _.chain(obj)
-//     .map((v, k) => `${enc(k)}=${enc(v)}`)
-//     .join('&')
+const isError = e => !(e.target.status >= 200 && e.target.status < 300 || e.target.status === 304)
 
 const xhr = url => new Promise((res, rej) => {
   const req = new window.XMLHttpRequest()
-  req.addEventListener('load', e => res(req.responseText))
+  req.addEventListener('load', e => {
+    if (isError(e)) return rej(e.responseText)
+    res(req.responseText)
+  })
   req.addEventListener('error', e => rej(e))
   req.open('GET', url)
   req.send()
@@ -16,7 +13,11 @@ const xhr = url => new Promise((res, rej) => {
 
 xhr.post = (url, data) => new Promise((res, rej) => {
   const req = new window.XMLHttpRequest()
-  req.addEventListener('load', e => res(req.responseText))
+  req.addEventListener('load', e => {
+    console.log(e.target)
+    if (isError(e)) return rej(e.responseText)
+    res(req.responseText)
+  })
   req.addEventListener('error', e => rej(e))
   req.open('POST', url)
   req.setRequestHeader('Content-Type', 'application/json')
