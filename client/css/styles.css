@@ -35,7 +35,8 @@ section:not(:first-of-type) {
 }
 
 section:not(:first-of-type)::before,
-article:not(:first-of-type)::before {
+article:not(:first-of-type)::before,
+.blogArticle::after {
   content: '';
   display: block;
   height: 1px;

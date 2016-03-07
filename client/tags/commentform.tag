@@ -13,36 +13,33 @@
     background: none;
     resize: none;
     width: 100%;
+    padding: .5rem;
     margin-bottom: 1rem;
+    background-color: hsl(0, 0%, 94%);
+    transition: background-color .6s;
   }
 
   :scope input[type=text] {
-    border-bottom: solid 2px hsl(0, 0%, 90%);
-    transition: border-bottom .6s;
-  }
-
-  :scope input[type=text]:focus {
-    border-bottom: solid 2px hsl(0, 0%, 0%);
+    width: 30%;
   }
 
   :scope input[type=submit] {
     width: auto;
     padding: 0 .5rem;
     line-height: 2.5rem;
-    background-color: hsl(0, 0%, 85%);
     transition: background-color .6s;
-  }
-
-  :scope input[type=submit]:focus,
-  :scope input[type=submit]:hover {
-    background-color: hsl(0, 0%, 80%);
+    box-shadow: 0 3px 6px hsl(0, 0%, 88%), 0 3px 6px hsl(0, 0%, 76%);
   }
 
   :scope input[type=submit]:hover {
     cursor: pointer;
   }
 
-  :scope textarea {
+  :scope input:focus,
+  :scope textarea:focus,
+  :scope input:hover,
+  :scope textarea:hover {
+    background-color: hsl(0, 0%, 85%);
   }
 
 </style>

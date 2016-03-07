@@ -1,12 +1,33 @@
 <comments>
+<h2>Comments</h2>
 <ul>
   <li each={ comments } class={ state }>
-    <p class="author">{ author }</p>
-    <p class="text">{ text }</p>
+    <blockquote>
+      <h4 class="author">{ author }</h4>
+      <p class="text">{ text }</p>
+    </blockquote>
   </li>
 </ul>
 
 <style scoped>
+:scope {
+  display: block;
+  margin-bottom: 4rem;
+}
+
+:scope::before {
+  content: '';
+  display: block;
+  height: 1px;
+  width: 100%;
+  margin: 1rem 0 0 0;
+  background-color: #DDD;
+}
+
+:scope ul {
+  padding: 0;
+}
+
 @keyframes pulse {
   0% {
     opacity: 1;
@@ -17,6 +38,7 @@
 }
 
 :scope li {
+  list-style: none;
   transition: color .6s;
 }
 

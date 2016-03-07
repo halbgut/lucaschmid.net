@@ -1,10 +1,9 @@
-<article itemscope itemtype="http://schema.org/Article">
+<article class="blogArticle" itemscope itemtype="http://schema.org/Article">
   {{{articleContent}}}
   <p>
     <i>– By <a href="author.url" itemprop="author" itemtype="https://schema.org/Author"><span itemprop="name">{{ author.name }}</span></a></i><br>
     <i>Created on <span itemprop="dataPublished" content="{{ createdISO }}">{{ created }}</span></i>
   </p>
-  <h2>Comments</h2>
   <comments></comments>
   <commentform></commentform>
 </article>
