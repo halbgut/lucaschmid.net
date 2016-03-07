@@ -17,6 +17,7 @@
     margin-bottom: 1rem;
     background-color: hsl(0, 0%, 94%);
     transition: background-color .6s;
+    box-shadow: 0 3px 6px hsl(0, 0%, 88%), 0 3px 6px hsl(0, 0%, 76%);
   }
 
   :scope input[type=text] {
