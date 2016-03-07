@@ -67,7 +67,10 @@ var getCommit = (() => {
           emitter.emit('newCommit', data)
           res(data)
         })
-        .catch(() => updating = false)
+        .catch((err) => {
+          updating = false
+          console.error(err)
+        })
     })
   }
 })()
