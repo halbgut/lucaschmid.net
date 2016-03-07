@@ -26,10 +26,6 @@
 
   :scope input[type=submit] {
     width: auto;
-    padding: 0 .5rem;
-    line-height: 2.5rem;
-    transition: background-color .6s;
-    box-shadow: 0 3px 6px hsl(0, 0%, 88%), 0 3px 6px hsl(0, 0%, 76%);
   }
 
   :scope input[type=submit]:hover {
@@ -40,7 +36,7 @@
   :scope textarea:focus,
   :scope input:hover,
   :scope textarea:hover {
-    background-color: hsl(0, 0%, 85%);
+    background-color: hsl(0, 0%, 90%);
   }
 
 </style>
