@@ -20,12 +20,12 @@ module.exports = {
       comments.postComment(context.request.body)
         .then(data => {
           context.status = 200
-          context.response = data
+          context.body = data
           res()
         })
         .catch(err => {
           context.status = 400
-          context.response = err
+          context.body = err
           res()
         })
     })
