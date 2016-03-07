@@ -18,7 +18,11 @@ module.exports = {
   post: {
     '/api/comments/postComment': context => new Promise((res, rej) => {
       comments.postComment(context.request.body)
-        .then(res)
+        .then(data => {
+          context.status = 200
+          context.response = data
+          res()
+        })
         .catch(err => {
           context.status = 400
           context.response = err
