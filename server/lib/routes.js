@@ -61,7 +61,7 @@ module.exports = () => {
   })
 
   const actioner = action => function *(next) {
-    const shouldContinue = yield new Promise((res, rej) => {
+    yield new Promise((res, rej) => {
       action(this)
         .then((e) => res(false))
         .catch((e) => {
@@ -69,7 +69,7 @@ module.exports = () => {
           else res(true)
         })
     })
-    if (shouldContinue) yield next
+    yield next
   }
 
   _.each(serverRoutes.get, (action, route) =>
