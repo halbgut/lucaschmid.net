@@ -1,5 +1,7 @@
 riot.tag2('commentform', '<form onsubmit="{submit}"><input type="text" name="author" placeholder="Name"><textarea name="text" cols="30" rows="5" placeholder="Comment"></textarea><input value="post" type="submit" name="submit"></form>', 'commentform input,[riot-tag="commentform"] input,commentform textarea,[riot-tag="commentform"] textarea { font: inherit; border: none; background: none; resize: none; width: 100%; margin-bottom: 1rem; } commentform input[type=text],[riot-tag="commentform"] input[type=text] { border-bottom: solid 2px hsl(0, 0%, 90%); transition: border-bottom .6s; } commentform input[type=text]:focus,[riot-tag="commentform"] input[type=text]:focus { border-bottom: solid 2px hsl(0, 0%, 0%); } commentform input[type=submit],[riot-tag="commentform"] input[type=submit] { width: auto; padding: 0 .5rem; line-height: 2.5rem; background-color: hsl(0, 0%, 85%); transition: background-color .6s; } commentform input[type=submit]:focus,[riot-tag="commentform"] input[type=submit]:focus,commentform input[type=submit]:hover,[riot-tag="commentform"] input[type=submit]:hover { background-color: hsl(0, 0%, 80%); } commentform input[type=submit]:hover,[riot-tag="commentform"] input[type=submit]:hover { cursor: pointer; } commentform textarea,[riot-tag="commentform"] textarea { }', '', function(opts) {
 const xhr = require('../js/lib/xhr')
+const _ = require('lodash')
+
 this.submit = function (e) {
   const data = Array.from(this.root.querySelectorAll('input,textarea'))
     .reduce((mem, el) => {
@@ -12,20 +14,46 @@ this.submit = function (e) {
     .split('/')
     .reverse()[0]
 
+  if (!comments) return console.error('The comments section isn\'t beeing shown so I\'m not posting your comment')
+  const comment = _.clone(data)
+  const commentsOnServer = _.cloneDeep(comments.comments)
+  comment.state = 'sending'
+  comments.update({
+    comments: comments.comments.concat(comment)
+  })
+
   xhr.post('/api/comments/postComment', data)
-    .then(e => console.log(e))
-    .catch(e => console.error(e))
+    .then(e => {
+      comment.state = 'sent'
+      comments.update({
+        comments: commentsOnServer.concat(comment)
+      })
+    })
+    .catch(e => {
+      console.log(e)
+      comment.state = 'failed'
+      comments.update({
+        comments: commentsOnServer.concat(comment)
+      })
+      setTimeout(() => {
+        comments.update({
+          comments: commentsOnServer
+        })
+      }, 2000)
+    })
 
   return false
 }.bind(this)
 }, '{ }');
 
 
-riot.tag2('comments', '<ul><li each="{comments}"><p class="author">{author}</p><p class="text">{text}</p></li></ul>', '', '', function(opts) {
+riot.tag2('comments', '<ul><li each="{comments}" class="{state}"><p class="author">{author}</p><p class="text">{text}</p></li></ul>', '@keyframes pulse { 0% { opacity: 1; } 100% { opacity: 0; } } comments li,[riot-tag="comments"] li { transition: color .6s; } comments .sending,[riot-tag="comments"] .sending { animation: pulse 1s 0 infinite alternate; color: hsl(50, 0%, 50%); } comments .failed,[riot-tag="comments"] .failed { color: hsl(360, 65%, 50%); } comments .sent,[riot-tag="comments"] .sent { color: hsl(120, 65%, 50%); }', '', function(opts) {
 const xhr = require('../js/lib/xhr')
 const post = window.location.href
   .split('/')
   .reverse()[0]
+
+window.comments = this
 
 this.on('mount', () => {
   xhr(`/api/comments/getComments/${post}`)

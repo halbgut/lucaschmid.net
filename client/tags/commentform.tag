@@ -49,6 +49,8 @@
 
 <script>
 const xhr = require('../js/lib/xhr')
+const _ = require('lodash')
+
 submit (e) {
   const data = Array.from(this.root.querySelectorAll('input,textarea'))
     .reduce((mem, el) => {
@@ -61,9 +63,34 @@ submit (e) {
     .split('/')
     .reverse()[0]
 
+  if (!comments) return console.error('The comments section isn\'t beeing shown so I\'m not posting your comment')
+  const comment = _.clone(data)
+  const commentsOnServer = _.cloneDeep(comments.comments)
+  comment.state = 'sending'
+  comments.update({
+    comments: comments.comments.concat(comment)
+  })
+
+
   xhr.post('/api/comments/postComment', data)
-    .then(e => console.log(e))
-    .catch(e => console.error(e))
+    .then(e => {
+      comment.state = 'sent'
+      comments.update({
+        comments: commentsOnServer.concat(comment)
+      })
+    })
+    .catch(e => {
+      console.log(e)
+      comment.state = 'failed'
+      comments.update({
+        comments: commentsOnServer.concat(comment)
+      })
+      setTimeout(() => {
+        comments.update({
+          comments: commentsOnServer
+        })
+      }, 2000)
+    })
 
   return false
 }
