@@ -1,5 +1,9 @@
 version: '2'
 services:
+  db:
+    image: mongo
+    volumes:
+      - /data:/data/db
   web:
     build: ./
     container_name: lucaschmid.net
@@ -10,8 +14,4 @@ services:
       - 80:80
     restart: always
     env_file: .env
-  db:
-    image: mongo
-    volumes:
-      - /data:/data/db
 
