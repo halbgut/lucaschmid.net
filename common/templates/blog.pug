@@ -1,0 +1,24 @@
+h2 Another Blog
+each article in articles
+  article(itemscope itemtype="https://schema.org/Blog")
+    h2
+      a(href=article.url)= 'title'
+    {article.teaser}
+    p
+      b
+        a(href=article.url) ...read it!
+    p
+      i
+        | – By
+        a(href=article.author.url itemprop="author" itemtype="https://schema.org/Author")
+          span(itemprop="name")= article.author.name
+      i
+        | Created on
+        span(itemprop="datePublished" content=article.createdISO)=article.created
+section
+  ul
+    li
+      a(href="/feed/rss.xml") RSS-Feed
+    li
+      a(href="/feed/atom.xml") Atom-Feed
+

@@ -5,7 +5,7 @@ const router = require('koa-router')()
 
 const view = require('./view')
 const parallelPromise = require('../../common/lib/parallelPromise')
-const handlebars = require('../../common/lib/handlebars')
+const pug = require('../../common/lib/pug')
 const config = require('../../common/config')
 const serverRoutes = require('../routes')
 const commonRoutes = require('../../common/routes')
@@ -40,9 +40,9 @@ module.exports = () => {
       ])
         .then(results => {
           // Compile the content of the layout
-          const content = handlebars.compile(results[0][1])(results[1])
+          const content = pug(results[0][1])(results[1])
           // Compile the layout
-          that.body = cache[cacheKey] = handlebars.compile(
+          that.body = cache[cacheKey] = pug(
             results[0][0]
           )(
             _.chain(_.clone(config))

@@ -7,7 +7,7 @@ const parallelPromise = require('../../common/lib/parallelPromise')
 const getTemplateFile = name => promisify(
   fs.readFile.bind(
     null,
-    `${__dirname}/../../${config.templateDir}/${name}.html`,
+    `${__dirname}/../../${config.templateDir}/${name}.pug`,
     { encoding: 'utf8' }
   )
 )

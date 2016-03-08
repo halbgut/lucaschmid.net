@@ -1,0 +1,35 @@
+doctype html
+html(lang=lang)
+  head
+    meta(charset="UTF-8")
+    meta(name="keywords" content=keywords)
+    meta(name="description" content=description)
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    title= title
+    link(rel="alternative" title="Atom Feed" href=#{ getFullUrl('feed/atom.xml') })
+    link(rel="alternative" title="RSS Feed" href=#{ getFullUrl('feed/rss.xml') })
+    link(rel="stylesheet" href="/_build/bundle.css")
+  body
+    work-in-progress
+    main
+      custom-navigation
+      nav
+        ul
+          li
+            a(href="/") About
+          li
+            a(href="/projects") Projects
+          li
+            a(href="/anotherblog") Blog
+      div.content='content'
+    footer
+      nav
+        ul
+          li
+            a(href="/ip") What's my IP
+          li
+            a(href="/vim-shortcut-viewer") Vim Shortcut Viewer
+          li
+            a(href="/elm-pomodoro/Pomodoro.html") Pomodoro
+    script(src="/_build/bundle.js")
+

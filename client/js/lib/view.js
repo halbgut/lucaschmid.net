@@ -1,5 +1,5 @@
 const api = require('./api')
-const Handlebars = require('handlebars')
+const jade = require('jade')
 
 const renderer = cb => (data) => {
   document.getElementsByClassName[0]
@@ -10,7 +10,7 @@ module.exports = name => new Promise((res, rej) => {
   api('view', name)
     .then(tpl =>
       res(
-        renderer(Handlebars.compile(tpl))
+        renderer(jade.compile(tpl))
       )
     )
     .catch(rej)

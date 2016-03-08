@@ -41,6 +41,7 @@
     "gulp": "^3.9.0",
     "handlebars": "^4.0.5",
     "highlight.js": "^9.2.0",
+    "jade": "^1.11.0",
     "level4": "^1.0.1",
     "nodemon": "latest",
     "page": "^1.6.4",
