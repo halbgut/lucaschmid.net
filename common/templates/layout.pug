@@ -6,8 +6,8 @@ html(lang=lang)
     meta(name="description" content=description)
     meta(name="viewport" content="width=device-width, initial-scale=1")
     title= title
-    link(rel="alternative" title="Atom Feed" href=#{ getFullUrl('feed/atom.xml') })
-    link(rel="alternative" title="RSS Feed" href=#{ getFullUrl('feed/rss.xml') })
+    link(rel="alternative" title="Atom Feed" href=getFullUrl('feed/atom.xml'))
+    link(rel="alternative" title="RSS Feed" href=getFullUrl('feed/rss.xml'))
     link(rel="stylesheet" href="/_build/bundle.css")
   body
     work-in-progress
@@ -21,7 +21,7 @@ html(lang=lang)
             a(href="/projects") Projects
           li
             a(href="/anotherblog") Blog
-      div.content='content'
+      div.content!= content
     footer
       nav
         ul

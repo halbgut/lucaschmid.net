@@ -1,17 +1,18 @@
-h2 Another Blog
+h1 Another Blog
 each article in articles
   article(itemscope itemtype="https://schema.org/Blog")
     h2
-      a(href=article.url)= 'title'
-    {article.teaser}
+      a(href=article.url)!= article.title
+    !{article.teaser}
     p
       b
         a(href=article.url) ...read it!
     p
       i
-        | – By
+        | – By 
         a(href=article.author.url itemprop="author" itemtype="https://schema.org/Author")
           span(itemprop="name")= article.author.name
+      br
       i
         | Created on
         span(itemprop="datePublished" content=article.createdISO)=article.created
