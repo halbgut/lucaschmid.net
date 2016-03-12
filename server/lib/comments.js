@@ -20,7 +20,16 @@ const commentSchema = new mongoose.Schema({
 const Comment = mongoose.model('Comments', commentSchema)
 
 module.exports = {
-  getComments: post => Comment.find({ post: post }),
+  getComments: post =>
+    Comment
+      .find({ post: post })
+      .then(arr =>
+        arr.map(el => ({
+          post: el.post,
+          text: el.text,
+          author: el.author
+        }))
+      ),
   postComment: com => new Promise((res, rej) => {
     const comment = (new Comment(com))
     comment
