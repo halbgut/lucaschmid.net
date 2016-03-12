@@ -1,11 +1,17 @@
 <commentform>
 <form onsubmit={ submit }>
+  <p class="errors">{ error }</p>
   <input type="text" name="author" placeholder="Name">
   <textarea name="text" cols="30" rows="5" placeholder="Comment"></textarea>
   <input value="post" type="submit" name="submit">
 </form>
 
 <style scoped>
+  :scope .errors {
+    padding: 1rem 0;
+    color: hsl(360, 65%, 50%);
+  }
+
   :scope input,
   :scope textarea {
     font: inherit;
@@ -38,7 +44,6 @@
   :scope textarea:hover {
     background-color: hsl(0, 0%, 90%);
   }
-
 </style>
 
 <script>
@@ -61,29 +66,23 @@ submit (e) {
   const comment = _.clone(data)
   const commentsOnServer = _.cloneDeep(comments.comments)
   comment.state = 'sending'
-  comments.update({
-    comments: comments.comments.concat(comment)
-  })
+  comments.update({ comments: comments.comments.concat(comment) })
+  this.update({ error: '' })
 
 
   xhr.post('/api/comments/postComment', data)
     .then(e => {
       comment.state = 'sent'
-      comments.update({
-        comments: commentsOnServer.concat(comment)
-      })
+      comments.update({ comments: commentsOnServer.concat(comment) })
     })
     .catch(e => {
-      console.log(e)
       comment.state = 'failed'
-      comments.update({
-        comments: commentsOnServer.concat(comment)
-      })
+      comments.update({ comments: commentsOnServer.concat(comment) })
+      this.update({ error: e.message })
       setTimeout(() => {
-        comments.update({
-          comments: commentsOnServer
-        })
-      }, 2000)
+        comments.update({ comments: commentsOnServer })
+        this.update({ error: e.message })
+      }, 3000)
     })
 
   return false

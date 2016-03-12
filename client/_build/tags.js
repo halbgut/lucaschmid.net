@@ -1,4 +1,4 @@
-riot.tag2('commentform', '<form onsubmit="{submit}"><input type="text" name="author" placeholder="Name"><textarea name="text" cols="30" rows="5" placeholder="Comment"></textarea><input value="post" type="submit" name="submit"></form>', 'commentform input,[riot-tag="commentform"] input,commentform textarea,[riot-tag="commentform"] textarea { font: inherit; border: none; background: none; resize: none; width: 100%; padding: .5rem; margin-bottom: 1rem; background-color: hsl(0, 0%, 94%); transition: background-color .6s; box-shadow: 0 3px 6px hsl(0, 0%, 88%), 0 3px 6px hsl(0, 0%, 76%); } commentform input[type=text],[riot-tag="commentform"] input[type=text] { width: 30%; } commentform input[type=submit],[riot-tag="commentform"] input[type=submit] { width: auto; } commentform input[type=submit]:hover,[riot-tag="commentform"] input[type=submit]:hover { cursor: pointer; } commentform input:focus,[riot-tag="commentform"] input:focus,commentform textarea:focus,[riot-tag="commentform"] textarea:focus,commentform input:hover,[riot-tag="commentform"] input:hover,commentform textarea:hover,[riot-tag="commentform"] textarea:hover { background-color: hsl(0, 0%, 90%); }', '', function(opts) {
+riot.tag2('commentform', '<form onsubmit="{submit}"><p class="errors">{error}</p><input type="text" name="author" placeholder="Name"><textarea name="text" cols="30" rows="5" placeholder="Comment"></textarea><input value="post" type="submit" name="submit"></form>', 'commentform .errors,[riot-tag="commentform"] .errors { padding: 1rem 0; color: hsl(360, 65%, 50%); } commentform input,[riot-tag="commentform"] input,commentform textarea,[riot-tag="commentform"] textarea { font: inherit; border: none; background: none; resize: none; width: 100%; padding: .5rem; margin-bottom: 1rem; background-color: hsl(0, 0%, 94%); transition: background-color .6s; box-shadow: 0 3px 6px hsl(0, 0%, 88%), 0 3px 6px hsl(0, 0%, 76%); } commentform input[type=text],[riot-tag="commentform"] input[type=text] { width: 30%; } commentform input[type=submit],[riot-tag="commentform"] input[type=submit] { width: auto; } commentform input[type=submit]:hover,[riot-tag="commentform"] input[type=submit]:hover { cursor: pointer; } commentform input:focus,[riot-tag="commentform"] input:focus,commentform textarea:focus,[riot-tag="commentform"] textarea:focus,commentform input:hover,[riot-tag="commentform"] input:hover,commentform textarea:hover,[riot-tag="commentform"] textarea:hover { background-color: hsl(0, 0%, 90%); }', '', function(opts) {
 const xhr = require('../js/lib/xhr')
 const _ = require('lodash')
 
@@ -18,28 +18,22 @@ this.submit = function (e) {
   const comment = _.clone(data)
   const commentsOnServer = _.cloneDeep(comments.comments)
   comment.state = 'sending'
-  comments.update({
-    comments: comments.comments.concat(comment)
-  })
+  comments.update({ comments: comments.comments.concat(comment) })
+  this.update({ error: '' })
 
   xhr.post('/api/comments/postComment', data)
     .then(e => {
       comment.state = 'sent'
-      comments.update({
-        comments: commentsOnServer.concat(comment)
-      })
+      comments.update({ comments: commentsOnServer.concat(comment) })
     })
     .catch(e => {
-      console.log(e)
       comment.state = 'failed'
-      comments.update({
-        comments: commentsOnServer.concat(comment)
-      })
+      comments.update({ comments: commentsOnServer.concat(comment) })
+      this.update({ error: e.message })
       setTimeout(() => {
-        comments.update({
-          comments: commentsOnServer
-        })
-      }, 2000)
+        comments.update({ comments: commentsOnServer })
+        this.update({ error: e.message })
+      }, 3000)
     })
 
   return false
