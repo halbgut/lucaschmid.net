@@ -1,0 +1,9 @@
+[submodule "subsites/elm-pomodoro"]
+	path = subsites/elm-pomodoro
+	url = git@github.com:Kriegslustig/elm-pomodoro.git
+[submodule "subsites/elm-intro"]
+	path = subsites/elm-intro
+	url = git@github.com:Kriegslustig/elm-intro.git
+[submodule "subsites/vim-shortcut-viewer"]
+	path = subsites/vim-shortcut-viewer
+	url = git@github.com:Kriegslustig/vim-shortcut-viewer.git
