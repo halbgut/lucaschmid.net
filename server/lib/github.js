@@ -96,7 +96,7 @@ module.exports = {
         emitter.removeListener('newCommit', notify)
       })
       getCommit()
-        .then(data => socket.send(data))
+        .then(notify)
         .catch(err => console.error(err))
       emitter.on('newCommit', notify)
     }
