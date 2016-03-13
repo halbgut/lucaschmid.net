@@ -3,7 +3,7 @@ services:
   db:
     image: mongo
     volumes:
-      - /data:/data/db
+      - ./data:/data/db
   web:
     build: ./
     container_name: lucaschmid.net
