@@ -23,6 +23,7 @@
     "scmp": "^1.0.0",
     "showdown": "^1.3.0",
     "showdown-footnotes": "^1.1.0",
+    "jade": "^1.11.0",
     "websocket": "^1.0.22"
   },
   "devDependencies": {
@@ -41,7 +42,6 @@
     "gulp": "^3.9.0",
     "handlebars": "^4.0.5",
     "highlight.js": "^9.2.0",
-    "jade": "^1.11.0",
     "level4": "^1.0.1",
     "nodemon": "latest",
     "page": "^1.6.4",
