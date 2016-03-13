@@ -90,11 +90,15 @@ module.exports = {
         return
       }
       ratelimiter.inc()
-      socket.on('close', ratelimiter.dec)
+      const notify = (data) => socket.send(data)
+      socket.on('close', () => {
+        ratelimiter.dec()
+        emitter.removeListener('newCommit', notify)
+      })
       getCommit()
         .then(data => socket.send(data))
         .catch(err => console.error(err))
-      emitter.on('newCommit', (data) => socket.send(data))
+      emitter.on('newCommit', notify)
     }
   },
   private: {
