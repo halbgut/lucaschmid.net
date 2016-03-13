@@ -85,10 +85,10 @@ app.use(function *(next) {
   }
 })
 
-require('/var/elm-intro/server/main.js')(app, '/elm')
-app.use(koaStatic('/var/elm-intro/client/assets'))
-app.use(mount('/vim-shortcut-viewer', koaStatic('/var/vim-shortcut-viewer')))
-app.use(mount('/elm-pomodoro', koaStatic('/var/elm-pomodoro')))
+require(`${__dirname}/../subsites/elm-intro/server/main.js`)(app, '/elm')
+app.use(koaStatic(`${__dirname}/../elm-intro/client/assets`))
+app.use(mount('/vim-shortcut-viewer', koaStatic(`${__dirname}/../subsites/vim-shortcut-viewer`)))
+app.use(mount('/elm-pomodoro', koaStatic(`${__dirname}/../subsites/elm-pomodoro`)))
 
 // Add router
 app.use(routes.routes())
