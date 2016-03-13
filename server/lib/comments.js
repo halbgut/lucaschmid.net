@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const ratelimiter = require('./ratelimiter').smart(1)
 
 mongoose.connect('mongodb://db/lucaschmid-net')
 
@@ -31,7 +32,9 @@ module.exports = {
         }))
       ),
   postComment: com => new Promise((res, rej) => {
+    if (!ratelimiter.canDo()) return rej({ message: 'Rate limit exeeded' })
     const comment = (new Comment(com))
+    ratelimiter.ping()
     comment
       .validate()
       .then(() => comment.save())
