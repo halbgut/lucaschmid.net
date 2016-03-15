@@ -2,8 +2,9 @@ version: '2'
 services:
   db:
     image: mongo
+    env_file: .env
     volumes:
-      - ./data:/data/db
+      - ${MONGO_LOCATION}:/data/db
   web:
     build: ./
     container_name: lucaschmid.net

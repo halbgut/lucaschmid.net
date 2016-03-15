@@ -1,6 +1,7 @@
 #!/bin/bash
 
 APP_DIR=/var/app/lucaschmid.net/
+source .env
 
 while RES=$(inotifywait -e create $APP_DIR --format %f); do
   if [[ "restart" == $(basename ${RES}) ]]; then
