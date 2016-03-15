@@ -2,7 +2,7 @@
 
 [ctime:1455563400866]
 
-I don't like Drupal not 7 and not 8. I just don't like it. Here's why. **Disclaimer**: _May contain inapropriate language_.
+I don't like Drupal not 7 and not 8. I just don't like it. Here's why. **Disclaimer**: _May contain inappropriate language_.
 
 ## TL;DR;
 
