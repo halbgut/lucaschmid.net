@@ -1,4 +1,4 @@
-import _ from 'lodash'
+const _ = require('lodash')
 
 module.exports = () => {
   _.each(document.querySelectorAll('nav a'), (el) => {

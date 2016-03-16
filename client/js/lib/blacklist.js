@@ -1,6 +1,6 @@
-import data from '../../../common/data/blacklist.json'
-import aes from '../../../common/lib/aes'
-import view from './view'
+const data = require('../../../common/data/blacklist.json')
+const aes = require('../../../common/lib/aes.js')
+const view = require('./view.js')
 
 module.exports = () => {
   let key = []

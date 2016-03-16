@@ -1,5 +1,5 @@
-const xhr = require('./xhr')
-const websocket = require('./websocket')
+const xhr = require('./xhr.js')
+const websocket = require('./websocket.js')
 
 var ws
 

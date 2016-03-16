@@ -1,4 +1,4 @@
-const api = require('./api')
+const api = require('./api.js')
 const jade = require('jade')
 
 const renderer = cb => (data) => {
