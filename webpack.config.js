@@ -27,11 +27,11 @@ module.exports = {
       {
         test: /\.js$|\.tag$/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        loader: 'babel-loader?presets=es2015'
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader?minimize&import')
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader?minimize')
       },
     ],
   }
