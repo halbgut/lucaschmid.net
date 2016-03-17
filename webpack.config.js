@@ -1,6 +1,7 @@
 const webpack = require('webpack')
 const autoprefixer = require('autoprefixer')
-const precss = require('precss')
+const cssnano = require('cssnano')
+const level4 = require('level4')
 
 module.exports = {
   entry: './client/entry.js',
@@ -15,7 +16,7 @@ module.exports = {
     preLoaders: [
       {
         test: /\.tag$/,
-        loader: 'riotjs-loader'
+        loader: 'riotjs-loader?type=none'
       }
     ],
     loaders: [
@@ -25,9 +26,9 @@ module.exports = {
         loader: 'json'
       },
       {
-        test: /\.js$/,
+        test: /\.js$|\.tag$/,
         exclude: /node_modules/,
-        loader: 'babel?presets=es2015'
+        loader: 'babel-loader'
       },
       {
         test: /\.css$/,
@@ -35,9 +36,6 @@ module.exports = {
       },
     ],
   },
-  externals: [
-    /^[a-z\-0-9]+$/
-  ],
-  postcss: () => [autoprefixer, precss]
+  postcss: () => [level4, autoprefixer, cssnano]
 }
 

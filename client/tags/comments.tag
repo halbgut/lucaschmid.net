@@ -58,7 +58,7 @@
 </style>
 
 <script>
-const xhr = require('../js/lib/xhr')
+const xhr = require('../js/lib/xhr.js')
 const post = window.location.href
   .split('/')
   .reverse()[0]

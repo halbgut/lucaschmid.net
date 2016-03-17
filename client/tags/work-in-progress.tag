@@ -29,8 +29,8 @@
   </style>
 
   <script>
-    const api = require('../js/lib/api')
-    const dom = require('../js/lib/domHelpers')
+    const api = require('../js/lib/api.js')
+    const dom = require('../js/lib/domHelpers.js')
 
     var firstCommit = true
     var currentCommit

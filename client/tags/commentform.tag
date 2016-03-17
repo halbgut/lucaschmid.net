@@ -47,10 +47,10 @@
 </style>
 
 <script>
-const xhr = require('../js/lib/xhr')
+const xhr = require('../js/lib/xhr.js')
 const _ = require('lodash')
 
-submit (e) {
+this.submit = function (e) {
   const data = Array.from(this.root.querySelectorAll('input,textarea'))
     .reduce((mem, el) => {
       if (el.type === 'submit') return mem

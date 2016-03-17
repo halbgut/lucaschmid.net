@@ -60,7 +60,7 @@
   </style>
   <script>
     const _ = require('lodash')
-    const dom = require('../js/lib/domHelpers')
+    const dom = require('../js/lib/domHelpers.js')
 
     const calcPercent = (offset, factor, top) => {
       return Math.round(( offset - top ) / factor)

@@ -1,13 +1,12 @@
 const _ = require('lodash')
 
-module.exports = () => {
-  _.each(document.querySelectorAll('nav a'), (el) => {
-    if (
+module.exports = () =>
+  Array.from(document.querySelectorAll('nav a'))
+    .filter(el =>
       window.location.pathname.split('/')[1] ===
       el.getAttribute('href').split('/')[1]
-    ) {
-      el.className += ' current'
-    }
-  })
-}
+    )
+    .forEach(el =>
+      el.classList.add('current')
+    )
 
