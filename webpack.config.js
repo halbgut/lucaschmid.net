@@ -1,7 +1,5 @@
 const webpack = require('webpack')
-const autoprefixer = require('autoprefixer')
-const cssnano = require('cssnano')
-const level4 = require('level4')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   entry: './client/entry.js',
@@ -10,7 +8,8 @@ module.exports = {
     path: `${__dirname}/client/build/`
   },
   plugins: [
-    new webpack.ProvidePlugin({ riot: 'riot' })
+    new webpack.ProvidePlugin({ riot: 'riot' }),
+    new ExtractTextPlugin("[name].css")
   ],
   module: {
     preLoaders: [
@@ -32,10 +31,9 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader!postcss-loader'
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader?minimize&import')
       },
     ],
-  },
-  postcss: () => [level4, autoprefixer, cssnano]
+  }
 }
 
