@@ -9,7 +9,7 @@ module.exports = {
   },
   plugins: [
     new webpack.ProvidePlugin({ riot: 'riot' }),
-    new ExtractTextPlugin("[name].css")
+    new ExtractTextPlugin('[name].css')
   ],
   module: {
     preLoaders: [
@@ -32,8 +32,8 @@ module.exports = {
       {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader?minimize')
-      },
-    ],
+      }
+    ]
   }
 }
 
