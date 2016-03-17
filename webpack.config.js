@@ -9,7 +9,9 @@ module.exports = {
   },
   plugins: [
     new webpack.ProvidePlugin({ riot: 'riot' }),
-    new ExtractTextPlugin('[name].css')
+    new ExtractTextPlugin('[name].css'),
+    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.DedupePlugin()
   ],
   module: {
     preLoaders: [

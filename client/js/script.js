@@ -1,7 +1,8 @@
 const nav = require('./lib/nav.js')
 const footnotes = require('./lib/footnotes.js')
 const blacklist = require('./lib/blacklist.js')
-const highlight = require('highlight.js')
+const highlight = require('highlight.js') // Adds more than 100KB to the bundle
+const riot = require('riot')
 
 require('../tags/commentform.tag')
 require('../tags/comments.tag')
