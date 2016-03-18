@@ -12,84 +12,84 @@ var feeds
 
 // Feed cache
 require('./lib/feeds')
-  .then(res => feeds = res)
+  .then((res) => { feeds = res })
 
 module.exports = {
   post: {
-    '/api/comments/postComment': context => new Promise((res, rej) => {
+    '/api/comments/postComment': (context) => new Promise((resolve, reject) => {
       comments.postComment(context.request.body)
-        .then(data => {
+        .then((data) => {
           context.status = 200
           context.body = data
-          res()
+          resolve()
         })
-        .catch(err => {
+        .catch((err) => {
           context.status = 400
           context.body = err
-          res()
+          resolve()
         })
     })
   },
   get: {
-    '/api/github/xhr/:command': context => new Promise((res, rej) => {
+    '/api/github/xhr/:command': (context) => new Promise((resolve, reject) => {
       if (github.xhr[context.params.command]) {
         github.xhr[context.params.command]()
-          .then(json => {
+          .then((json) => {
             context.body = json
-            res()
+            resolve()
           })
-          .catch(err => fail(context, err))
+          .catch((err) => fail(context, err))
       } else {
-        rej()
+        reject()
       }
     }),
-    '/api/comments/getComments/:post': context =>
+    '/api/comments/getComments/:post': (context) =>
       comments.getComments(context.params.post)
-        .then(data => {
+        .then((data) => {
           context.body = data
           context.status = 200
         }),
-    '/api/view/xhr/:name': context => new Promise((res, rej) => {
+    '/api/view/xhr/:name': (context) => new Promise((resolve, reject) => {
       view.xhr(context.params.name)
-        .then(html => {
+        .then((html) => {
           context.body = html
           context.response.type = 'text/plain'
-          res()
+          resolve()
         })
-        .catch(e => {
+        .catch((e) => {
           console.error(e)
-          rej()
+          reject()
         })
     }),
-    '/feed/:type': context => new Promise((res, rej) => {
+    '/feed/:type': (context) => new Promise((resolve, reject) => {
       if (context.params.type === 'atom.xml') {
         context.body = feeds[0]
-        res()
+        resolve()
       } else if (context.params.type === 'rss.xml') {
         context.body = feeds[1]
-        res()
+        resolve()
       } else {
-        rej()
+        reject()
       }
     }),
-    '/webdevquiz': context => new Promise((res, rej) => {
+    '/webdevquiz': (context) => new Promise((resolve, reject) => {
       webdevquiz(context)
-      res()
+      resolve()
     }),
-    '/ip': context => new Promise((res, rej) => {
+    '/ip': (context) => new Promise((resolve, reject) => {
       let addr = context.req.connection.remoteAddress
       const cb = (err, name) => {
         context.body = `${addr}\n${name || err.code}`
-        res()
+        resolve()
       }
       context.response.status = 200
       if (addr.substr(7).match(/^(\d{1,3}\.){3}\d{1,3}$/)) addr = addr.substr(7)
       dns.reverse(addr, cb)
     }),
-    '/:p': context => new Promise((res, rej) => {
+    '/:p': (context) => new Promise((resolve, reject) => {
       // TODO Render 404
       context.response.status = 404
-      res()
+      resolve()
     })
   }
 }

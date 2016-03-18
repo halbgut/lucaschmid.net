@@ -4,7 +4,7 @@ const config = require('../../common/config')
 const promisify = require('../../common/lib/promisify')
 const parallelPromise = require('../../common/lib/parallelPromise')
 
-const getTemplateFile = name => promisify(
+const getTemplateFile = (name) => promisify(
   fs.readFile.bind(
     null,
     `${__dirname}/../../${config.templateDir}/${name}.pug`,
@@ -12,8 +12,8 @@ const getTemplateFile = name => promisify(
   )
 )
 
-const getTemplate = (name, includeLayout) => new Promise((res, rej) => {
-  if (name.indexOf('.') > -1) return rej('Invalid character in name')
+const getTemplate = (name, includeLayout) => new Promise((resolve, reject) => {
+  if (name.indexOf('.') > -1) return reject('Invalid character in name')
   const promise = includeLayout
       ? parallelPromise([
         getTemplateFile('layout'),
@@ -21,19 +21,19 @@ const getTemplate = (name, includeLayout) => new Promise((res, rej) => {
       ])
       : getTemplateFile(name)
   promise
-    .then(res)
-    .catch(rej)
+    .then(resolve)
+    .catch(reject)
 })
 
 module.exports = {
-  xhr: (name, includeLayout) => new Promise((res, rej) => {
+  xhr: (name, includeLayout) => new Promise((resolve, reject) => {
     getTemplate(name, includeLayout)
-      .then(res)
-      .catch(rej)
+      .then(resolve)
+      .catch(reject)
   }),
   ws: (name, socket, includeLayout) => {
     getTemplate(name, includeLayout)
-      .then(js => socket.send(js))
-      .catch(e => { throw e })
+      .then((js) => socket.send(js))
+      .catch((e) => { throw e })
   }
 }
