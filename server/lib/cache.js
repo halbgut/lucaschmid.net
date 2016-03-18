@@ -6,6 +6,6 @@ module.exports = () =>
           ? cache = {}
           : str
             ? cache[key] = str
-            : key[str]
+            : cache[key]
   )({})
 
