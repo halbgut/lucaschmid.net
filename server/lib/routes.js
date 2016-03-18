@@ -38,7 +38,7 @@ module.exports = () => {
         view.xhr(params[0], true),
         params[1]()
       ])
-        .then(results => {
+        .then((results) => {
           // Compile the content of the layout
           const content = pug(results[0][1])(results[1])
           // Compile the layout
@@ -56,17 +56,17 @@ module.exports = () => {
               .value()
           )
         })
-        .catch(err => fail(this, err))
+        .catch((err) => fail(this, err))
     })
   })
 
-  const actioner = action => function *(next) {
-    yield new Promise((res, rej) => {
+  const actioner = (action) => function *(next) {
+    yield new Promise((resolve, reject) => {
       action(this)
-        .then((e) => res(false))
+        .then((e) => resolve(false))
         .catch((e) => {
           if (e) fail(this, e)
-          else res(true)
+          else resolve(true)
         })
     })
     yield next
