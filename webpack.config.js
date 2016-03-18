@@ -1,5 +1,13 @@
 const webpack = require('webpack')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const dev = process.env.NODE_ENV !== 'production'
+const plugins = [
+  new webpack.ProvidePlugin({ riot: 'riot' }),
+  new ExtractTextPlugin('[name].css')
+]
+
+if (!dev) plugins.push(new webpack.optimize.UglifyJsPlugin())
+if (!dev) plugins.push(new webpack.optimize.DedupePlugin())
 
 module.exports = {
   entry: './client/entry.js',
@@ -7,12 +15,7 @@ module.exports = {
     filename: 'bundle.js',
     path: `${__dirname}/client/build/`
   },
-  plugins: [
-    new webpack.ProvidePlugin({ riot: 'riot' }),
-    new ExtractTextPlugin('[name].css'),
-    new webpack.optimize.UglifyJsPlugin(),
-    new webpack.optimize.DedupePlugin()
-  ],
+  plugins,
   module: {
     preLoaders: [
       {
@@ -33,7 +36,13 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader?minimize')
+        loader: ExtractTextPlugin.extract(
+          'style-loader',
+          (dev
+            ? 'css-loader?-minimize'
+            : 'css-loader?minimize'
+          )
+        )
       }
     ]
   }
