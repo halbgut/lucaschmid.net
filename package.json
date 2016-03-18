@@ -46,8 +46,8 @@
     "xml": "^1.0.0"
   },
   "scripts": {
-    "build": "NODE_ENV=production grunt build",
-    "watch": "grunt",
+    "build": "NODE_ENV=production webpack",
+    "watch": "webpack --watch",
     "start": "if [ ${NODE_ENV} = \"production\" ]; then node server/main.js; else nodemon -L -i client server/main.js; fi"
   }
 }
