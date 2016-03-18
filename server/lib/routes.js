@@ -10,12 +10,12 @@ const config = require('../../common/config')
 const serverRoutes = require('../routes')
 const commonRoutes = require('../../common/routes')
 const fail = require('./fail')
-let cache = {}
+const cache = require('./cache')()
 
 module.exports = () => {
   router.get('/clear-cache', function *(next) {
     if (this.query.key === config.cacheKey) {
-      cache = {}
+      cache(true)
       this.body = 'Cache cleared!'
       this.status = 200
     } else {
@@ -43,10 +43,10 @@ module.exports = () => {
     router.get(route, function *(next) {
       const that = this
       const params = genParams(this.params)
-      const cacheKey = params[2] || params[1]
+      const cacheKey = params[2] || params[0]
       // Use cached version if it's around
-      if (config.shouldCache && cache[cacheKey]) {
-        that.body = cache[cacheKey]
+      if (config.shouldCache && cache(cacheKey)) {
+        that.body = cache(cacheKey)
         that.status = 200
         return
       }
@@ -55,7 +55,7 @@ module.exports = () => {
         params[1]()
       ])
         .then((result) => {
-          that.body = cache[cacheKey] = renderToLayout(result)
+          that.body = cache(cacheKey, renderToLayout(result))
         })
         .catch((err) => fail(this, err))
     })

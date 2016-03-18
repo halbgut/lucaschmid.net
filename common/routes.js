@@ -1,81 +1,78 @@
-const _ = require('lodash')
 const parallelPromise = require('./lib/parallelPromise')
-const getMarkdown = require(`./lib/getMarkdown`)
-const getArticles = require(`./lib/getArticles`)
-const env = require('./lib/env')
+const getMarkdown = require('./lib/getMarkdown')
+const getArticles = require('./lib/getArticles')
 
 module.exports = {
-  '/': params => [
+  '/': (params) => [
     'start',
-    () => new Promise((res, rej) => {
+    () => new Promise((resolve, reject) => {
       parallelPromise([
         getMarkdown('start'),
         getMarkdown('skills'),
         getMarkdown('references')
       ])
         .then((mdArr) => {
-          res({ sections: mdArr.map((md) => md[0].html) })
+          resolve({ sections: mdArr.map((md) => md[0].html) })
         })
-        .catch(rej)
+        .catch(reject)
     })
   ],
-  '/projects': params => [
+  '/projects': (params) => [
     'projects',
-    () => new Promise((res, rej) => {
+    () => new Promise((resolve, reject) => {
       getMarkdown('projects/*')
-        .then((mdArr) => res({ projects: mdArr.map((md) => md.html) }))
-        .catch(rej)
+        .then((mdArr) => resolve({ projects: mdArr.map((md) => md.html) }))
+        .catch(reject)
     })
   ],
-  '/anotherblog': params => [
+  '/anotherblog': (params) => [
     'blog',
-    () => new Promise((res, rej) => {
+    () => new Promise((resolve, reject) => {
       getArticles('blog')
-        .then(articles => res({ articles }))
-        .catch(rej)
+        .then((articles) => resolve({ articles }))
+        .catch(reject)
     })
   ],
-  '/anotherblog/:article': params => [
+  '/anotherblog/:article': (params) => [
     'blogArticle',
-    () => new Promise((res, rej) => {
+    () => new Promise((resolve, reject) => {
       getArticles('blog')
-        .then(articles =>
-          res(articles.filter(el => el.name === params.article)[0])
+        .then((articles) =>
+          resolve(articles.filter((el) => el.name === params.article)[0])
         )
-        .catch(rej)
+        .catch(reject)
     }),
     `blogArticle/${params.article}`
   ],
-  '/ipa': params => [
+  '/ipa': (params) => [
     'generic',
-    () => new Promise((res, rej) => {
+    () => new Promise((resolve, reject) => {
       getMarkdown('dispo_interaktiver_news_artikel')
-        .then(md => res({
+        .then((md) => resolve({
           title: 'Interaktiver News-Artikel',
           generic: md[0].html
         }))
-        .catch(rej)
-
+        .catch(reject)
     }),
     'ipa'
   ],
-  '/peopleidliketoworkwith': params => [
+  '/peopleidliketoworkwith': (params) => [
     'generic',
-    () => new Promise((res, rej) => {
+    () => new Promise((resolve, reject) => {
       getMarkdown('peopleidliketoworkwith')
-        .then(md => res({
+        .then((md) => resolve({
           title: 'peopleidliketoworkwith',
           generic: md[0].html
         }))
-        .catch(rej)
+        .catch(reject)
     })
   ],
-  '/blacklist': params => [
+  '/blacklist': (params) => [
     'generic',
-    () => new Promise((res, rej) => {
-      res({
-        title: 'peopleidliketoworkwith',
-        generic: md[0].html
+    () => new Promise((resolve, reject) => {
+      resolve({
+        title: 'blacklist',
+        generic: 'YOLO'
       })
     })
   ]
