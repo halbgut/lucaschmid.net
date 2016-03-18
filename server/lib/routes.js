@@ -23,6 +23,22 @@ module.exports = () => {
     }
   })
 
+  // [ [ PugTemplateString, PugTemplateString ], Data ]
+  const renderToLayout = (results) =>
+    pug(
+      results[0][0]
+    )(
+      _.chain(_.clone(config))
+        .assign(results[1])
+        .assign({ content: pug(results[0][1])(results[1]) })
+        .assign({
+          title: results[1].title
+            ? `${config.title} | ${results[1].title}`
+            : config.title
+        })
+        .value()
+    )
+
   _.each(commonRoutes, (genParams, route) => {
     router.get(route, function *(next) {
       const that = this
@@ -38,23 +54,8 @@ module.exports = () => {
         view.xhr(params[0], true),
         params[1]()
       ])
-        .then((results) => {
-          // Compile the content of the layout
-          const content = pug(results[0][1])(results[1])
-          // Compile the layout
-          that.body = cache[cacheKey] = pug(
-            results[0][0]
-          )(
-            _.chain(_.clone(config))
-              .assign(results[1])
-              .assign({ content })
-              .assign({
-                title: results[1].title
-                  ? `${config.title} | ${results[1].title}`
-                  : config.title
-              })
-              .value()
-          )
+        .then((result) => {
+          that.body = cache[cacheKey] = renderToLayout(result)
         })
         .catch((err) => fail(this, err))
     })

@@ -7,7 +7,7 @@ const crypto = require('crypto')
 const scmp = require('scmp')
 const fs = require('fs')
 
-const config = require('../common/config.js')
+const config = require('../../common/config.js')
 
 module.exports = function *(next) {
   if (

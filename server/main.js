@@ -43,7 +43,7 @@ app.use(security)
 app.use(bodyParser())
 
 // Github `push` webhook
-app.use(restart())
+app.use(restart)
 
 // Static files
 app.use(koaStatic(`${__dirname}/../client`))
