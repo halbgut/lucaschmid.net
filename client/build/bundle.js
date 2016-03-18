@@ -78,6 +78,9 @@
 	__webpack_require__(220);
 	__webpack_require__(222);
 
+	var common2page = __webpack_require__(223);
+	common2page(__webpack_require__(225));
+
 	riot.mount('*');
 	window.riot = riot;
 
@@ -15095,10 +15098,10 @@
 	var ws;
 
 	var wsApiReq = function wsApiReq(url, socket) {
-	  return new Promise(function (res, rej) {
+	  return new Promise(function (resolve, reject) {
 	    var respond = function respond(e) {
 	      socket.removeEventListener('message', respond);
-	      res(JSON.parse(e.data));
+	      resolve(JSON.parse(e.data));
 	    };
 	    socket.addEventListener('message', respond);
 	    socket.send(url);
@@ -15106,18 +15109,18 @@
 	};
 
 	module.exports = function (api, method) {
-	  return new Promise(function (res, rej) {
+	  return new Promise(function (resolve, reject) {
 	    if (!ws) {
 	      websocket().then(function (newSocket) {
 	        ws = newSocket;
-	        wsApiReq('/api/' + api + '/ws/' + method, ws).then(res).catch(rej);
+	        wsApiReq('/api/' + api + '/ws/' + method, ws).then(resolve).catch(reject);
 	      }).catch(function (e) {
 	        xhr('/api/' + api + '/xhr/' + method).then(function (data) {
-	          return res(JSON.parse(data));
-	        }).catch(rej);
+	          return resolve(JSON.parse(data));
+	        }).catch(reject);
 	      });
 	    } else {
-	      wsApiReq('/api/' + api + '/ws/' + method, ws).then(res).catch(rej);
+	      wsApiReq('/api/' + api + '/ws/' + method, ws).then(resolve).catch(reject);
 	    }
 	  });
 	};
@@ -50820,6 +50823,364 @@
 	  });
 	}, '{ }');
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(216)))
+
+/***/ },
+/* 223 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _ = __webpack_require__(10);
+	var view = __webpack_require__(21);
+	var parallelPromise = __webpack_require__(224);
+
+	var getContainer = function getContainer() {
+	  return document.getElementsByClassName('content')[0];
+	};
+	var reload = function reload() {
+	  window.location = window.location;
+	};
+
+	module.exports = function (routes) {
+	  return _.map(routes, function (getParams, route) {
+	    return [route, function (context, next) {
+	      var params = getParams(context);
+	      var container = getContainer();
+	      parallelPromise([view(params[0]), params[1]()]).then(function (results) {
+	        container.innerHTML = results[0](results[1]);
+	      }).catch(reload);
+	    }];
+	  });
+	};
+
+/***/ },
+/* 224 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function (promises) {
+	  return new Promise(function (res, rej) {
+	    var results = [];
+	    var inc = 0;
+	    promises.map(function (fn, i) {
+	      return typeof fn === 'function' ? fn() : fn.then(function (data) {
+	        results[i] = data;
+	        ++inc;
+	        if (inc === promises.length) {
+	          res(results);
+	        }
+	      }).catch(rej);
+	    });
+	  });
+	};
+
+/***/ },
+/* 225 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var parallelPromise = __webpack_require__(224);
+	var getMarkdown = __webpack_require__(226);
+	var getArticles = __webpack_require__(229);
+
+	module.exports = {
+	  '/': function _(params) {
+	    return ['start', function () {
+	      return new Promise(function (resolve, reject) {
+	        parallelPromise([getMarkdown('start'), getMarkdown('skills'), getMarkdown('references')]).then(function (mdArr) {
+	          resolve({ sections: mdArr.map(function (md) {
+	              return md[0].html;
+	            }) });
+	        }).catch(reject);
+	      });
+	    }];
+	  },
+	  '/projects': function projects(params) {
+	    return ['projects', function () {
+	      return new Promise(function (resolve, reject) {
+	        getMarkdown('projects/*').then(function (mdArr) {
+	          return resolve({ projects: mdArr.map(function (md) {
+	              return md.html;
+	            }) });
+	        }).catch(reject);
+	      });
+	    }];
+	  },
+	  '/anotherblog': function anotherblog(params) {
+	    return ['blog', function () {
+	      return new Promise(function (resolve, reject) {
+	        getArticles('blog').then(function (articles) {
+	          return resolve({ articles: articles });
+	        }).catch(reject);
+	      });
+	    }];
+	  },
+	  '/anotherblog/:article': function anotherblogArticle(params) {
+	    return ['blogArticle', function () {
+	      return new Promise(function (resolve, reject) {
+	        getArticles('blog').then(function (articles) {
+	          return resolve(articles.filter(function (el) {
+	            return el.name === params.article;
+	          })[0]);
+	        }).catch(reject);
+	      });
+	    }, 'blogArticle/' + params.article];
+	  },
+	  '/ipa': function ipa(params) {
+	    return ['generic', function () {
+	      return new Promise(function (resolve, reject) {
+	        getMarkdown('dispo_interaktiver_news_artikel').then(function (md) {
+	          return resolve({
+	            title: 'Interaktiver News-Artikel',
+	            generic: md[0].html
+	          });
+	        }).catch(reject);
+	      });
+	    }, 'ipa'];
+	  },
+	  '/peopleidliketoworkwith': function peopleidliketoworkwith(params) {
+	    return ['generic', function () {
+	      return new Promise(function (resolve, reject) {
+	        getMarkdown('peopleidliketoworkwith').then(function (md) {
+	          return resolve({
+	            title: 'peopleidliketoworkwith',
+	            generic: md[0].html
+	          });
+	        }).catch(reject);
+	      });
+	    }];
+	  },
+	  '/blacklist': function blacklist(params) {
+	    return ['generic', function () {
+	      return new Promise(function (resolve, reject) {
+	        resolve({
+	          title: 'blacklist',
+	          generic: 'YOLO'
+	        });
+	      });
+	    }];
+	  }
+	};
+
+/***/ },
+/* 226 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var serverSideMarkdown = '../../server/lib/getMarkdown';
+	var env = __webpack_require__(227);
+	if (env === 'server') {
+	  module.exports = __webpack_require__(228)(serverSideMarkdown);
+	} else {
+	  (function () {
+	    var xhr = __webpack_require__(23);
+	    module.exports = function (name) {
+	      return xhr('/api/md/' + name);
+	    };
+	  })();
+	}
+
+/***/ },
+/* 227 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+	module.exports = (typeof window === 'undefined' ? 'undefined' : _typeof(window)) === 'object' ? 'client' : 'server';
+
+/***/ },
+/* 228 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var map = {
+		"./aes": 15,
+		"./aes.js": 15,
+		"./env": 227,
+		"./env.js": 227,
+		"./getArticles": 229,
+		"./getArticles.js": 229,
+		"./getMarkdown": 226,
+		"./getMarkdown.js": 226,
+		"./parallelPromise": 224,
+		"./parallelPromise.js": 224,
+		"./promisify": 234,
+		"./promisify.js": 234,
+		"./pug": 235,
+		"./pug.js": 235
+	};
+	function webpackContext(req) {
+		return __webpack_require__(webpackContextResolve(req));
+	};
+	function webpackContextResolve(req) {
+		return map[req] || (function() { throw new Error("Cannot find module '" + req + "'.") }());
+	};
+	webpackContext.keys = function webpackContextKeys() {
+		return Object.keys(map);
+	};
+	webpackContext.resolve = webpackContextResolve;
+	module.exports = webpackContext;
+	webpackContext.id = 228;
+
+
+/***/ },
+/* 229 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var getMarkdown = __webpack_require__(226);
+	var config = __webpack_require__(230);
+
+	module.exports = function (root) {
+	  return new Promise(function (resolve, reject) {
+	    getMarkdown(root + '/*').then(function (mdArr) {
+	      resolve(mdArr.map(function (md) {
+	        return {
+	          name: md.name,
+	          url: config.getFullUrl('anotherblog/' + md.name),
+	          title: md.title,
+	          teaser: md.paragraphs[0],
+	          articleContent: md.html,
+	          author: {
+	            name: 'Luca Nils Schmid',
+	            url: config.getFullUrl(),
+	            email: 'allspamhere@kriegslustig.me'
+	          },
+	          created: md.ctime
+	        };
+	      }).sort(function (a, b) {
+	        return a.created.getTime() > b.create ? 1 : -1;
+	      }));
+	    }).catch(reject);
+	  });
+	};
+
+/***/ },
+/* 230 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process, __dirname) {'use strict';
+
+	var _ = __webpack_require__(10);
+	var env = __webpack_require__(227);
+
+	var conf = __webpack_require__(231);
+
+	if (process.env.NODE_ENV !== 'production') {
+	  conf = _.extend(conf, conf.dev);
+	}
+
+	if (env === 'server') {
+	  conf = _.extend(conf, __webpack_require__(232)("./" + env + '/config.json'));
+	}
+
+	module.exports = _.extend(conf, {
+	  getFullUrl: function getFullUrl(path) {
+	    return conf.defaultProto + '://' + conf.hostname + (path ? '/' + path : '');
+	  },
+	  getBuildPath: function getBuildPath(path) {
+	    return __dirname + '/../../' + conf.buildDir + (path ? '/' + path : '');
+	  }
+	});
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(26), "/"))
+
+/***/ },
+/* 231 */
+/***/ function(module, exports) {
+
+	module.exports = {
+		"defaultProto": "https",
+		"hostname": "lucaschmid.net",
+		"ports": [
+			80,
+			443
+		],
+		"description": "My name is Luca Nils Schmid. This is my portfolio.",
+		"title": "Luca Nils Schmid",
+		"dataDir": "common/data",
+		"buildDir": "client/_build",
+		"templateDir": "common/templates",
+		"keywords": "luca nils schmid, kriegslustig, webdevelopment, node.js",
+		"dev": {
+			"shouldCache": false,
+			"hostname": "192.168.99.100",
+			"defaultProto": "http"
+		}
+	};
+
+/***/ },
+/* 232 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var map = {
+		"./server/config.json": 233
+	};
+	function webpackContext(req) {
+		return __webpack_require__(webpackContextResolve(req));
+	};
+	function webpackContextResolve(req) {
+		return map[req] || (function() { throw new Error("Cannot find module '" + req + "'.") }());
+	};
+	webpackContext.keys = function webpackContextKeys() {
+		return Object.keys(map);
+	};
+	webpackContext.resolve = webpackContextResolve;
+	module.exports = webpackContext;
+	webpackContext.id = 232;
+
+
+/***/ },
+/* 233 */
+/***/ function(module, exports) {
+
+	module.exports = {
+		"github": {
+			"token": "d9ce6f457ec6dd0d6f7b4757a2859449125bbbc7"
+		},
+		"restartKey": "gI838teV8U3vpcNrC6GsKvgOjA6ccJhVbNWrdHgxOj564nubshzS6laAh7Wi",
+		"cacheKey": "6XAhJax9F1Lndj3PAL1FTxfYbiHrskH7L_ZDLU8CnYWdyEDdtGIejIylwq5d",
+		"blacklistKey": "codecodecodecode"
+	};
+
+/***/ },
+/* 234 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	module.exports = function (fn) {
+	  return new Promise(function (res, rej) {
+	    fn(function (err, data) {
+	      if (err) return rej(err);
+	      res(data);
+	    });
+	  });
+	};
+
+/***/ },
+/* 235 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var pug = __webpack_require__(25);
+	var _ = __webpack_require__(10);
+
+	var env = __webpack_require__(227);
+	var loadFilePath = '../helpers/loadFile.js';
+
+	module.exports = function (str) {
+	  var globals = {};
+	  if (env === 'server') globals.loadFile = __webpack_require__(228)(loadFilePath);
+	  return function (data) {
+	    return pug.compile(str)(_.extend(data, globals));
+	  };
+	};
 
 /***/ }
 /******/ ]);

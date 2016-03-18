@@ -1,10 +1,12 @@
 const pug = require('jade')
 const _ = require('lodash')
 
-module.exports = str => {
-  const globals = {
-    loadFile: require('../helpers/loadFile.js')
-  }
-  return data => pug.compile(str)(_.extend(data, globals))
+const env = require('./env.js')
+const loadFilePath = '../helpers/loadFile.js'
+
+module.exports = (str) => {
+  const globals = {}
+  if (env === 'server') globals.loadFile = require(loadFilePath)
+  return (data) => pug.compile(str)(_.extend(data, globals))
 }
 

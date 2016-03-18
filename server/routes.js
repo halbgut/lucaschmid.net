@@ -7,6 +7,7 @@ const comments = require('./lib/comments')
 const view = require('./lib/view')
 const fail = require('./lib/fail')
 const webdevquiz = require('./lib/webdevquiz')
+const getMarkdown = require('./lib/getMarkdown')
 
 var feeds
 
@@ -61,6 +62,13 @@ module.exports = {
           reject()
         })
     }),
+    '/api/md/:name': (context) =>
+      getMarkdown(context.params.name)
+        .then((mdArr) => {
+          context.body = mdArr
+          context.status = 200
+        })
+        .catch((err) => fail(context, err)),
     '/feed/:type': (context) => new Promise((resolve, reject) => {
       if (context.params.type === 'atom.xml') {
         context.body = feeds[0]

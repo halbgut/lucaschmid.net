@@ -1,12 +1,11 @@
-const fs = require('fs')
-const getMarkdown = require(`./getMarkdown`)
-const config = require(`../config.js`)
+const getMarkdown = require('./getMarkdown')
+const config = require('../config.js')
 
-module.exports = root => new Promise((res, rej) => {
+module.exports = (root) => new Promise((resolve, reject) => {
   getMarkdown(`${root}/*`)
-    .then(mdArr => {
-      res(
-        mdArr.map(md => {
+    .then((mdArr) => {
+      resolve(
+        mdArr.map((md) => {
           return {
             name: md.name,
             url: config.getFullUrl(`anotherblog/${md.name}`),
@@ -30,6 +29,6 @@ module.exports = root => new Promise((res, rej) => {
         })
       )
     })
-    .catch(rej)
+    .catch(reject)
 })
 

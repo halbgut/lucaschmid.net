@@ -3,33 +3,33 @@ const websocket = require('./websocket.js')
 
 var ws
 
-const wsApiReq = (url, socket) => new Promise((res, rej) => {
-  const respond = e => {
+const wsApiReq = (url, socket) => new Promise((resolve, reject) => {
+  const respond = (e) => {
     socket.removeEventListener('message', respond)
-    res(JSON.parse(e.data))
+    resolve(JSON.parse(e.data))
   }
   socket.addEventListener('message', respond)
   socket.send(url)
 })
 
-module.exports = (api, method) => new Promise((res, rej) => {
+module.exports = (api, method) => new Promise((resolve, reject) => {
   if (!ws) {
     websocket()
-      .then(newSocket => {
+      .then((newSocket) => {
         ws = newSocket
         wsApiReq(`/api/${api}/ws/${method}`, ws)
-          .then(res)
-          .catch(rej)
+          .then(resolve)
+          .catch(reject)
       })
-      .catch(e => {
+      .catch((e) => {
         xhr(`/api/${api}/xhr/${method}`)
-          .then(data => res(JSON.parse(data)))
-          .catch(rej)
+          .then((data) => resolve(JSON.parse(data)))
+          .catch(reject)
       })
   } else {
     wsApiReq(`/api/${api}/ws/${method}`, ws)
-      .then(res)
-      .catch(rej)
+      .then(resolve)
+      .catch(reject)
   }
 })
 
