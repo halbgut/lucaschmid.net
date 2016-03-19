@@ -1,18 +1,14 @@
 const api = require('./api.js')
 const jade = require('jade')
 
-const renderer = cb => (data) => {
+const renderer = (cb) => (data) => {
   document.getElementsByClassName[0]
     .innerHtml = cb(data)
 }
 
-module.exports = name => new Promise((res, rej) => {
+module.exports = (name) =>
   api('view', name)
-    .then(tpl =>
-      res(
-        renderer(jade.compile(tpl))
-      )
+    .then((tpl) =>
+      renderer(jade.compile(tpl))
     )
-    .catch(rej)
-})
 

@@ -9,8 +9,9 @@ require('../tags/comments.tag')
 require('../tags/custom-navigation.tag')
 require('../tags/work-in-progress.tag')
 
-const common2page = require('./lib/common2page.js')
-common2page(require('../../common/routes.js'))
+// const common2page = require('./lib/common2page.js')
+// const routes = common2page(require('../../common/routes.js'))
+// routes[0][1]()
 
 riot.mount('*')
 window.riot = riot

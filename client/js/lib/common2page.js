@@ -7,10 +7,10 @@ const reload = () => { window.location = window.location }
 
 module.exports = (routes) => _.map(routes, (getParams, route) => [
   route,
-  (context, next) => {
-    const params = getParams(context)
+  () => {
+    const params = getParams()
     const container = getContainer()
-    parallelPromise([
+    return parallelPromise([
       view(params[0]),
       params[1]()
     ])
