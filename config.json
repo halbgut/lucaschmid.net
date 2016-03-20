@@ -8,6 +8,7 @@
   "buildDir": "client/_build",
   "templateDir": "common/templates",
   "keywords": "luca nils schmid, kriegslustig, webdevelopment, node.js",
+  "shouldCache": true,
   "dev": {
     "shouldCache": false,
     "hostname": "192.168.99.100",
