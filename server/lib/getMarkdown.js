@@ -16,7 +16,7 @@ const mdConverter = new showdown.Converter({ extensions: [footnotes] })
 const blocks = [
   [
     'ctime',
-    /^\[ctime:(\d+)\]$/,
+    /\[ctime:(\d+)\]/,
     (data) => {
       let ctime = new Date()
       ctime.setTime(data[1] || 0)
@@ -25,13 +25,13 @@ const blocks = [
   ],
   [
     'image',
-    /^\[image:([^\]]+)\]$/,
+    /\[image:([^\]]+)\]/,
     (data) => data[1]
   ],
   [
     'title',
-    /^#+ .+$/,
-    (data) => data[2],
+    /#+ (.+)\n/,
+    (data) => data[1],
     true
   ]
 ]
@@ -50,8 +50,9 @@ module.exports = (pattern) => {
             const foundBlocks = {}
             blocks.forEach((block) => {
               foundBlocks[block[0]] = block[2](block[1].exec(data) || [])
-              if (!block[3]) data = data.replace(block[1], '')
+              if (block[3]) data = data.replace(block[1], '')
             })
+            console.log(foundBlocks)
             const html = mdConverter.makeHtml(data)
             next(null, _.assign({
               html,
