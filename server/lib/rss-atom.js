@@ -68,7 +68,7 @@ var generators = {
   item: [
     (entry) => [{ title: strip(entry.title) }],
     (entry) => [{ guid: entry.id }],
-    (entry) => entry.link ? [{ 'aton:link': genAtomLink(entry.link) }] : [],
+    (entry) => entry.link ? [{ 'atom:link': genAtomLink(entry.link) }] : [],
     (entry) => entry.author.name && entry.author.email
       ? [{ author: `${entry.author.name} <${entry.author.email}>` }]
       : [],

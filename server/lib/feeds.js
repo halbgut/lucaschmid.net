@@ -19,7 +19,7 @@ module.exports = new Promise((res, rej) => {
             title: article.title,
             id: article.url,
             summary: article.teaser,
-            content: article.content,
+            content: article.articleContent,
             author: {
               name: article.author.name,
               uri: article.author.url,
