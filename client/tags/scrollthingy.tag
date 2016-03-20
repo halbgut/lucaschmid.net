@@ -11,15 +11,6 @@
   min-width: 100%;
   background-color: white;
 }
-
-:scope > section:nth-child(1) {
-  background-color: hsl(0, 40%, 80%);
-}
-
-:scope > section:nth-child(2) {
-  background-color: hsl(20, 40%, 80%);
-}
-
 </style>
 <script>
 const updatePosition = (factor, parentHeight, element, nth, lastPos) => {
