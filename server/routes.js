@@ -72,6 +72,7 @@ module.exports = {
         })
         .catch((err) => fail(context, err)),
     '/feed/:type': (context) => new Promise((resolve, reject) => {
+      context.type = 'text/xml'
       if (context.params.type === 'atom.xml') {
         context.body = feeds[0]
         resolve()
