@@ -85,7 +85,9 @@
     this.on('mount', () => {
       calcPos()
       _.each(this.root.getElementsByTagName('li'), (el, i) => {
-        const elem = document.getElementById(el.getAttribute('data-id')).parentNode
+        const child = document.getElementById(el.getAttribute('data-id'))
+        if (!child) return
+        const elem = child.parentNode
         const center = innerHeight / 3
         const containerHeight = center > elem.clientHeight
           ? elem.clientHeight
