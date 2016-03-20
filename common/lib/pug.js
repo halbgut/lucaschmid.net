@@ -4,9 +4,12 @@ const _ = require('lodash')
 const env = require('./env.js')
 const loadFilePath = '../helpers/loadFile.js'
 
-module.exports = (str) => {
+module.exports = (str, filename) => {
   const globals = {}
   if (env === 'server') globals.loadFile = require(loadFilePath)
-  return (data) => pug.compile(str)(_.extend(data, globals))
+  return (data) => pug.compile(
+    str,
+    { filename }
+  )(_.extend(data, globals))
 }
 

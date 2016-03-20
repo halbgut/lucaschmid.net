@@ -26,7 +26,8 @@ module.exports = () => {
   // [ [ PugTemplateString, PugTemplateString ], Data ]
   const renderToLayout = (results) =>
     pug(
-      results[0][0]
+      results[0][0],
+      'layout.pug'
     )(
       _.chain(_.clone(config))
         .assign(results[1])
