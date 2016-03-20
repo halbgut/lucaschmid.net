@@ -14,7 +14,6 @@ require('../tags/work-in-progress.tag')
 // routes[0][1]()
 
 riot.mount('*')
-window.riot = riot
 
 window.addEventListener('load', () => {
   highlight.initHighlighting()

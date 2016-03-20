@@ -8,6 +8,8 @@ const view = require('./lib/view')
 const fail = require('./lib/fail')
 const webdevquiz = require('./lib/webdevquiz')
 const getMarkdown = require('./lib/getMarkdown')
+const pug = require('../common/lib/pug')
+const parallelPromise = require('../common/lib/parallelPromise')
 
 var feeds
 
@@ -39,7 +41,7 @@ module.exports = {
             context.body = json
             resolve()
           })
-          .catch((err) => fail(context, err))
+          .catch((err) => resolve(fail(context, err)))
       } else {
         reject()
       }
@@ -86,19 +88,26 @@ module.exports = {
     }),
     '/ip': (context) => new Promise((resolve, reject) => {
       let addr = context.req.connection.remoteAddress
-      const cb = (err, name) => {
+      context.status = 200
+      if (addr.substr(7).match(/^(\d{1,3}\.){3}\d{1,3}$/)) addr = addr.substr(7)
+      dns.reverse(addr, (err, name) => {
         context.body = `${addr}\n${name || err.code}`
         resolve()
-      }
-      context.response.status = 200
-      if (addr.substr(7).match(/^(\d{1,3}\.){3}\d{1,3}$/)) addr = addr.substr(7)
-      dns.reverse(addr, cb)
+      })
     }),
-    '/:p': (context) => new Promise((resolve, reject) => {
-      // TODO Render 404
-      context.response.status = 404
-      resolve()
-    })
+    '/wimdu-application': (context) => new Promise((resolve, reject) => {
+      parallelPromise([
+        getMarkdown('application/*/*'),
+        view.private.getTemplate('application', false)
+      ])
+        .then((res) => {
+          context.status = 200
+          console.log(res[0])
+          context.body = pug(res[1])({ chapters: res[0] })
+          resolve()
+        })
+        .catch((err) => resolve(fail(context, err)))
+    }),
   }
 }
 

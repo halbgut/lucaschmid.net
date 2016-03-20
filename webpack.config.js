@@ -10,9 +10,12 @@ if (!dev) plugins.push(new webpack.optimize.UglifyJsPlugin())
 if (!dev) plugins.push(new webpack.optimize.DedupePlugin())
 
 module.exports = {
-  entry: './client/entry.js',
+  entry: {
+    main: './client/entry',
+    application: './client/application'
+  },
   output: {
-    filename: 'bundle.js',
+    filename: '[name].js',
     path: `${__dirname}/client/build/`
   },
   plugins,

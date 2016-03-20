@@ -35,5 +35,8 @@ module.exports = {
     getTemplate(name, includeLayout)
       .then((js) => socket.send(js))
       .catch((e) => { throw e })
+  },
+  private: {
+    getTemplate
   }
 }
