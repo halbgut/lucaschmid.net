@@ -3,7 +3,7 @@ each article in articles
   article(itemscope itemtype="https://schema.org/Blog")
     h2
       a(href=article.url)!= article.title
-    !{article.teaser}
+    | !{article.teaser}
     p
       b
         a(href=article.url) ...read it!
