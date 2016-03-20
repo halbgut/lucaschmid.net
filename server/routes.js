@@ -103,7 +103,6 @@ module.exports = {
       ])
         .then((res) => {
           context.status = 200
-          console.log(res[0])
           context.body = pug(res[1])({ chapters: res[0] })
           resolve()
         })
