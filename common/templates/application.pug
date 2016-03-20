@@ -7,9 +7,10 @@ html(lang=lang)
     meta(name="viewport" content="width=device-width, initial-scale=1")
     title
       | Application For Wimdu
+    <style>!{loadFile('client/build/application.css')}</style>
   body
     scrollthingy
       each chapter in chapters
-        section!= chapter.html
+        section(style="background-image: url('#{chapter.image}');")!= chapter.html
     script(src="/build/application.js")
 
