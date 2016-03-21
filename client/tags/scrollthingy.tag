@@ -69,8 +69,8 @@
 const _ = require('lodash')
 const domH = require('../js/lib/domHelpers.js')
 
-let scrollLock = true
-let dontLock = false
+let scrollLock = false
+let dontLock = true
 
 const updatePosition = (factor, heightBefore, elVh, element, lastPos) => {
   let active = false
@@ -114,27 +114,28 @@ const updateActive = (el, i, oldChapters) => {
 this.on('mount', () => {
   // TODO: Add a scrolling animation
   const children = Array.from(this.root.querySelectorAll('.content section'))
-  window.addEventListener('hashchange', () => {
-    console.log(['scrollLock', scrollLock])
+  window.addEventListener('hashchange', (e) => {
+    e.preventDefault()
     if (scrollLock) return scrollLock = false
     const hash = window.location.href.split('#')[1]
     let scroll, found
     ; [scroll, found] = children.reduce(
       (mem, el) => [
-        mem[1] || el.id === hash
+        mem[1] || el.getAttribute('data-name') === hash
           ? mem[0]
           : mem[0] + el.clientHeight,
-        el.id === hash || mem[1]
+        el.getAttribute('data-name') === hash || mem[1]
       ],
       [0, false]
     )
     if (found) {
+      dontLock = true
       window.scroll(0, scroll + 1)
     }
   })
   const chapters = children.map(el => ({
     title: el.getAttribute('data-title'),
-    url: el.id
+    url: el.getAttribute('data-name')
   }))
   let containerHeight = calcHeightSum(children)
   let factor = (window.innerHeight / 100)
@@ -155,16 +156,18 @@ this.on('mount', () => {
     el.style.zIndex = children.length - i
     setHeight()
     window.addEventListener('resize', setHeight)
-    window.addEventListener('scroll', () => {
-      let newActive
-      ; [currPos, newActive] = updatePosition(factor, height, vh, el, currPos)
-      if (newActive && !active) {
-        if (dontLock) dontLock = false
-        else if(!scrollLock) scrollLock = true
-        updateActive(el, i, chapters)
+    window.addEventListener('scroll', () => requestAnimationFrame(
+      () => {
+        let newActive
+        ; [currPos, newActive] = updatePosition(factor, height, vh, el, currPos)
+        if (newActive && !active) {
+          if (dontLock) dontLock = false
+          else if(!scrollLock) scrollLock = true
+          updateActive(el, i, chapters)
+        }
+        active = newActive
       }
-      active = newActive
-    })
+    ))
   })
 })
 </script>
