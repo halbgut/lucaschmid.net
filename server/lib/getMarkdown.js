@@ -52,7 +52,6 @@ module.exports = (pattern) => {
               foundBlocks[block[0]] = block[2](block[1].exec(data) || [])
               if (!block[3]) data = data.replace(block[1], '')
             })
-            console.log(foundBlocks)
             const html = mdConverter.makeHtml(data)
             next(null, _.assign({
               html,

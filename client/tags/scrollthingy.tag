@@ -22,7 +22,6 @@ const updatePosition = (factor, parentHeight, element, nth, lastPos) => {
     pos = 0
   if (pos === 0 && lastPos !== 0)
     element.style.transform = 'translateY(0vh)'
-  console.log([window.scrollY / factor, nth, pos])
   return pos
 }
 
