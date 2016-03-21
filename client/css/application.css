@@ -1,9 +1,40 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  color: #FFF;
+  font: 100 23px Helvetica, Futura;
+}
+
 body {
   margin: 0;
 }
 
-h2,
+h2 {
+  font-weight: 400;
+}
+
 a {
   color: #FFF;
+}
+
+section {
+  background-size: cover;
+}
+
+.text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-size: 16px;
+  line-height: 1rem;
+  width: 100%;
+  max-width: 26rem;
+  padding: 1rem;
+  background-color: hsla(0, 0%, 0%, .4);
+}
+
+@media (min-width 800px) {
 }
 

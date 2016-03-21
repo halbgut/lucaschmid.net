@@ -11,6 +11,7 @@ html(lang=lang)
   body
     scrollthingy
       each chapter in chapters
-        section(style="background-image: url('#{chapter.image}');")!= chapter.html
+        section(style="background-image: url('#{chapter.image}');")
+          div.text!= chapter.html
     script(src="/build/application.js")
 
