@@ -112,11 +112,11 @@ const updateActive = (el, i, oldChapters) => {
 }
 
 this.on('mount', () => {
-  // TODO: Handle resizing
+  // TODO: Add a scrolling animation
   const children = Array.from(this.root.querySelectorAll('.content section'))
   window.addEventListener('hashchange', () => {
+    console.log(['scrollLock', scrollLock])
     if (scrollLock) return scrollLock = false
-    dontLock = true
     const hash = window.location.href.split('#')[1]
     let scroll, found
     ; [scroll, found] = children.reduce(
@@ -161,7 +161,6 @@ this.on('mount', () => {
       if (newActive && !active) {
         if (dontLock) dontLock = false
         else if(!scrollLock) scrollLock = true
-        else scrollLock = false
         updateActive(el, i, chapters)
       }
       active = newActive
