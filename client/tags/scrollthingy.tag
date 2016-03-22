@@ -68,29 +68,52 @@
 <script>
 const _ = require('lodash')
 const domH = require('../js/lib/domHelpers.js')
+const Immutable= require('immutable')
 
-let scrollLock = false
-let dontLock = true
+const log = x => console.log(x) || x
 
-const updatePosition = (factor, heightBefore, elVh, element, lastPos) => {
-  let active = false
-  let min = elVh * -1
+const getChapters = (model) =>
+  Immutable.List(
+    Array.from(
+      model.get('root').querySelectorAll('.content section')
+    )
+  )
+    .map((el, i, arr) => Immutable.Map({
+      title: el.getAttribute('data-title'),
+      url: el.getAttribute('data-name'),
+      height: el.clientHeight,
+      top: calcVh(calcHeightSum(arr.slice(0, i))),
+      pos: 0,
+      vh: calcVh(el.clientHeight),
+      element: el // Not Immutable
+    }))
+
+const updatePosition = (model, chapter) => {
+  const min = chapter.vh * -1
   let pos =
-    window.scrollY / factor * -1 + heightBefore
-  if (pos < 0 && pos >= min) {
-    element.style.transform = `translateY(${pos}vh)`
-    active = true
-  } else if (pos < min) {
-    pos = min
-  } else {
-    pos = 0
+    window.scrollY / model.get('factor') * -1 + chapter.top
+  if (pos < min) pos = min
+  if (pos > 0) pos = 0
+  return chapter.set('pos', pos)
+}
+
+const updater = (actions, model) => { // This function is used to produce side-effects
+  let cachedModel = model
+  return (model) => {
+    model.forEach((el, k) => {
+      if (
+        (
+          actions[k] ||
+          actions['*']
+        ) &&
+        (
+          typeof el === 'object' ||
+          el !== cachedModel.get(k)
+        )
+      ) (actions[k] || actions['*'])(el, model) // this doesn't work for arrays yet
+    })
+    return cachedModel = model // especially this part
   }
-  if (pos === 0 && lastPos !== 0) {
-    element.style.transform = 'translateY(0vh)'
-  } else if (pos === min && lastPos !== min) {
-    element.style.transform = `translateY(${min}vh)`
-  }
-  return [pos, active]
 }
 
 const calcVh = (h) => h / (window.innerHeight / 100)
@@ -100,7 +123,7 @@ const calcHeightSum = (elArr) =>
     .map((el) => el.clientHeight)
     .reduce((m, n) => n + m, 0)
 
-const updateActive = (el, i, oldChapters) => {
+const updateActive = (el, i) => {
   const name = el.getAttribute('data-name')
   Array.from(this.root.querySelectorAll('.böttns__link'))
     .forEach((el, n) => {
@@ -113,62 +136,36 @@ const updateActive = (el, i, oldChapters) => {
 
 this.on('mount', () => {
   // TODO: Add a scrolling animation
-  const children = Array.from(this.root.querySelectorAll('.content section'))
-  window.addEventListener('hashchange', (e) => {
-    e.preventDefault()
-    if (scrollLock) return scrollLock = false
-    const hash = window.location.href.split('#')[1]
-    let scroll, found
-    ; [scroll, found] = children.reduce(
-      (mem, el) => [
-        mem[1] || el.getAttribute('data-name') === hash
-          ? mem[0]
-          : mem[0] + el.clientHeight,
-        el.getAttribute('data-name') === hash || mem[1]
-      ],
-      [0, false]
+  const model = Immutable.Map({
+    scrollY: window.scrollTop,
+    windowH: window.innerHeight,
+    hash: window.location.hash,
+    root: this.root,
+    factor: window.innerHeight / 100
+  })
+
+  const updateDom = updater({
+    hash: (hash) => window.location.hash = hash,
+    chapters: updater({
+      '*': (pos, el) => log(el).get('element').style.transform = `translateY(${pos}vh)`
+    }, Immutable.Map())
+  }, model)
+
+  const render = (model) => {
+    const newModel = model
+      .set('scrollY', window.scrollTop)
+      .set('windowH', window.innerHeight)
+      .set('hash', window.location.hash)
+      .set('factor', window.innerHeight / 100)
+    return newModel.update('chapters', (chapters) =>
+      chapters.map(updatePosition.bind(null, newModel))
     )
-    if (found) {
-      dontLock = true
-      window.scroll(0, scroll + 1)
-    }
-  })
-  const chapters = children.map(el => ({
-    title: el.getAttribute('data-title'),
-    url: el.getAttribute('data-name')
-  }))
-  let containerHeight = calcHeightSum(children)
-  let factor = (window.innerHeight / 100)
-  this.update({ chapters })
-  this.root.style.height = containerHeight + 'px'
-  window.addEventListener('resize', () => {
-    factor = (window.innerHeight / 100)
-    containerHeight = calcHeightSum(children)
-    this.root.style.height = containerHeight + 'px'
-  })
-  children.forEach((el, i) => {
-    const setHeight = () => {
-      vh = calcVh(el.clientHeight)
-      height = calcVh(calcHeightSum(children.slice(0, i)))
-    }
-    let height, vh, currPos, active
-    el.style.position = 'fixed'
-    el.style.zIndex = children.length - i
-    setHeight()
-    window.addEventListener('resize', setHeight)
-    window.addEventListener('scroll', () => requestAnimationFrame(
-      () => {
-        let newActive
-        ; [currPos, newActive] = updatePosition(factor, height, vh, el, currPos)
-        if (newActive && !active) {
-          if (dontLock) dontLock = false
-          else if(!scrollLock) scrollLock = true
-          updateActive(el, i, chapters)
-        }
-        active = newActive
-      }
-    ))
-  })
+  }
+
+  const loop = (model) =>
+    loop(updateDom(render(model)))
+
+  loop(model.set('chapters', getChapters(model)))
 })
 </script>
 </scrollthingy>

@@ -6,6 +6,7 @@
   "dependencies": {
     "async": "^1.5.2",
     "glob": "^6.0.3",
+    "immutable": "^3.7.6",
     "jade": "^1.11.0",
     "koa": "^1.1.2",
     "koa-body-parser": "^1.1.2",
