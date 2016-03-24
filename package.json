@@ -36,6 +36,7 @@
     "highlight.js": "^9.2.0",
     "json-loader": "^0.5.4",
     "level4": "^1.0.1",
+    "nodemon": "^1.9.1",
     "page": "^1.6.4",
     "postcss-loader": "^0.8.2",
     "riot": "^2.3.12",
