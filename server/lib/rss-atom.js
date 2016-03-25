@@ -1,5 +1,5 @@
 var xml = require('xml')
-var strip = require('strip')
+var striptags = require('striptags')
 var _ = require('lodash')
 
 var defaults = {
@@ -56,29 +56,29 @@ function genAtom (options, entries) {
 
 var generators = {
   channel: [
-    (options) => [{ title: strip(options.title) }],
+    (options) => [{ title: striptags(options.title) }],
     (options) => [{ link: options.rssId }],
     (options) => [{ 'atom:link': genAtomLink([options.rssId, 'self']) }],
-    (options) => [{ description: strip(options.subtitle) }],
+    (options) => [{ description: striptags(options.subtitle) }],
     (options) => [{ generator: options.generator || defaults.generator }],
     (options) => options.language ? [{ language: options.language }] : [],
     (options) => [{ lastBuildDate: (options.updated || new Date()).toUTCString() }]
     // TODO: Implement image
   ],
   item: [
-    (entry) => [{ title: strip(entry.title) }],
+    (entry) => [{ title: striptags(entry.title) }],
     (entry) => [{ guid: entry.id }],
     (entry) => entry.link ? [{ 'atom:link': genAtomLink(entry.link) }] : [],
     (entry) => entry.author.name && entry.author.email
       ? [{ author: `${entry.author.name} <${entry.author.email}>` }]
       : [],
     (entry) => [{ 'content:encoded': { _cdata: entry.content } }],
-    (entry) => [{ description: strip(entry.summary) }],
+    (entry) => [{ description: striptags(entry.summary) }],
     (entry) => entry.pubDate ? [{ pubDate: entry.pubDate }] : []
   ],
   feed: [
-    (options) => [{ title: strip(options.title) }],
-    (options) => [{ subtitle: strip(options.subtitle) }],
+    (options) => [{ title: striptags(options.title) }],
+    (options) => [{ subtitle: striptags(options.subtitle) }],
     (options) => [{ id: options.atomId }],
     (options) => [{ updated: (options.updated || new Date()).toISOString() }],
     (options) => options.author
@@ -97,11 +97,11 @@ var generators = {
   ],
   entry: [
     (entry) => [{ id: entry.id }],
-    (entry) => [{ title: strip(entry.title) }],
+    (entry) => [{ title: striptags(entry.title) }],
     (entry) => [{ updated: entry.updated.toISOString() }],
     (entry) => [{ author: genAtomAuthor(entry.author) }],
     (entry) => [{ link: genAtomLink([entry.id, 'self']) }],
-    (entry) => [{ summary: strip(entry.summary) }],
+    (entry) => [{ summary: striptags(entry.summary) }],
     (entry) => [{ content: [ { _attr: { type: 'html' } }, entry.content ] }]
   ]
 }
