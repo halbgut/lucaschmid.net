@@ -70,8 +70,6 @@ const _ = require('lodash')
 const domH = require('../js/lib/domHelpers.js')
 const Immutable= require('immutable')
 
-const log = x => console.log(x) || x
-
 const getChapters = (model) =>
   Immutable.List(
     Array.from(
@@ -91,7 +89,7 @@ const getChapters = (model) =>
 const updatePosition = (model, chapter) => {
   const min = chapter.vh * -1
   let pos =
-    window.scrollY / model.get('factor') * -1 + chapter.top
+    window.scrollY / model.get('factor') * -1 + chapter.get('top')
   if (pos < min) pos = min
   if (pos > 0) pos = 0
   return chapter.set('pos', pos)
@@ -110,7 +108,7 @@ const updater = (actions, model) => { // This function is used to produce side-e
           typeof el === 'object' ||
           el !== cachedModel.get(k)
         )
-      ) (actions[k] || actions['*'])(el, model) // this doesn't work for arrays yet
+      ) (actions[k])(el, model) // this doesn't work for arrays yet
     })
     return cachedModel = model // especially this part
   }
@@ -120,7 +118,7 @@ const calcVh = (h) => h / (window.innerHeight / 100)
 
 const calcHeightSum = (elArr) =>
   elArr
-    .map((el) => el.clientHeight)
+    .map((el) => el.clientHeight || el.get('element').clientHeight)
     .reduce((m, n) => n + m, 0)
 
 const updateActive = (el, i) => {
@@ -134,21 +132,41 @@ const updateActive = (el, i) => {
   window.location.href = window.location.href.split('#')[0] + '#' + name
 }
 
+const lazyArrayUpdater = (actions) => {
+  const cache = {}
+  return (arr) => {
+    arr.forEach((el, k) => {
+      (cache[k] || (cache[k] = updater(actions, el)))(el)
+    })
+  }
+}
+
+const initializeSectionStyles = (chapters) => {
+  chapters.forEach((chapter, i, arr) => {
+    chapter.get('element').style.position = 'fixed'
+    chapter.get('element').style.zIndex = arr.count() - i
+  })
+  return chapters
+}
+
 this.on('mount', () => {
   // TODO: Add a scrolling animation
   const model = Immutable.Map({
     scrollY: window.scrollTop,
     windowH: window.innerHeight,
     hash: window.location.hash,
+    height: 0,
     root: this.root,
     factor: window.innerHeight / 100
   })
 
   const updateDom = updater({
     hash: (hash) => window.location.hash = hash,
-    chapters: updater({
-      '*': (pos, el) => log(el).get('element').style.transform = `translateY(${pos}vh)`
-    }, Immutable.Map())
+    chapters: lazyArrayUpdater({
+      pos: (pos, el) =>
+        el.get('element').style.transform = `translateY(${pos}vh)`
+    }),
+    height: (height, model) => { model.get('root').style.height = height + 'px' }
   }, model)
 
   const render = (model) => {
@@ -156,6 +174,7 @@ this.on('mount', () => {
       .set('scrollY', window.scrollTop)
       .set('windowH', window.innerHeight)
       .set('hash', window.location.hash)
+      .set( 'height', calcHeightSum(model.get('chapters')) )
       .set('factor', window.innerHeight / 100)
     return newModel.update('chapters', (chapters) =>
       chapters.map(updatePosition.bind(null, newModel))
@@ -163,9 +182,11 @@ this.on('mount', () => {
   }
 
   const loop = (model) =>
-    loop(updateDom(render(model)))
+    requestAnimationFrame(() =>
+      loop(updateDom(render(model)))
+    )
 
-  loop(model.set('chapters', getChapters(model)))
+  loop(model.set('chapters', initializeSectionStyles(getChapters(model))))
 })
 </script>
 </scrollthingy>
