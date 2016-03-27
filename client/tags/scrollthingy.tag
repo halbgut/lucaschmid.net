@@ -170,8 +170,7 @@ this.on('mount', () => {
     chapter: undefined
   })
 
-  // TODO: rename updateDom -> render
-  const updateDom = updater({
+  const render = updater({
     hash: (hash) => window.location.hash = hash,
     chapters: lazyArrayUpdater({
       pos: (pos, el) =>
@@ -182,7 +181,7 @@ this.on('mount', () => {
   }, model)
 
   // TODO: rename render -> update
-  const render = (model) => {
+  const update = (model) => {
     const newModel = model
       .set('scrollY', window.scrollY)
       .set('windowH', window.innerHeight)
@@ -197,7 +196,7 @@ this.on('mount', () => {
 
   const loop = (model) =>
     requestAnimationFrame(() =>
-      loop(updateDom(render(model)))
+      loop(render(update(model)))
     )
 
   loop(model.set('chapters', initializeSectionStyles(getChapters(model))))
