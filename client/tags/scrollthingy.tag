@@ -81,6 +81,7 @@ const getChapters = (model) =>
       url: el.getAttribute('data-name'),
       height: el.clientHeight,
       top: calcVh(calcHeightSum(arr.slice(0, i))),
+      topPx: calcHeightSum(arr.slice(0, i)),
       pos: 0,
       vh: calcVh(el.clientHeight),
       element: el // Not Immutable
@@ -89,7 +90,7 @@ const getChapters = (model) =>
 const updatePosition = (model, chapter) => {
   const min = chapter.vh * -1
   let pos =
-    window.scrollY / model.get('factor') * -1 + chapter.get('top')
+    model.get('scrollY') / model.get('factor') * -1 + chapter.get('top')
   if (pos < min) pos = min
   if (pos > 0) pos = 0
   return chapter.set('pos', pos)
@@ -149,35 +150,48 @@ const initializeSectionStyles = (chapters) => {
   return chapters
 }
 
+const getCurrentChapter = (model) => {
+  const pos = model.get('scrollY')
+  return model.get('chapters').filter((el) =>
+    el.get('topPx') <= pos &&
+    el.get('topPx') + el.get('height') > pos
+  ).get(0).get('url')
+}
+
 this.on('mount', () => {
   // TODO: Add a scrolling animation
   const model = Immutable.Map({
-    scrollY: window.scrollTop,
+    scrollY: window.scrollY,
     windowH: window.innerHeight,
     hash: window.location.hash,
     height: 0,
     root: this.root,
-    factor: window.innerHeight / 100
+    factor: window.innerHeight / 100,
+    chapter: undefined
   })
 
+  // TODO: rename updateDom -> render
   const updateDom = updater({
     hash: (hash) => window.location.hash = hash,
     chapters: lazyArrayUpdater({
       pos: (pos, el) =>
         el.get('element').style.transform = `translateY(${pos}vh)`
     }),
-    height: (height, model) => { model.get('root').style.height = height + 'px' }
+    height: (height, model) => { model.get('root').style.height = height + 'px' },
+    chapter: (chapter) => { domH.updateHash(chapter) }
   }, model)
 
+  // TODO: rename render -> update
   const render = (model) => {
     const newModel = model
-      .set('scrollY', window.scrollTop)
+      .set('scrollY', window.scrollY)
       .set('windowH', window.innerHeight)
       .set('hash', window.location.hash)
       .set( 'height', calcHeightSum(model.get('chapters')) )
       .set('factor', window.innerHeight / 100)
+      .set('chapter', getCurrentChapter(model))
     return newModel.update('chapters', (chapters) =>
-      chapters.map(updatePosition.bind(null, newModel))
+      chapters.map(updatePosition.bind(null, newModel)) // The *Height* and *top* attributes should be updated here too
     )
   }
 
