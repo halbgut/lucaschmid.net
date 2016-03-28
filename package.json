@@ -43,7 +43,6 @@
     "riot": "^2.3.12",
     "riotjs-loader": "^3.0.0",
     "sitemap": "^1.5.0",
-    "strip": "0.0.7",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.14",
     "xml": "^1.0.0"
