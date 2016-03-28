@@ -90,18 +90,19 @@ const getChapters = (model) =>
 const updateChapterMaps = (() => {
   let cachedWidth = 0
   return (model, chapters) => {
-    cachedWidth = model.get('width')
-    return chapters.map((chapter, i) => {
+    let newChapters = chapters.map((chapter, i, arr) => {
       const newChapter = updatePosition(model, chapter)
       if (model.get('width') === cachedWidth) return newChapter
       const height = newChapter.get('element')
-      const top = calcHeightSum(model.get('chapters').slice(0, i))
+      const top = calcHeightSum(arr.slice(0, i))
       return newChapter
         .set('vh', calcVh(height))
         .set('heigt', height)
         .set('top', calcVh(top))
         .set('topPx', top)
     })
+    cachedWidth = model.get('width')
+    return newChapters
   }
 })()
 
@@ -171,10 +172,10 @@ const initializeSectionStyles = (chapters) => {
 
 const getCurrentChapter = (model) => {
   const pos = model.get('scrollY')
-  return model.get('chapters').filter((el) =>
+  return (model.get('chapters').filter((el) =>
     el.get('topPx') <= pos &&
     el.get('topPx') + el.get('height') > pos
-  ).get(0).get('url')
+  ).get(0) || Immutable.Map()).get('url')
 }
 
 this.on('mount', () => {
@@ -206,14 +207,17 @@ this.on('mount', () => {
   // TODO: rename render -> update
   const update = (model) => {
     const newModel = model
-      .set('scrollY', window.scrollY)
-      .set('windowH', window.innerHeight)
-      .set('hash', window.location.hash)
-      .set( 'height', calcHeightSum(model.get('chapters')) )
-      .set('factor', window.innerHeight / 100)
-      .set('chapter', getCurrentChapter(model))
-      .set('width', window.innerWidth)
-    return newModel.update('chapters', updateChapterMaps.bind(null, newModel))
+      .update('chapters', updateChapterMaps.bind(null, model))
+    return (
+      newModel
+        .set('scrollY', window.scrollY)
+        .set('windowH', window.innerHeight)
+        .set('hash', window.location.hash)
+        .set( 'height', calcHeightSum(model.get('chapters')) )
+        .set('factor', window.innerHeight / 100)
+        .set('chapter', getCurrentChapter(newModel))
+        .set('width', window.innerWidth)
+    )
   }
 
   const loop = (model) =>

@@ -25,7 +25,7 @@ section {
 }
 
 .text__wrapper {
-  position: absolute;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: end;
