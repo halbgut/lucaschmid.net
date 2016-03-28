@@ -117,7 +117,7 @@ const updatePosition = (model, chapter) => {
 
 const updater = (actions, model) => { // This function is used to produce side-effects
   let cachedModel = model
-  return (model) => {
+  return (model, parentModel) => {
     model.forEach((el, k) => {
       if (
         (
@@ -128,7 +128,7 @@ const updater = (actions, model) => { // This function is used to produce side-e
           typeof el === 'object' ||
           el !== cachedModel.get(k)
         )
-      ) actions[k](el, model)
+      ) actions[k](el, model, parentModel)
     })
     return cachedModel = model
   }
@@ -171,10 +171,10 @@ const initializeSectionStyles = (chapters) => {
 
 const getCurrentChapter = (model) => {
   const pos = model.get('scrollY')
-  return (model.get('chapters').filter((el) =>
+  return model.get('chapters').filter((el) =>
     el.get('topPx') <= pos &&
     el.get('topPx') + el.get('height') > pos
-  ).get(0) || Immutable.Map()).get('url')
+  ).get(0) || Immutable.Map()
 }
 
 this.on('mount', () => {
@@ -188,7 +188,8 @@ this.on('mount', () => {
     factor: window.innerHeight / 100,
     chapter: undefined,
     events: Immutable.Map({
-      load: true
+      load: true,
+      firstUpdate: false
     })
   })
 
@@ -200,17 +201,26 @@ this.on('mount', () => {
       }
     }),
     height: (height, model) => { model.get('root').style.height = height + 'px' },
-    chapter: (chapter, model) => { domH.updateHash(chapter) },
+    chapter: (chapter, model) => { domH.updateHash(chapter.get('url')) },
     events: updater({
+      firstUpdate: (firstUpdate, events, model) => {
+        if (!firstUpdate) return
+        window.scrollTo(0, model.get('chapter').get('topPx'))
+      }
     }, Immutable.Map({}))
   }, Immutable.Map({}))
 
   const update = (model) => {
     let newModel = model.update('chapters', updateChapterMaps.bind(null, model))
     // Event handling
-    if (newModel.get('events').get('load')) {
-    newModel = newModel.update('chapters', initializeSectionStyles)
+    let load = newModel.get('events').get('load')
+    newModel = newModel.update('events', (events) => events.map(() => false))
+    if (load) {
+      newModel = newModel
+        .update('chapters', initializeSectionStyles)
+        .update('events', (events) => events.set('firstUpdate', true))
     }
+
     return (
       newModel
         .set('scrollY', window.scrollY)
@@ -220,7 +230,6 @@ this.on('mount', () => {
         .set('factor', window.innerHeight / 100)
         .set('chapter', getCurrentChapter(newModel))
         .set('width', window.innerWidth)
-        .update('events', (events) => events.map(() => false))
     )
   }
 
