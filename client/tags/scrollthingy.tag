@@ -87,6 +87,24 @@ const getChapters = (model) =>
       element: el // Not Immutable
     }))
 
+const updateChapterMaps = (() => {
+  let cachedWidth = 0
+  return (model, chapters) => {
+    cachedWidth = model.get('width')
+    return chapters.map((chapter, i) => {
+      const newChapter = updatePosition(model, chapter)
+      if (model.get('width') === cachedWidth) return newChapter
+      const height = newChapter.get('element')
+      const top = calcHeightSum(model.get('chapters').slice(0, i))
+      return newChapter
+        .set('vh', calcVh(height))
+        .set('heigt', height)
+        .set('top', calcVh(top))
+        .set('topPx', top)
+    })
+  }
+})()
+
 const updatePosition = (model, chapter) => {
   const min = chapter.vh * -1
   let pos =
@@ -109,9 +127,9 @@ const updater = (actions, model) => { // This function is used to produce side-e
           typeof el === 'object' ||
           el !== cachedModel.get(k)
         )
-      ) (actions[k])(el, model) // this doesn't work for arrays yet
+      ) cachedModel = (actions[k])(el, model) || model
     })
-    return cachedModel = model // especially this part
+    return cachedModel
   }
 }
 
@@ -171,13 +189,17 @@ this.on('mount', () => {
   })
 
   const render = updater({
-    hash: (hash) => window.location.hash = hash,
+    hash: (hash) => { window.location.hash = hash },
     chapters: lazyArrayUpdater({
-      pos: (pos, el) =>
+      pos: (pos, el) => {
         el.get('element').style.transform = `translateY(${pos}vh)`
+      }
     }),
     height: (height, model) => { model.get('root').style.height = height + 'px' },
-    chapter: (chapter) => { domH.updateHash(chapter) }
+    chapter: (chapter, model) => {
+      domH.updateHash(chapter)
+      return
+    }
   }, model)
 
   // TODO: rename render -> update
@@ -189,9 +211,8 @@ this.on('mount', () => {
       .set( 'height', calcHeightSum(model.get('chapters')) )
       .set('factor', window.innerHeight / 100)
       .set('chapter', getCurrentChapter(model))
-    return newModel.update('chapters', (chapters) =>
-      chapters.map(updatePosition.bind(null, newModel)) // The *Height* and *top* attributes should be updated here too
-    )
+      .set('width', window.innerWidth)
+    return newModel.update('chapters', updateChapterMaps.bind(null, newModel))
   }
 
   const loop = (model) =>
