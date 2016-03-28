@@ -96,7 +96,7 @@ module.exports = {
         resolve()
       })
     }),
-    '/wimdu-application': (context) => new Promise((resolve, reject) => {
+    '/application': (context) => new Promise((resolve, reject) => {
       parallelPromise([
         getMarkdown('application/*/*'),
         view.private.getTemplate('application', false)
