@@ -4,7 +4,7 @@
   </div>
   <nav class="böttns">
     <li each={ chapters } class="böttns__item">
-      <a href="#{get('url')}" class="böttns__link"></a>
+      <a href="#{get('url')}" class={ böttns__link: true, böttns__link--active: active === get('url') }></a>
     </li>
   </nav>
 <style scoped>
