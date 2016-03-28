@@ -118,7 +118,6 @@ const updatePosition = (model, chapter) => {
 const updater = (actions, model) => { // This function is used to produce side-effects
   let cachedModel = model
   return (model) => {
-    let newModel = model
     model.forEach((el, k) => {
       if (
         (
@@ -129,9 +128,9 @@ const updater = (actions, model) => { // This function is used to produce side-e
           typeof el === 'object' ||
           el !== cachedModel.get(k)
         )
-      ) newModel = (actions[k](el, newModel) || newModel)
+      ) actions[k](el, model)
     })
-    return cachedModel = newModel
+    return cachedModel = model
   }
 }
 
@@ -184,10 +183,13 @@ this.on('mount', () => {
     scrollY: window.scrollY,
     windowH: window.innerHeight,
     hash: window.location.hash,
-    height: 0,
+    height: this.root.clientHeight,
     root: this.root,
     factor: window.innerHeight / 100,
-    chapter: undefined
+    chapter: undefined,
+    events: Immutable.Map({
+      load: true
+    })
   })
 
   const render = updater({
@@ -198,16 +200,17 @@ this.on('mount', () => {
       }
     }),
     height: (height, model) => { model.get('root').style.height = height + 'px' },
-    chapter: (chapter, model) => {
-      domH.updateHash(chapter)
-      return
-    }
-  }, model)
+    chapter: (chapter, model) => { domH.updateHash(chapter) },
+    events: updater({
+    }, Immutable.Map({}))
+  }, Immutable.Map({}))
 
-  // TODO: rename render -> update
   const update = (model) => {
-    const newModel = model
-      .update('chapters', updateChapterMaps.bind(null, model))
+    let newModel = model.update('chapters', updateChapterMaps.bind(null, model))
+    // Event handling
+    if (newModel.get('events').get('load')) {
+    newModel = newModel.update('chapters', initializeSectionStyles)
+    }
     return (
       newModel
         .set('scrollY', window.scrollY)
@@ -217,15 +220,16 @@ this.on('mount', () => {
         .set('factor', window.innerHeight / 100)
         .set('chapter', getCurrentChapter(newModel))
         .set('width', window.innerWidth)
+        .update('events', (events) => events.map(() => false))
     )
   }
 
   const loop = (model) =>
     requestAnimationFrame(() =>
-      loop(render(update(model)))
+      loop(update(render(model)))
     )
 
-  loop(model.set('chapters', initializeSectionStyles(getChapters(model))))
+  loop( model.set('chapters', getChapters(model)) )
 })
 </script>
 </scrollthingy>
