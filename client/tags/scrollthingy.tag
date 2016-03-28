@@ -117,6 +117,7 @@ const updatePosition = (model, chapter) => {
 const updater = (actions, model) => { // This function is used to produce side-effects
   let cachedModel = model
   return (model) => {
+    let newModel = model
     model.forEach((el, k) => {
       if (
         (
@@ -127,9 +128,9 @@ const updater = (actions, model) => { // This function is used to produce side-e
           typeof el === 'object' ||
           el !== cachedModel.get(k)
         )
-      ) cachedModel = (actions[k])(el, model) || model
+      ) newModel = (actions[k](el, newModel) || newModel)
     })
-    return cachedModel
+    return cachedModel = newModel
   }
 }
 
