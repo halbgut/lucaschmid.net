@@ -4,7 +4,7 @@
   </div>
   <nav class="böttns">
     <li each={ chapters } class="böttns__item">
-      <a href="#{url}" class="böttns__link"></a>
+      <a href="#{get('url')}" class="böttns__link"></a>
     </li>
   </nav>
 <style scoped>
@@ -107,7 +107,7 @@ const updateChapterMaps = (() => {
 })()
 
 const updatePosition = (model, chapter) => {
-  const min = chapter.vh * -1
+  const min = chapter.get('vh') * -1
   let pos =
     model.get('scrollY') / model.get('factor') * -1 + chapter.get('top')
   if (pos < min) pos = min
@@ -120,10 +120,7 @@ const updater = (actions, model) => { // This function is used to produce side-e
   return (model, parentModel) => {
     model.forEach((el, k) => {
       if (
-        (
-          actions[k] ||
-          actions['*']
-        ) &&
+        actions[k] &&
         (
           typeof el === 'object' ||
           el !== cachedModel.get(k)
@@ -156,7 +153,7 @@ const lazyArrayUpdater = (actions) => {
   const cache = {}
   return (arr) => {
     arr.forEach((el, k) => {
-      (cache[k] || (cache[k] = updater(actions, el)))(el)
+      (cache[k] || (cache[k] = updater(actions, el, arr)))(el)
     })
   }
 }
@@ -198,13 +195,19 @@ this.on('mount', () => {
     chapters: lazyArrayUpdater({
       pos: (pos, el) => {
         el.get('element').style.transform = `translateY(${pos}vh)`
-      }
+      },
     }),
     height: (height, model) => { model.get('root').style.height = height + 'px' },
-    chapter: (chapter, model) => { domH.updateHash(chapter.get('url')) },
+    chapter: updater({
+      url: (url) => {
+        this.update({ active: url })
+        domH.updateHash(url)
+      }
+    }, Immutable.Map()),
     events: updater({
       firstUpdate: (firstUpdate, events, model) => {
         if (!firstUpdate) return
+        this.update({ chapters: model.get('chapters').toArray() })
         window.scrollTo(0, model.get('chapter').get('topPx'))
       }
     }, Immutable.Map({}))
