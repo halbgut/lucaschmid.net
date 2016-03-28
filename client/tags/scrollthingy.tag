@@ -7,68 +7,81 @@
       <a href="#{get('url')}" class={ böttns__link: true, böttns__link--active: active === get('url') }></a>
     </li>
   </nav>
-<style scoped>
-:scope {
-  position: relative;
-  display: block;
-}
-
-:scope .content {
-  z-index: 1;
-  display: block;
-  overflow: hidden;
-}
-
-:scope .content > section {
-  position: relative;
-  min-height: 100vh;
-  min-width: 100%;
-  background-color: white;
-}
-
-:scope .böttns {
-  z-index: 3;
-  position: fixed;
-  right: 0;
-  top: 0;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-:scope .böttns__link {
-  display: block;
-  width: 1rem;
-  height: 1rem;
-  background-color: hsla(0, 0%, 0%, .6);
-  border-radius: 1rem;
-  margin: .3rem;
-  border: solid 3px hsl(0, 0%, 100%);
-  transform: scale(1);
-  transition: .2s transform;
-}
-
-:scope .böttns__link--active {
-  background-color: hsla(0, 0%, 100%, .6);
-  border-color: solid 3px hsl(0, 0%, 0%);
-  transform: scale(1.2);
-}
-
-:scope .böttns {
-  list-style: none;
-}
-
-:scope section:last-child {
-  box-sizing: content-box;
-  padding-bottom: 1px;
-}
-
-</style>
 <script>
+
 const _ = require('lodash')
 const domH = require('../js/lib/domHelpers.js')
 const Immutable= require('immutable')
+
+this.on('mount', () => {
+  // TODO: Add a scrolling animation
+  const model = Immutable.Map({
+    scrollY: window.scrollY,
+    windowH: window.innerHeight,
+    hash: window.location.hash,
+    height: this.root.clientHeight,
+    root: this.root,
+    factor: window.innerHeight / 100,
+    chapter: undefined,
+    events: Immutable.Map({
+      load: true,
+      firstUpdate: false
+    })
+  })
+
+  const render = updater({
+    hash: (hash) => { window.location.hash = hash },
+    chapters: lazyArrayUpdater({
+      pos: (pos, el) => {
+        el.get('element').style.transform = `translateY(${pos}vh)`
+      },
+    }),
+    height: (height, model) => { model.get('root').style.height = height + 'px' },
+    chapter: updater({
+      url: (url) => {
+        this.update({ active: url })
+        domH.updateHash(url)
+      }
+    }, Immutable.Map()),
+    events: updater({
+      firstUpdate: (firstUpdate, events, model) => {
+        if (!firstUpdate) return
+        this.update({ chapters: model.get('chapters').toArray() })
+        window.scrollTo(0, model.get('chapter').get('topPx'))
+      }
+    }, Immutable.Map({}))
+  }, Immutable.Map({}))
+
+  const update = (model) => {
+    let newModel = model.update('chapters', updateChapterMaps.bind(null, model))
+    // Event handling
+    let load = newModel.get('events').get('load')
+    newModel = newModel.update('events', (events) => events.map(() => false))
+    if (load) {
+      newModel = newModel
+        .update('chapters', initializeSectionStyles)
+        .update('events', (events) => events.set('firstUpdate', true))
+    }
+
+    return (
+      newModel
+        .set('scrollY', window.scrollY)
+        .set('windowH', window.innerHeight)
+        .set('hash', window.location.hash)
+        .set( 'height', calcHeightSum(model.get('chapters')) )
+        .set('factor', window.innerHeight / 100)
+        .set('chapter', getCurrentChapter(newModel))
+        .set('width', window.innerWidth)
+    )
+  }
+
+  const loop = (model) =>
+    requestAnimationFrame(() =>
+      loop(update(render(model)))
+    )
+
+  loop( model.set('chapters', getChapters(model)) )
+})
 
 const getChapters = (model) =>
   Immutable.List(
@@ -174,75 +187,63 @@ const getCurrentChapter = (model) => {
   ).get(0) || Immutable.Map()
 }
 
-this.on('mount', () => {
-  // TODO: Add a scrolling animation
-  const model = Immutable.Map({
-    scrollY: window.scrollY,
-    windowH: window.innerHeight,
-    hash: window.location.hash,
-    height: this.root.clientHeight,
-    root: this.root,
-    factor: window.innerHeight / 100,
-    chapter: undefined,
-    events: Immutable.Map({
-      load: true,
-      firstUpdate: false
-    })
-  })
-
-  const render = updater({
-    hash: (hash) => { window.location.hash = hash },
-    chapters: lazyArrayUpdater({
-      pos: (pos, el) => {
-        el.get('element').style.transform = `translateY(${pos}vh)`
-      },
-    }),
-    height: (height, model) => { model.get('root').style.height = height + 'px' },
-    chapter: updater({
-      url: (url) => {
-        this.update({ active: url })
-        domH.updateHash(url)
-      }
-    }, Immutable.Map()),
-    events: updater({
-      firstUpdate: (firstUpdate, events, model) => {
-        if (!firstUpdate) return
-        this.update({ chapters: model.get('chapters').toArray() })
-        window.scrollTo(0, model.get('chapter').get('topPx'))
-      }
-    }, Immutable.Map({}))
-  }, Immutable.Map({}))
-
-  const update = (model) => {
-    let newModel = model.update('chapters', updateChapterMaps.bind(null, model))
-    // Event handling
-    let load = newModel.get('events').get('load')
-    newModel = newModel.update('events', (events) => events.map(() => false))
-    if (load) {
-      newModel = newModel
-        .update('chapters', initializeSectionStyles)
-        .update('events', (events) => events.set('firstUpdate', true))
-    }
-
-    return (
-      newModel
-        .set('scrollY', window.scrollY)
-        .set('windowH', window.innerHeight)
-        .set('hash', window.location.hash)
-        .set( 'height', calcHeightSum(model.get('chapters')) )
-        .set('factor', window.innerHeight / 100)
-        .set('chapter', getCurrentChapter(newModel))
-        .set('width', window.innerWidth)
-    )
-  }
-
-  const loop = (model) =>
-    requestAnimationFrame(() =>
-      loop(update(render(model)))
-    )
-
-  loop( model.set('chapters', getChapters(model)) )
-})
 </script>
+<style scoped>
+:scope {
+  position: relative;
+  display: block;
+}
+
+:scope .content {
+  z-index: 1;
+  display: block;
+  overflow: hidden;
+}
+
+:scope .content > section {
+  position: relative;
+  min-height: 100vh;
+  min-width: 100%;
+  background-color: white;
+}
+
+:scope .böttns {
+  z-index: 3;
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+:scope .böttns__link {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  background-color: hsla(0, 0%, 0%, .6);
+  border-radius: 1rem;
+  margin: .3rem;
+  border: solid 3px hsl(0, 0%, 100%);
+  transform: scale(1);
+  transition: .2s transform;
+}
+
+:scope .böttns__link--active {
+  background-color: hsla(0, 0%, 100%, .6);
+  border-color: solid 3px hsl(0, 0%, 0%);
+  transform: scale(1.2);
+}
+
+:scope .böttns {
+  list-style: none;
+}
+
+:scope section:last-child {
+  box-sizing: content-box;
+  padding-bottom: 1px;
+}
+</style>
 </scrollthingy>
 
