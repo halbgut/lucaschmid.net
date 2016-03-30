@@ -224,6 +224,7 @@ const getCurrentChapter = (model) => {
 :scope .content {
   z-index: 1;
   display: block;
+  height: 100%;
   overflow: hidden;
   position: relative;
 }
