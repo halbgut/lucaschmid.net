@@ -4,7 +4,11 @@
   </div>
   <nav class="böttns">
     <li each={ chapters } class="böttns__item">
-      <a href="#{get('url')}" class={ böttns__link: true, böttns__link--active: active === get('url') }></a>
+      <a
+        onclick={hashchange}
+        href="#{get('url')}"
+        class={ böttns__link: true, böttns__link--active: active === get('url') }
+      ></a>
     </li>
   </nav>
 <script>
@@ -13,24 +17,27 @@ const _ = require('lodash')
 const domH = require('../js/lib/domHelpers.js')
 const Immutable= require('immutable')
 
+let hashchanged = false
+
 this.on('mount', () => {
   // TODO: Add a scrolling animation
   const model = Immutable.Map({
     scrollY: window.scrollY,
     windowH: window.innerHeight,
-    hash: window.location.hash,
+    hash: window.location.hash.substr(1),
     height: this.root.clientHeight,
     root: this.root,
     factor: window.innerHeight / 100,
     chapter: undefined,
     events: Immutable.Map({
       load: true,
-      firstUpdate: false
+      firstUpdate: false,
+      hashchange: false
     })
   })
 
   const render = updater({
-    hash: (hash) => { window.location.hash = hash },
+    hash: (hash) => { domH.updateHash(hash) },
     chapters: lazyArrayUpdater({
       pos: (pos, el) => {
         el.get('element').style.transform = `translateY(${pos}vh)`
@@ -48,12 +55,20 @@ this.on('mount', () => {
         if (!firstUpdate) return
         this.update({ chapters: model.get('chapters').toArray() })
         window.scrollTo(0, model.get('chapter').get('topPx'))
+      },
+      hashchange: (hashchange, events, model) => {
+        const chapter = model
+          .get('chapters')
+          .filter((c) => c.get('url') === model.get('hash'))
+          .get(0)
+        if (chapter) window.scrollTo(0, chapter.get('topPx'))
       }
     }, Immutable.Map({}))
   }, Immutable.Map({}))
 
   const update = (model) => {
     let newModel = model.update('chapters', updateChapterMaps.bind(null, model))
+
     // Event handling
     let load = newModel.get('events').get('load')
     newModel = newModel.update('events', (events) => events.map(() => false))
@@ -62,12 +77,19 @@ this.on('mount', () => {
         .update('chapters', initializeSectionStyles)
         .update('events', (events) => events.set('firstUpdate', true))
     }
+    if (hashchanged) {
+      hashchanged = false
+      if (window.location.hash !== newModel.get('hash'))
+        newModel = newModel
+          .set('hash', window.location.hash)
+          .update('events', (events) => events.set('hashchange', true))
+    }
 
     return (
       newModel
         .set('scrollY', window.scrollY)
         .set('windowH', window.innerHeight)
-        .set('hash', window.location.hash)
+        .set('hash', window.location.hash.substr(1))
         .set( 'height', calcHeightSum(model.get('chapters')) )
         .set('factor', window.innerHeight / 100)
         .set('chapter', getCurrentChapter(newModel))
@@ -82,6 +104,11 @@ this.on('mount', () => {
 
   loop( model.set('chapters', getChapters(model)) )
 })
+
+this.hashchange = (e) => {
+  setTimeout(() => { hashchanged = true }, 0)
+  return true
+}
 
 const getChapters = (model) =>
   Immutable.List(
