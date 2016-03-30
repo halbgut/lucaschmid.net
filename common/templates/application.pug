@@ -14,5 +14,8 @@ html(lang=lang)
         section(style="background-image: url('#{chapter.image}');" data-name= chapter.name data-title= chapter.title data-id= chapter.name)
           div.text__wrapper
             div.text!= chapter.html
+      section.footer
+        p.footer__center
+          | [Insert motivational quote here]
     script(src="/build/application.js")
 

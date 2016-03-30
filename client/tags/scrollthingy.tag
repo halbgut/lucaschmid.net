@@ -53,7 +53,7 @@ this.on('mount', () => {
     events: updater({
       firstUpdate: (firstUpdate, events, model) => {
         if (!firstUpdate) return
-        this.update({ chapters: model.get('chapters').toArray() })
+        this.update({ chapters: model.get('chapters').slice(0, -1).toArray() })
         window.scrollTo(0, model.get('chapter').get('topPx'))
       },
       hashchange: (hashchange, events, model) => {
@@ -225,9 +225,10 @@ const getCurrentChapter = (model) => {
   z-index: 1;
   display: block;
   overflow: hidden;
+  position: relative;
 }
 
-:scope .content > section {
+:scope section {
   position: relative;
   min-height: 100vh;
   min-width: 100%;
@@ -235,7 +236,7 @@ const getCurrentChapter = (model) => {
 }
 
 :scope .böttns {
-  z-index: 3;
+  z-index: 1;
   position: fixed;
   right: 0;
   top: 0;
@@ -267,10 +268,22 @@ const getCurrentChapter = (model) => {
   list-style: none;
 }
 
-:scope section:last-child {
-  box-sizing: content-box;
-  padding-bottom: 1px;
+:scope section:nth-last-child(2) {
+  box-shadow: 0 -14px 30px 14px black;
 }
+
+:scope .footer {
+  min-height: 10vh;
+  height: 10vh;
+  bottom: 0;
+}
+
+:scope .footer__center {
+  color: #000;
+  width: 100%;
+  text-align: center;
+}
+
 </style>
 </scrollthingy>
 
