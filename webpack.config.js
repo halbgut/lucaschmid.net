@@ -1,4 +1,5 @@
 const webpack = require('webpack')
+const autoprefixer = require('autoprefixer')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const dev = process.env.NODE_ENV !== 'production'
 const plugins = [
@@ -42,12 +43,13 @@ module.exports = {
         loader: ExtractTextPlugin.extract(
           'style-loader',
           (dev
-            ? 'css-loader?-minimize'
-            : 'css-loader?minimize'
+            ? 'css-loader?-minimize!postcss-loader'
+            : 'css-loader?minimize!postcss-loader'
           )
         )
       }
     ]
-  }
+  },
+  postcss: () => [autoprefixer]
 }
 
