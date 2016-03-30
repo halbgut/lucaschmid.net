@@ -274,7 +274,6 @@ const getCurrentChapter = (model) => {
 
 :scope .footer {
   min-height: 10vh;
-  height: 10vh;
   bottom: 0;
 }
 
@@ -282,6 +281,11 @@ const getCurrentChapter = (model) => {
   color: #000;
   width: 100%;
   text-align: center;
+  line-height: 2rem;
+}
+
+:scope .footer__center a {
+  color: blue;
 }
 
 </style>
