@@ -53,7 +53,7 @@ this.on('mount', () => {
     events: updater({
       firstUpdate: (firstUpdate, events, model) => {
         if (!firstUpdate) return
-        this.update({ chapters: model.get('chapters').slice(0, -1).toArray() })
+        this.update({ chapters: model.get('chapters').slice(1, -1).toArray() })
         window.scrollTo(0, model.get('chapter').get('topPx'))
       },
       hashchange: (hashchange, events, model) => {
@@ -273,19 +273,16 @@ const getCurrentChapter = (model) => {
   box-shadow: 0 -14px 30px 14px black;
 }
 
-:scope .footer {
+:scope section:nth-last-child(1) {
   min-height: 10vh;
   bottom: 0;
-}
-
-:scope .footer__center {
   color: #000;
   width: 100%;
   text-align: center;
   line-height: 2rem;
 }
 
-:scope .footer__center a {
+:scope section:nth-last-child(1) a {
   color: blue;
 }
 

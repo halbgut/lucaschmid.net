@@ -14,10 +14,5 @@ html(lang=lang)
         section(style="background-image: url('#{chapter.image}');" data-name= chapter.name data-title= chapter.title data-id= chapter.name)
           div.text__wrapper
             div.text!= chapter.html
-      section.footer
-        p.footer__center
-          | Images taken from 
-          a(target="_blank" href="http://nos.twnsnd.co/" alt="Great old timy stock photos :)")
-            | New Old Stock
     script(src="/build/application.js")
 
