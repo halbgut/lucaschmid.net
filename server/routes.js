@@ -96,7 +96,7 @@ module.exports = {
         resolve()
       })
     }),
-    '/application': (context) => new Promise((resolve, reject) => {
+    '/resume': (context) => new Promise((resolve, reject) => {
       parallelPromise([
         getMarkdown('application/*/*'),
         view.private.getTemplate('application', false)
