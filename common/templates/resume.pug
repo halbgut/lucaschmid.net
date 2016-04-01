@@ -7,12 +7,12 @@ html(lang=lang)
     meta(name="viewport" content="width=device-width, initial-scale=1")
     title
       | Resume
-    <style>!{loadFile('client/build/application.css')}</style>
+    <style>!{loadFile('client/build/resume.css')}</style>
   body
     scrollthingy
       each chapter in chapters
         section(style="background-image: url('#{chapter.image}');" data-name= chapter.name data-title= chapter.title data-id= chapter.name)
           div.text__wrapper
             div.text!= chapter.html
-    script(src="/build/application.js")
+    script(src="/build/resume.js")
 

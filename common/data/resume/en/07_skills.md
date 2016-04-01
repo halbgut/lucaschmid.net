@@ -2,7 +2,7 @@
 
 _Rated on a scale of 2, 3, 5, 8, 13, 21._
 
-[image:/img/application/tumblr_npu7nhn42b1sfie3io1_1280.jpg]
+[image:/img/resume/tumblr_npu7nhn42b1sfie3io1_1280.jpg]
 
 ### (Natural) Languages
 

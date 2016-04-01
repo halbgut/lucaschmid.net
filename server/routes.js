@@ -96,10 +96,10 @@ module.exports = {
         resolve()
       })
     }),
-    '/resume': (context) => new Promise((resolve, reject) => {
+    '/resume-wimdu': (context) => new Promise((resolve, reject) => {
       parallelPromise([
-        getMarkdown('application/*/*'),
-        view.private.getTemplate('application', false)
+        getMarkdown('resume/*/*'),
+        view.private.getTemplate('resume', false)
       ])
         .then((res) => {
           context.status = 200
@@ -107,7 +107,7 @@ module.exports = {
           resolve()
         })
         .catch((err) => resolve(fail(context, err)))
-    }),
+    })
   }
 }
 

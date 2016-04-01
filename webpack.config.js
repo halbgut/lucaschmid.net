@@ -13,7 +13,7 @@ if (!dev) plugins.push(new webpack.optimize.DedupePlugin())
 module.exports = {
   entry: {
     main: './client/entry',
-    application: './client/application'
+    resume: './client/resume'
   },
   output: {
     filename: '[name].js',
