@@ -40,7 +40,7 @@ this.on('mount', () => {
     hash: (hash) => { domH.updateHash(hash) },
     chapters: lazyArrayUpdater({
       pos: (pos, el) => {
-        el.get('element').style.transform = `translateY(${pos}vh)`
+        el.get('element').style.transform = `translate3d(0, ${pos}vh, 0)`
       },
     }),
     height: (height, model) => { model.get('root').style.height = height + 'px' },
@@ -133,7 +133,7 @@ const updateChapterMaps = (() => {
     let newChapters = chapters.map((chapter, i, arr) => {
       const newChapter = updatePosition(model, chapter)
       if (model.get('width') === cachedWidth) return newChapter
-      const height = newChapter.get('element')
+      const height = newChapter.get('element').clientHeight
       const top = calcHeightSum(arr.slice(0, i))
       return newChapter
         .set('vh', calcVh(height))
