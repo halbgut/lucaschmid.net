@@ -97,7 +97,8 @@ this.on('mount', () => {
   text-decoration: underline;
 }
 
-:scope [data-lang] {
+[data-lang] {
+  display: none;
   opacity: 0;
   transform: translateY(10vh);
   transition: opacity .8s, transform .8s;
