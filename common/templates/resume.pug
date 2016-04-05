@@ -9,10 +9,12 @@ html(lang=lang)
       | Resume
     <style>!{loadFile('client/build/resume.css')}</style>
   body
-    scrollthingy
-      each chapter in chapters
-        section(style="background-image: url('#{chapter.image}');" data-name= chapter.name data-title= chapter.title data-id= chapter.name)
-          div.text__wrapper
-            div.text!= chapter.html
+    translation(data-languages= languages)
+      scrollthingy
+        each chapter in chapters
+          section(style="background-image: url('#{chapter.image}');" data-name= chapter.name data-title= chapter.title data-id= chapter.name)
+            div.text__wrapper
+              each text in chapter.texts
+                div.text(data-lang= text.lang)!= text.html
     script(src="/build/resume.js")
 

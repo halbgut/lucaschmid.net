@@ -24,7 +24,7 @@ this.on('mount', () => {
   const model = Immutable.Map({
     scrollY: window.scrollY,
     windowH: window.innerHeight,
-    hash: window.location.hash.substr(1),
+    hash: domH.getHashFrag(1),
     height: this.root.clientHeight,
     root: this.root,
     factor: window.innerHeight / 100,
@@ -37,7 +37,7 @@ this.on('mount', () => {
   })
 
   const render = updater({
-    hash: (hash) => { domH.updateHash(hash) },
+    hash: (hash) => { domH.setHashFrag(1, hash) },
     chapters: lazyArrayUpdater({
       pos: (pos, el) => {
         el.get('element').style.transform = `translate3d(0, ${pos}vh, 0)`
@@ -47,7 +47,7 @@ this.on('mount', () => {
     chapter: updater({
       url: (url) => {
         this.update({ active: url })
-        domH.updateHash(url)
+        domH.setHashFrag(1, url)
       }
     }, Immutable.Map()),
     events: updater({
@@ -57,6 +57,13 @@ this.on('mount', () => {
         window.scrollTo(0, model.get('chapter').get('topPx'))
       },
       hashchange: (hashchange, events, model) => {
+        console.log(
+            model
+          .get('chapters')
+          .filter((c) => c.get('url') === model.get('hash'))
+          .get(0)
+          .toObject()
+            )
         const chapter = model
           .get('chapters')
           .filter((c) => c.get('url') === model.get('hash'))
@@ -79,9 +86,9 @@ this.on('mount', () => {
     }
     if (hashchanged) {
       hashchanged = false
-      if (window.location.hash !== newModel.get('hash'))
+      if (domH.getHashFrag(1) !== newModel.get('hash'))
         newModel = newModel
-          .set('hash', window.location.hash)
+          .set('hash', domH.getHashFrag(1))
           .update('events', (events) => events.set('hashchange', true))
     }
 
@@ -89,7 +96,7 @@ this.on('mount', () => {
       newModel
         .set('scrollY', window.scrollY)
         .set('windowH', window.innerHeight)
-        .set('hash', window.location.hash.substr(1))
+        .set('hash', domH.getHashFrag(1))
         .set( 'height', calcHeightSum(model.get('chapters')) )
         .set('factor', window.innerHeight / 100)
         .set('chapter', getCurrentChapter(newModel))
@@ -106,8 +113,9 @@ this.on('mount', () => {
 })
 
 this.hashchange = (e) => {
-  setTimeout(() => { hashchanged = true }, 0)
-  return true
+  domH.setHashFrag(1, e.target.getAttribute('href').substr(1))
+  hashchanged = true
+  return false
 }
 
 const getChapters = (model) =>
@@ -175,7 +183,7 @@ const calcVh = (h) => h / (window.innerHeight / 100)
 
 const calcHeightSum = (elArr) =>
   elArr
-    .map((el) => el.clientHeight || el.get('element').clientHeight)
+    .map((el) => (el.get ? el.get('element') : el).clientHeight)
     .reduce((m, n) => n + m, 0)
 
 const updateActive = (el, i) => {
@@ -218,6 +226,7 @@ const getCurrentChapter = (model) => {
 <style scoped>
 :scope {
   position: relative;
+  z-index: 1;
   display: block;
 }
 

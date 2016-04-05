@@ -102,8 +102,19 @@ module.exports = {
         view.private.getTemplate('resume', false)
       ])
         .then((res) => {
+          const languages = []
+          res[0] = res[0]
+            .sort((c1, c2) => c1.name > c2.name ? 1 : - 1)
+            .reduce((m, c) => {
+              const lang = c.file.split('/').reverse()[1]
+              if (languages.indexOf(lang) === -1) languages.push(lang)
+              if (!m[c.name]) m[c.name] = c
+              if (!m[c.name].texts) m[c.name].texts = {}
+              m[c.name].texts[lang] = { html: c.html, lang }
+              return m
+            }, {})
           context.status = 200
-          context.body = pug(res[1])({ chapters: res[0] })
+          context.body = pug(res[1])({ chapters: res[0], languages })
           resolve()
         })
         .catch((err) => resolve(fail(context, err)))
