@@ -11,6 +11,15 @@ html(lang=lang)
   body
     translation(data-languages= languages)
       scrollthingy
+        section(style="background-image: url('/img/resume/tumblr_o1dennYMHW1sfie3io1_1280.jpg')" data-name="01_toc" data-id="01_toc" data-title="Table Of Contents")
+          div.text__wrapper
+            each lang in languages
+              div.text(data-lang= lang)
+                ul
+                  each chapter in chapters
+                    if chapter.title
+                      li
+                        a(href= "##{chapter.name}")= chapter.title
         each chapter in chapters
           section(style="background-image: url('#{chapter.image}');" data-name= chapter.name data-title= chapter.title data-id= chapter.name)
             div.text__wrapper

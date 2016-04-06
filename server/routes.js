@@ -104,8 +104,9 @@ module.exports = {
         .then((res) => {
           const languages = []
           res[0] = res[0]
-            .sort((c1, c2) => c1.name > c2.name ? 1 : - 1)
+            .sort((c1, c2) => c1.name > c2.name ? 1 : -1)
             .reduce((m, c) => {
+              console.log(c.title)
               const lang = c.file.split('/').reverse()[1]
               if (languages.indexOf(lang) === -1) languages.push(lang)
               if (!m[c.name]) m[c.name] = c
