@@ -15,11 +15,18 @@
 
 const _ = require('lodash')
 const domH = require('../js/lib/domHelpers.js')
-const Immutable= require('immutable')
+const Immutable = require('immutable')
 
 let hashchanged = false
+let rendered = false
+window.mounted = window.mounted || false
 
 this.on('mount', () => {
+  if (mounted) return
+  mounted = true
+
+  const initialHash = domH.getHashFrag(1)
+
   // TODO: Add a scrolling animation
   const model = Immutable.Map({
     scrollY: window.scrollY,
@@ -31,7 +38,7 @@ this.on('mount', () => {
     chapter: undefined,
     events: Immutable.Map({
       load: true,
-      firstUpdate: false,
+      rendered: false,
       hashchange: false
     })
   })
@@ -51,27 +58,19 @@ this.on('mount', () => {
       }
     }, Immutable.Map()),
     events: updater({
-      firstUpdate: (firstUpdate, events, model) => {
-        if (!firstUpdate) return
+      rendered: (rendered, events, model) => {
+        if (!rendered) return
+        const chapter = getChapterByUrl(initialHash, model)
         this.update({ chapters: model.get('chapters').slice(1, -1).toArray() })
-        window.scrollTo(0, model.get('chapter').get('topPx'))
+        window.scrollTo(0, chapter.get('topPx'))
       },
       hashchange: (hashchange, events, model) => {
-        console.log(
-            model
-          .get('chapters')
-          .filter((c) => c.get('url') === model.get('hash'))
-          .get(0)
-          .toObject()
-            )
-        const chapter = model
-          .get('chapters')
-          .filter((c) => c.get('url') === model.get('hash'))
-          .get(0)
+        if(!hashchange) return
+        const chapter = getChapterByUrl(model.get('hash'), model)
         if (chapter) window.scrollTo(0, chapter.get('topPx'))
       }
-    }, Immutable.Map({}))
-  }, Immutable.Map({}))
+    }, model.get('events'))
+  }, model)
 
   const update = (model) => {
     let newModel = model.update('chapters', updateChapterMaps.bind(null, model))
@@ -82,7 +81,6 @@ this.on('mount', () => {
     if (load) {
       newModel = newModel
         .update('chapters', initializeSectionStyles)
-        .update('events', (events) => events.set('firstUpdate', true))
     }
     if (hashchanged) {
       hashchanged = false
@@ -91,6 +89,13 @@ this.on('mount', () => {
           .set('hash', domH.getHashFrag(1))
           .update('events', (events) => events.set('hashchange', true))
     }
+
+    newModel = newModel.update('events', (events) => events.set(
+      'rendered',
+      !rendered && window.scrollMaxY > 0
+        ? rendered = true
+        : false
+    ))
 
     return (
       newModel
@@ -117,6 +122,13 @@ this.hashchange = (e) => {
   hashchanged = true
   return false
 }
+
+const getChapterByUrl = (url, model) =>
+  model
+    .get('chapters')
+    .filter((c) => c.get('url') === url)
+    .get(0) ||
+  Immutable.map({})
 
 const getChapters = (model) =>
   Immutable.List(
@@ -173,9 +185,12 @@ const updater = (actions, model) => { // This function is used to produce side-e
           typeof el === 'object' ||
           el !== cachedModel.get(k)
         )
-      ) actions[k](el, model, parentModel)
+      ) {
+        actions[k](el, model, parentModel)
+      }
     })
-    return cachedModel = model
+    cachedModel = model
+    return model
   }
 }
 
