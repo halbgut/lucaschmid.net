@@ -52,12 +52,32 @@ img {
   padding: 1rem;
 }
 
-:scope section:nth-last-child(1) .text__wrapper {
+section:nth-last-child(1) .text__wrapper {
   min-height: auto;
 }
 
-:scope section:nth-last-child(1) .text {
+section:nth-last-child(1) .text {
   background-color: transparent;
+}
+
+section[data-name="00_intro"] {
+  background-position: center;
+}
+
+section[data-name="03_apprenticeship"] {
+  background-position: bottom;
+}
+
+section[data-name="04_goals"] {
+  background-position: bottom;
+}
+
+section[data-name="06_particulars"] {
+  background-position: center;
+}
+
+section[data-name="08_cv"] {
+  background-position: bottom;
 }
 
 @media (min-width 800px) {
