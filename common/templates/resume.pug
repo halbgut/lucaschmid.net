@@ -19,7 +19,7 @@ html(lang=lang)
                   each chapter in chapters
                     if chapter.title
                       li
-                        a(href= "##{chapter.name}")= chapter.title
+                        a(href="#/#{lang}/#{chapter.name}")= chapter.titles[lang]
         each chapter in chapters
           section(style="background-image: url('#{chapter.image}');" data-name= chapter.name data-title= chapter.title data-id= chapter.name)
             div.text__wrapper

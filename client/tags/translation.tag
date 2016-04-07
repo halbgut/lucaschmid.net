@@ -14,6 +14,8 @@
   <yield />
 <script>
 
+window.translation = this
+
 const domH = require('../js/lib/domHelpers.js')
 
 const setLang = (lang) =>

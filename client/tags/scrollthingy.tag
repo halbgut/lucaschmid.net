@@ -5,19 +5,16 @@
   <nav class="böttns">
     <li each={ chapters } class="böttns__item">
       <a
-        onclick={hashchange}
-        href="#{get('url')}"
+        href="#/{window.translation.lang}/{get('url')}"
         class={ böttns__link: true, böttns__link--active: active === get('url') }
       ></a>
     </li>
   </nav>
 <script>
 
-const _ = require('lodash')
 const domH = require('../js/lib/domHelpers.js')
 const Immutable = require('immutable')
 
-let hashchanged = false
 let rendered = false
 window.mounted = window.mounted || false
 
@@ -38,13 +35,19 @@ this.on('mount', () => {
     chapter: undefined,
     events: Immutable.Map({
       load: true,
-      rendered: false,
-      hashchange: false
+      rendered: false
     })
   })
 
   const render = updater({
-    hash: (hash) => { domH.setHashFrag(1, hash) },
+    hash: (hash, model) => {
+      domH.setHashFrag(1, hash)
+      if (model.get('chapter').get('url') !== hash) {
+        const chapter = getChapterByUrl(hash, model)
+        if (!chapter) return
+        window.scrollTo(0, chapter.get('topPx'))
+      }
+    },
     chapters: lazyArrayUpdater({
       pos: (pos, el) => {
         el.get('element').style.transform = `translate3d(0, ${pos}vh, 0)`
@@ -60,15 +63,11 @@ this.on('mount', () => {
     events: updater({
       rendered: (rendered, events, model) => {
         if (!rendered) return
-        const chapter = getChapterByUrl(initialHash, model)
         this.update({ chapters: model.get('chapters').slice(1, -1).toArray() })
+        const chapter = getChapterByUrl(initialHash, model)
+        if (!chapter) return
         window.scrollTo(0, chapter.get('topPx'))
       },
-      hashchange: (hashchange, events, model) => {
-        if(!hashchange) return
-        const chapter = getChapterByUrl(model.get('hash'), model)
-        if (chapter) window.scrollTo(0, chapter.get('topPx'))
-      }
     }, model.get('events'))
   }, model)
 
@@ -81,13 +80,6 @@ this.on('mount', () => {
     if (load) {
       newModel = newModel
         .update('chapters', initializeSectionStyles)
-    }
-    if (hashchanged) {
-      hashchanged = false
-      if (domH.getHashFrag(1) !== newModel.get('hash'))
-        newModel = newModel
-          .set('hash', domH.getHashFrag(1))
-          .update('events', (events) => events.set('hashchange', true))
     }
 
     newModel = newModel.update('events', (events) => events.set(
@@ -117,18 +109,12 @@ this.on('mount', () => {
   loop( model.set('chapters', getChapters(model)) )
 })
 
-this.hashchange = (e) => {
-  domH.setHashFrag(1, e.target.getAttribute('href').substr(1))
-  hashchanged = true
-  return false
-}
-
 const getChapterByUrl = (url, model) =>
   model
     .get('chapters')
     .filter((c) => c.get('url') === url)
     .get(0) ||
-  Immutable.map({})
+  Immutable.Map({})
 
 const getChapters = (model) =>
   Immutable.List(
