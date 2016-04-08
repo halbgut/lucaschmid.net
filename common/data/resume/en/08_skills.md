@@ -4,15 +4,19 @@ _Rated on a scale of 2, 3, 5, 8, 13, 21._
 
 [image:/img/resume/tumblr_npu7nhn42b1sfie3io1_1280.jpg]
 
+### Softskills
+
+* Integrates quickly in new environments.
+
 ### (Natural) Languages
 
-* **8** – English
-* **1**3 – German
+* **13** – English
+* **21** – German
 
 ### Programming Languages
 
 * **13** – JavaScript
-* **8** – CSS & SASS
+* **13** – CSS & SASS
 * **8** – PHP
 * **5** – [Elm](elm-lang.org)
 
@@ -20,6 +24,7 @@ _Rated on a scale of 2, 3, 5, 8, 13, 21._
 
 * **3** – React
 * **2** – Angular
+* **3** – [Cycle.js](http://cycle.js.org/)
 * **8** – [Riot.js](riotjs.com)
 * **13** – [Meteor](meteor.com)
 * **8** – JavaScript Build Systems (e.g. Webpack)
