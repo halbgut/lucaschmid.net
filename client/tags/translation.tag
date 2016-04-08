@@ -88,6 +88,8 @@ this.on('mount', () => {
 }
 
 :scope .langnav__switch {
+  margin: 0 -6px;
+  padding: 0;
   background-color: transparent;
   border: none;
   font: inherit;
