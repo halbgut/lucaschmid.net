@@ -72,7 +72,7 @@ this.on('mount', () => {
   }, model)
 
   const update = (model) => {
-    let newModel = model.update('chapters', updateChapterMaps.bind(null, model))
+    let newModel = model.update('chapters', updateChapterMaps.bind(null, model, model.get('events').get('rendered')))
 
     // Event handling
     let load = newModel.get('events').get('load')
@@ -135,10 +135,10 @@ const getChapters = (model) =>
 
 const updateChapterMaps = (() => {
   let cachedWidth = 0
-  return (model, chapters) => {
+  return (model, noCache, chapters) => {
     let newChapters = chapters.map((chapter, i, arr) => {
       const newChapter = updatePosition(model, chapter)
-      if (model.get('width') === cachedWidth) return newChapter
+      if (!noCache && model.get('width') === cachedWidth) return newChapter
       const height = newChapter.get('element').clientHeight
       const top = calcHeightSum(arr.slice(0, i))
       return newChapter
