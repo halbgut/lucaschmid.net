@@ -12,6 +12,7 @@
   </nav>
 <script>
 
+const h = require('../js/lib/scrollthingyHelpers.js')
 const domH = require('../js/lib/domHelpers.js')
 const Immutable = require('immutable')
 
@@ -25,6 +26,9 @@ this.on('mount', () => {
   const initialHash = domH.getHashFrag(1)
 
   // TODO: Add a scrolling animation
+  /*
+   * The initial state of the model
+   */
   const model = Immutable.Map({
     scrollY: window.scrollY,
     windowH: window.innerHeight,
@@ -39,189 +43,70 @@ this.on('mount', () => {
     })
   })
 
-  const render = updater({
-    hash: (hash, model) => {
-      domH.setHashFrag(1, hash)
-      if (model.get('chapter').get('url') !== hash) {
-        const chapter = getChapterByUrl(hash, model)
-        if (!chapter) return
-        window.scrollTo(0, chapter.get('topPx'))
-      }
-    },
-    chapters: lazyArrayUpdater({
-      pos: (pos, el) => {
-        el.get('element').style.transform = `translate3d(0, ${pos}vh, 0)`
-      },
-    }),
-    height: (height, model) => { model.get('root').style.height = height + 'px' },
-    chapter: updater({
-      url: (url) => {
-        this.update({ active: url })
-        domH.setHashFrag(1, url)
-      }
-    }, Immutable.Map()),
-    events: updater({
-      rendered: (rendered, events, model) => {
-        if (!rendered) return
-        this.update({ chapters: model.get('chapters').slice(1, -1).toArray() })
-        const chapter = getChapterByUrl(initialHash, model)
-        if (!chapter) return
-        window.scrollTo(0, chapter.get('topPx'))
-      },
-    }, model.get('events'))
-  }, model)
-
+  /*
+   * Update the model values to the DOM
+   * @arg {Object} model A model as defined above
+   * @returns {Object} The new Model
+   */
   const update = (model) => {
-    let newModel = model.update('chapters', updateChapterMaps.bind(null, model, model.get('events').get('rendered')))
-
-    // Event handling
-    let load = newModel.get('events').get('load')
-    newModel = newModel.update('events', (events) => events.map(() => false))
-    if (load) {
-      newModel = newModel
-        .update('chapters', initializeSectionStyles)
-    }
-
-    newModel = newModel.update('events', (events) => events.set(
-      'rendered',
-      !rendered && window.scrollMaxY > 0
-        ? rendered = true
-        : false
-    ))
-
+    const newModel = model
+      .update('chapters', h.updateChapterMaps.bind(null, model))
     return (
       newModel
         .set('scrollY', window.scrollY)
         .set('windowH', window.innerHeight)
         .set('hash', domH.getHashFrag(1))
-        .set( 'height', calcHeightSum(model.get('chapters')) )
+        .set( 'height', h.calcHeightSum(model.get('chapters')) )
         .set('factor', window.innerHeight / 100)
-        .set('chapter', getCurrentChapter(newModel))
+        .set('chapter', h.getCurrentChapter(newModel))
         .set('width', window.innerWidth)
     )
   }
 
-  const loop = (model) =>
-    requestAnimationFrame(() =>
-      loop(update(render(model)))
-    )
-
-  loop( model.set('chapters', getChapters(model)) )
-})
-
-const getChapterByUrl = (url, model) =>
-  model
-    .get('chapters')
-    .filter((c) => c.get('url') === url)
-    .get(0) ||
-  Immutable.Map({})
-
-const getChapters = (model) =>
-  Immutable.List(
-    Array.from(
-      model.get('root').querySelectorAll('.content section')
-    )
-  )
-    .map((el, i, arr) => Immutable.Map({
-      title: el.getAttribute('data-title'),
-      url: el.getAttribute('data-name'),
-      height: el.clientHeight,
-      top: calcVh(calcHeightSum(arr.slice(0, i))),
-      topPx: calcHeightSum(arr.slice(0, i)),
-      pos: 0,
-      vh: calcVh(el.clientHeight),
-      element: el // Not Immutable
-    }))
-
-const updateChapterMaps = (() => {
-  let cachedWidth = 0
-  return (model, noCache, chapters) => {
-    let newChapters = chapters.map((chapter, i, arr) => {
-      const newChapter = updatePosition(model, chapter)
-      if (!noCache && model.get('width') === cachedWidth) return newChapter
-      const height = newChapter.get('element').clientHeight
-      const top = calcHeightSum(arr.slice(0, i))
-      return newChapter
-        .set('vh', calcVh(height))
-        .set('heigt', height)
-        .set('top', calcVh(top))
-        .set('topPx', top)
-    })
-    cachedWidth = model.get('width')
-    return newChapters
-  }
-})()
-
-const updatePosition = (model, chapter) => {
-  const min = chapter.get('vh') * -1
-  let pos =
-    model.get('scrollY') / model.get('factor') * -1 + chapter.get('top')
-  if (pos < min) pos = min
-  if (pos > 0) pos = 0
-  return chapter.set('pos', pos)
-}
-
-const updater = (actions, model) => { // This function is used to produce side-effects
-  let cachedModel = model
-  return (model, parentModel) => {
-    model.forEach((el, k) => {
-      if (
-        actions[k] &&
-        (
-          typeof el === 'object' ||
-          el !== cachedModel.get(k)
-        )
-      ) {
-        actions[k](el, model, parentModel)
+  /*
+   * Renders the changes in the model using a diffing mechanism
+   * @param {Object} model A model
+   * @returns {Object} model The same model that was passed
+   */
+  const render = h.updater({
+    hash: (hash, model) => {
+      domH.setHashFrag(1, hash)
+      if ((model.get('chapter') || Immutable.Map()).get('url') !== hash) {
+        const chapter = h.getChapterByUrl(hash, model)
+        if (!chapter) return
+        window.scrollTo(0, chapter.get('topPx'))
       }
-    })
-    cachedModel = model
-    return model
-  }
-}
+    },
+    chapters: h.lazyArrayUpdater({
+      pos: (pos, el) => {
+        el.get('element').style.transform = `translate3d(0, ${pos}vh, 0)`
+      },
+    }),
+    height: (height, model) => { model.get('root').style.height = height + 'px' },
+    chapter: h.updater({
+      url: (url) => {
+        this.update({ active: url })
+        domH.setHashFrag(1, url)
+      }
+    }, Immutable.Map()),
+  }, Immutable.Map())
 
-const calcVh = (h) => h / (window.innerHeight / 100)
-
-const calcHeightSum = (elArr) =>
-  elArr
-    .map((el) => (el.get ? el.get('element') : el).clientHeight)
-    .reduce((m, n) => n + m, 0)
-
-const updateActive = (el, i) => {
-  const name = el.getAttribute('data-name')
-  Array.from(this.root.querySelectorAll('.böttns__link'))
-    .forEach((el, n) => {
-      el.className = i === n
-        ? el.className + ' böttns__link--active'
-        : el.className.replace(/ böttns__link\-\-active/g, '')
-    })
-  window.location.href = window.location.href.split('#')[0] + '#' + name
-}
-
-const lazyArrayUpdater = (actions) => {
-  const cache = {}
-  return (arr) => {
-    arr.forEach((el, k) => {
-      (cache[k] || (cache[k] = updater(actions, el, arr)))(el)
-    })
-  }
-}
-
-const initializeSectionStyles = (chapters) => {
-  chapters.forEach((chapter, i, arr) => {
-    chapter.get('element').style.position = 'fixed'
-    chapter.get('element').style.zIndex = arr.count() - i
-  })
-  return chapters
-}
-
-const getCurrentChapter = (model) => {
-  const pos = model.get('scrollY')
-  return model.get('chapters').filter((el) =>
-    el.get('topPx') <= pos &&
-    el.get('topPx') + el.get('height') > pos
-  ).get(0) || Immutable.Map()
-}
+  /*
+   * Initialize the sections
+   */
+  ; ((initModel) => {
+    let model = initModel
+      .set('chapters', h.getChapters(initModel))
+      .update('chapters', h.initializeSectionStyles)
+    const exec = () => {
+      requestAnimationFrame(() => { model = update(render(model)) })
+    }
+    exec()
+    window.addEventListener('scroll', exec)
+    window.addEventListener('resize', exec)
+    window.addEventListener('load', exec)
+  })(model)
+})
 
 </script>
 <style scoped>
