@@ -1,33 +1,33 @@
-## Skills
-
-_Rated on a scale of 2, 3, 5, 8, 13, 21._
+## Fähigkeiten
 
 [image:/img/resume/tumblr_npu7nhn42b1sfie3io1_1280.jpg]
 
-### Softskills
+_Auf einer Skala von 2, 3, 5, 8, 13 bis 21 bewertet._
 
-* Integrates quickly in new environments.
+### Soziales
 
-### (Natural) Languages
+* Integriert sich schnell in neue Umgebungen
 
-* **13** – English
-* **21** – German
+### (Natürliche) Sprachen
 
-### Programming Languages
+* **13** – Englisch
+* **21** – Deutsch
+
+### Programmiersprachen
 
 * **13** – JavaScript
 * **13** – CSS & SASS
 * **8** – PHP
 * **5** – [Elm](elm-lang.org)
 
-### Other Technologies
+### Weitere Technologien
 
 * **3** – React
 * **2** – Angular
 * **3** – [Cycle.js](http://cycle.js.org/)
 * **8** – [Riot.js](riotjs.com)
 * **13** – [Meteor](meteor.com)
-* **8** – JavaScript Build Systems (e.g. Webpack)
+* **8** – JavaScript Build-Systeme (e.g. Webpack)
 * **8** – Node.js
 * **5** – WordPress
 * **5** – Drupal 7, 8

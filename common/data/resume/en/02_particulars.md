@@ -3,8 +3,7 @@
 [image:/img/resume/tumblr_ns91cwA5so1sfie3io1_1280.jpg]
 
 Luca Nils Schmid<br>
-15.12.1995<br>
-single
+15.12.1995
 
 Via Giuvs 17<br>
 7013 Domat/Ems<br>
