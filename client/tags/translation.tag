@@ -78,6 +78,8 @@ this.on('mount', () => {
   right: 1rem;
   list-style: none;
   z-index: 2;
+  padding: .5rem 0.7rem;
+  background-color: hsla(0, 0%, 0%, 0.3) !important;
 }
 
 :scope .langnav,

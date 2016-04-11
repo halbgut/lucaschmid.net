@@ -7,6 +7,8 @@ _Rated on a scale of 2, 3, 5, 8, 13, 21._
 ### Softskills
 
 * Integrates quickly in new environments.
+* I'm open minded and sociable
+* Like sharing and eager to learn
 
 ### (Natural) Languages
 
