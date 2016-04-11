@@ -24,12 +24,24 @@ const setHashFrags = (frags) => {
   return window.location
 }
 
+const addScrollStopEvent = (el) => {
+  let justScrolled = 0
+  const scrollStop = new CustomEvent('scrollStop', {})
+  el.addEventListener('scroll', () => {
+    ++justScrolled
+    window.setTimeout(() => {
+      if(--justScrolled === 0) el.dispatchEvent(scrollStop)
+    }, 100)
+  })
+}
+
 module.exports = {
   getTopOffset,
   updateHash,
   setHashFrags,
   setHashFrag,
   getHashFrags,
-  getHashFrag
+  getHashFrag,
+  addScrollStopEvent
 }
 

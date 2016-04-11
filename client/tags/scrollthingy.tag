@@ -16,9 +16,9 @@ const h = require('../js/lib/scrollthingyHelpers.js')
 const domH = require('../js/lib/domHelpers.js')
 const Immutable = require('immutable')
 
-let rendered = false
-window.mounted = window.mounted || false
+domH.addScrollStopEvent(window)
 
+window.mounted = window.mounted || false
 this.on('mount', () => {
   if (mounted) return
   mounted = true
@@ -37,10 +37,6 @@ this.on('mount', () => {
     root: this.root,
     factor: window.innerHeight / 100,
     chapter: undefined,
-    events: Immutable.Map({
-      load: true,
-      rendered: false
-    })
   })
 
   /*
@@ -100,9 +96,10 @@ this.on('mount', () => {
       .update('chapters', h.initializeSectionStyles)
 
     this.update({ chapters: model.get('chapters').toArray() })
-    const exec = () => { model = update(render(model)) }
+    const exec = () => { model = render(update(model)) }
     exec()
     window.addEventListener('scroll', exec)
+    window.addEventListener('scrollStop', exec)
     window.addEventListener('resize', exec)
     window.addEventListener('load', exec)
   })(model)
