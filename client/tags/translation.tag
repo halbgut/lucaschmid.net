@@ -24,6 +24,15 @@ const getLang = () => domH.getHashFrag(0)
 
 this.changelang = (e) => this.update({ lang: e.target.innerText })
 
+const triggerEvent = () => {
+  window.dispatchEvent(
+    new window.CustomEvent(
+      'translated',
+      { details: { language: this.lang } }
+    )
+  )
+}
+
 const show = (el) => {
   setTimeout(() => {
     el.style.display = 'block'
@@ -32,6 +41,7 @@ const show = (el) => {
     }, 30)
   }, 800)
 }
+
 const hide = (el) => {
   el.classList.remove('translation--show')
   setTimeout(() => {
@@ -45,9 +55,10 @@ this.on('mount', () => {
     Array.from(this.root.querySelectorAll('[data-lang]'))
       .forEach((el) => {
         el.getAttribute('data-lang') === this.lang
-          ? show(el)
+          ? show(el, this.lang)
           : hide(el)
       })
+    window.setTimeout(triggerEvent, 900)
   })
   this.update({
     langs: this.opts.dataLanguages

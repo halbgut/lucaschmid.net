@@ -94,14 +94,22 @@ this.on('mount', () => {
     let model = initModel
       .set('chapters', h.getChapters(initModel))
       .update('chapters', h.initializeSectionStyles)
+    const chapters = model.get('chapters').toArray()
 
-    this.update({ chapters: model.get('chapters').toArray() })
+    this.update({ chapters: chapters.slice(0, chapters.length - 1) })
     const exec = () => { model = render(update(model)) }
     exec()
     window.addEventListener('scroll', exec)
     window.addEventListener('scrollStop', exec)
     window.addEventListener('resize', exec)
     window.addEventListener('load', exec)
+    window.addEventListener('translated', () => {
+      model = model.update(
+        'chapters',
+        h.updateChapterMaps.bind(null, model, true)
+      )
+      exec()
+    })
   })(model)
 })
 

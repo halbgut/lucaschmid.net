@@ -26,10 +26,10 @@ const getChapterByUrl = (url, model) =>
 
 const updateChapterMaps = (() => {
   let cachedWidth = 0
-  return (model) => {
+  return (model, noCache) => {
     let newChapters = model.get('chapters').map((chapter, i, arr) => {
       const newChapter = updatePosition(model, chapter)
-      if (model.get('width') === cachedWidth) return newChapter
+      if (!noCache && model.get('width') === cachedWidth) return newChapter
       const height = newChapter.get('element').clientHeight
       const top = calcHeightSum(arr.slice(0, i))
       return newChapter
