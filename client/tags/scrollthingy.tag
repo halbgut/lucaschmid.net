@@ -26,7 +26,7 @@ this.on('mount', () => {
   const initialHash = domH.getHashFrag(1)
 
   // TODO: Add a scrolling animation
-  /*
+  /**
    * The initial state of the model
    */
   const model = Immutable.Map({
@@ -39,7 +39,7 @@ this.on('mount', () => {
     chapter: undefined,
   })
 
-  /*
+  /**
    * Update the model values to the DOM
    * @arg {Object} model A model as defined above
    * @returns {Object} The new Model
@@ -59,7 +59,7 @@ this.on('mount', () => {
     )
   }
 
-  /*
+  /**
    * Renders the changes in the model using a diffing mechanism
    * @param {Object} model A model
    * @returns {Object} model The same model that was passed
@@ -98,12 +98,32 @@ this.on('mount', () => {
 
     this.update({ chapters: chapters.slice(0, chapters.length - 1) })
     const exec = () => { model = render(update(model)) }
+
+    /**
+     * Update and render the scrollthingy at all relevant events.
+     */
     exec()
     window.addEventListener('scroll', exec)
-    window.addEventListener('scrollStop', exec)
     window.addEventListener('resize', exec)
     window.addEventListener('load', exec)
+
+    /**
+     * A custom event added using `domH.addScrollStopEvent`
+     * Without this eventlistener, the elements stop scrolling
+     * too early sometimes.
+     */
+    window.addEventListener('scrollStop', exec)
+
+    /**
+     * The translation riot tag triggers a `translated` event
+     * when all elements have been translated.
+     */
     window.addEventListener('translated', () => {
+      /**
+       * Before the elements are translated, their height is
+       * incorrect. So the chapter maps have to be updated,
+       * in order for the elements to be positioned correctly.
+       */
       model = model.update(
         'chapters',
         h.updateChapterMaps.bind(null, model, true)
