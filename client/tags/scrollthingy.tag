@@ -65,6 +65,12 @@ this.on('mount', () => {
    * @returns {Object} model The same model that was passed
    */
   const render = h.updater({
+    /**
+     * Whenever the hash changes, update it in the DOM.
+     * Also, if the new hashfrag isn't equal to the url prop
+     * of the current chapter, a manual hashchange must have
+     * occured. Meaning, we'll need to scroll to the new chapter.
+     */
     hash: (hash, model) => {
       domH.setHashFrag(1, hash)
       if ((model.get('chapter') || Immutable.Map()).get('url') !== hash) {
@@ -106,6 +112,7 @@ this.on('mount', () => {
     window.addEventListener('scroll', exec)
     window.addEventListener('resize', exec)
     window.addEventListener('load', exec)
+    window.addEventListener('hashchange', exec)
 
     /**
      * A custom event added using `domH.addScrollStopEvent`
