@@ -30,8 +30,8 @@ section {
 }
 
 img {
-  width: 50%;
-  min-width: 10rem;
+  width: calc(100% + 2rem);
+  margin-left: -1rem;
 }
 
 .text__wrapper {
@@ -91,6 +91,15 @@ section[data-name="zz_footer"] .text__wrapper {
   margin-top: 0;
 }
 
+section[data-name="02_particulars"] p:last-child {
+  margin-bottom: 0;
+  line-height: 0;
+}
+
+section[data-name="02_particulars"] .text {
+  padding-bottom: 0;
+}
+
 @media (min-width: 750px) {
   html,
   a {
@@ -102,13 +111,15 @@ section[data-name="zz_footer"] .text__wrapper {
   }
 
   .text__wrapper {
-    margin-top: 10vh;
+    padding: 10vh 0 0 0;
+    box-sizing: content-box;
     float: right;
+    background-color: hsla(0, 0%, 100%, .6);
   }
 
   .text {
-    min-height: 100vh;
     background-color: hsl(0, 0%, 100%);
+    margin-bottom: 10vh;
   }
 }
 
