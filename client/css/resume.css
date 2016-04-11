@@ -31,7 +31,7 @@ section {
 
 img {
   width: calc(100% + 2rem);
-  margin-left: -1rem;
+  margin-left: -1.5rem;
 }
 
 .text__wrapper {
@@ -85,10 +85,12 @@ section[data-name="08_cv"] {
 
 section[data-name="zz_footer"] .text {
   min-height: 0;
+  margin-bottom: 0;
 }
 
 section[data-name="zz_footer"] .text__wrapper {
-  margin-top: 0;
+  margin: 0;
+  padding: 0;
 }
 
 section[data-name="02_particulars"] p:last-child {
@@ -118,6 +120,7 @@ section[data-name="02_particulars"] .text {
   }
 
   .text {
+    padding: 1rem 1rem 1rem 1.5rem;
     background-color: hsl(0, 0%, 100%);
     margin-bottom: 10vh;
   }
