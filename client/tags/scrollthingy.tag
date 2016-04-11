@@ -98,9 +98,9 @@ this.on('mount', () => {
     let model = initModel
       .set('chapters', h.getChapters(initModel))
       .update('chapters', h.initializeSectionStyles)
-    const exec = () => {
-      requestAnimationFrame(() => { model = update(render(model)) })
-    }
+
+    this.update({ chapters: model.get('chapters').toArray() })
+    const exec = () => { model = update(render(model)) }
     exec()
     window.addEventListener('scroll', exec)
     window.addEventListener('resize', exec)
