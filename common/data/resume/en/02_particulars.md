@@ -13,5 +13,5 @@ Switzerland
 [+41 79 233 41 41](tel:+41792334141)<br>
 [lucaschmid.net](lucaschmid.net)
 
-![Me :)](/img/resume/2f1912fe24f081c0cd26256cd78c0d62.jpeg)
+![Me :)](/img/resume/small_bright.jpg)
 
