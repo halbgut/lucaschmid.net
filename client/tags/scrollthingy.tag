@@ -183,12 +183,12 @@ this.on('mount', () => {
   margin: .3rem;
   border: solid 3px hsl(0, 0%, 100%);
   transform: scale(1);
-  transition: .2s transform;
+  transition: .4s transform, .4s border-color, .4s background-color;
 }
 
 :scope .böttns__link--active {
   background-color: hsla(0, 0%, 100%, .6);
-  border-color: solid 3px hsl(0, 0%, 0%);
+  border-color: hsla(0, 0%, 0%, .6);
   transform: scale(1.2);
 }
 
