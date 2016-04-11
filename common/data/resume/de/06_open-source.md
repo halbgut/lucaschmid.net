@@ -1,6 +1,6 @@
-## My Work In Open-Source
+## Meine Open-Source Arbeit
 
-[image:/img/resume/tumblr_nztqykvR361sfie3io1_1280.jpg]
+[image:/img/resume/small_tumblr_nztqykvR361sfie3io1_1280.jpg]
 
-Most of my spare time I spend hacking on side-projects. Pretty much all of these are on [Github](https://github.com/kriegslustig). About half of these are simply to explore new technologies. With the other half I tried to provide some actual value. I've done a lot of work in the [Meteor](https://www.meteor.com/) community. My most popular project is [Altboiler](https://github.com/Kriegslustig/meteor-altboiler), which lets you render templates server-side in Meteor. Personally I think the [elm:make](https://github.com/Kriegslustig/meteor-elm-make) Meteor Package is much more interesting. It allows you to use Elm inside Meteor.
+Den grössten Teil meiner Freizeit verbringe ich mit Nebenprojekten. Die meisten dieser sind auf [Github](https://github.com/kriegslustig). Etwa die hälfe der Projekte sind um neue Technologien zu erforschen. Mit der anderen hälfte habe ich versucht etwas Nützliches zu erstellen. Ich habe viel in der [Meteor](https://www.meteor.com/) Community gearbeitet. Mein populärstes Projekt ist [Altboiler](https://github.com/Kriegslustig/meteor-altboiler). Das Package ermöglicht es Templates Server-Seitig zu rendern. Mein Lieblingsprojekt ist aber [elm:make](https://github.com/Kriegslustig/meteor-elm-make). Es lässt einen Elm in Meteor verwenden.
 

@@ -1,6 +1,6 @@
 ## Fähigkeiten
 
-[image:/img/resume/tumblr_npu7nhn42b1sfie3io1_1280.jpg]
+[image:/img/resume/small_tumblr_npu7nhn42b1sfie3io1_1280.jpg]
 
 _Auf einer Skala von 2, 3, 5, 8, 13 bis 21 bewertet._
 
@@ -29,9 +29,9 @@ _Auf einer Skala von 2, 3, 5, 8, 13 bis 21 bewertet._
 * **13** – [Meteor](meteor.com)
 * **8** – JavaScript Build-Systeme (e.g. Webpack)
 * **8** – Node.js
+* **13** – Docker
 * **5** – WordPress
 * **5** – Drupal 7, 8
-* **8** – Docker
 * **8** – VIM
 * **8** – Git
 * **5** – MySQL

@@ -1,6 +1,6 @@
 ## Personalien
 
-[image:/img/resume/tumblr_ns91cwA5so1sfie3io1_1280.jpg]
+[image:/img/resume/small_tumblr_ns91cwA5so1sfie3io1_1280.jpg]
 
 Luca Nils Schmid<br>
 15.12.1995<br>
@@ -13,5 +13,5 @@ Switzerland
 [+41 79 233 41 41](tel:+41792334141)<br>
 [lucaschmid.net](lucaschmid.net)
 
-![Ich :)](/img/resume/2f1912fe24f081c0cd26256cd78c0d62.jpeg)
+![Ich :)](/img/resume/small_bright.jpg)
 

@@ -1,6 +1,6 @@
 ## Particulars
 
-[image:/img/resume/tumblr_ns91cwA5so1sfie3io1_1280.jpg]
+[image:/img/resume/small_tumblr_ns91cwA5so1sfie3io1_1280.jpg]
 
 Luca Nils Schmid<br>
 15.12.1995

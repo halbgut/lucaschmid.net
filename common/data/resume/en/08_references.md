@@ -1,11 +1,11 @@
 ## References
 
-[image:/img/resume/tumblr_o2mhfipopj1sfie3io1_1280.jpg]
+[image:/img/resume/small_tumblr_o2mhfipopj1sfie3io1_1280.jpg]
 
 ### Projects
 
 * [lucaschmid.net](https://github.com/Kriegslustig/lucaschmid.net) – I really like to experiment with different technologies.
-* [meteor-elm-make](https://github.com/Kriegslustig/meteor-elm-make) - Here I aimed for readability, in order to make it easily maintainable. [Read more about the project](https://lucaschmid.net/projects#theelmmakemeteorpackage)
+* [meteor-elm-make](https://github.com/Kriegslustig/meteor-elm-make) - Here I aimed for readability, in order to make it easily maintainable. [Read more about the project](https://lucaschmid.net/projects#theelmmakemeteorpackage).
 
 Some of my other Projects are described [here](https://lucaschmid.net/projects).
 

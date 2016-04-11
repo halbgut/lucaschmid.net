@@ -2,7 +2,7 @@
 
 _Rated on a scale of 2, 3, 5, 8, 13, 21._
 
-[image:/img/resume/tumblr_npu7nhn42b1sfie3io1_1280.jpg]
+[image:/img/resume/small_tumblr_npu7nhn42b1sfie3io1_1280.jpg]
 
 ### Softskills
 
@@ -29,9 +29,9 @@ _Rated on a scale of 2, 3, 5, 8, 13, 21._
 * **13** – [Meteor](meteor.com)
 * **8** – JavaScript Build Systems (e.g. Webpack)
 * **8** – Node.js
+* **13** – Docker
 * **5** – WordPress
 * **5** – Drupal 7, 8
-* **8** – Docker
 * **8** – VIM
 * **8** – Git
 * **5** – MySQL
