@@ -7,7 +7,7 @@ _Auf einer Skala von 2, 3, 5, 8, 13 bis 21 bewertet._
 ### Soziales
 
 * Integriere mich schnell in neue Umgebungen
-* Ich bin kontaktfreudig und Weltoffen
+* Ich bin kontaktfreudig und weltoffen
 * Teile gerne und bin lehrfreudig
 
 ### (Natürliche) Sprachen

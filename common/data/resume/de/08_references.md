@@ -7,7 +7,7 @@
 * [lucaschmid.net](https://github.com/Kriegslustig/lucaschmid.net) – Ich experimentiere gerne mit verschiedenen technologien.
 * [meteor-elm-make](https://github.com/Kriegslustig/meteor-elm-make) – Bei diesem Projekt have ich versucht möglichst leserlichen Code zu schreiben. [Mehr zum Projekt](https://lucaschmid.net/projects#theelmmakemeteorpackage).
 
-Zu einigen meiner Projekte habe ich [hier](https://lucaschmid.net/projects) geschrieben.
+Zu einigen meiner Projekte habe ich [hier](https://lucaschmid.net/projects) etwas geschrieben.
 
 ### Personen
 
