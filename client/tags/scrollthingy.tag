@@ -16,16 +16,26 @@ const h = require('../js/lib/scrollthingyHelpers.js')
 const domH = require('../js/lib/domHelpers.js')
 const Immutable = require('immutable')
 
+/**
+ * Trigger a 'scrollstop' event when a scroll event doesn't
+ * occure within 100 ms of the last. (triggers update & rerender)
+ */
 domH.addScrollStopEvent(window)
 
+/**
+ * The mount event triggers twice. Cause the element is nestet
+ * inside another riot tag. Not a fan of riot anymore (that's not
+ * my only issue with it).
+ */
 window.mounted = window.mounted || false
 this.on('mount', () => {
   if (mounted) return
   mounted = true
 
+  /* Later used to scroll to the position of that slide */
   const initialHash = domH.getHashFrag(1)
+  domH.setHashFrag(1, '')
 
-  // TODO: Add a scrolling animation
   /**
    * The initial state of the model
    */
@@ -101,9 +111,18 @@ this.on('mount', () => {
       .set('chapters', h.getChapters(initModel))
       .update('chapters', h.initializeSectionStyles)
     const chapters = model.get('chapters').toArray()
+    const exec = () => { model = render(update(model)) }
 
     this.update({ chapters: chapters.slice(0, chapters.length - 1) })
-    const exec = () => { model = render(update(model)) }
+
+    /**
+     * When the load event happens, set the hashFrag to it's
+     * Initial state. That way another hashchange happens and
+     * The renderer scrolls to the right slide.
+     */
+    addEventListener('load', () => {
+      domH.setHashFrag(1, initialHash)
+    })
 
     /**
      * Update and render the scrollthingy at all relevant events.
@@ -119,7 +138,7 @@ this.on('mount', () => {
      * Without this eventlistener, the elements stop scrolling
      * too early sometimes.
      */
-    window.addEventListener('scrollStop', exec)
+    window.addEventListener('scrollstop', exec)
 
     /**
      * The translation riot tag triggers a `translated` event
