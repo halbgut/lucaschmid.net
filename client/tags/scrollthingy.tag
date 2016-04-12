@@ -91,7 +91,7 @@ this.on('mount', () => {
     },
     chapters: h.lazyArrayUpdater({
       pos: (pos, el) => {
-        el.get('element').style.transform = `translate3d(0, ${pos}vh, 0)`
+        el.get('element').style.transform = `translate(${pos}vh)`
       },
     }),
     height: (height, model) => { model.get('root').style.height = height + 'px' },
