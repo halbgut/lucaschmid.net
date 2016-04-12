@@ -5,6 +5,7 @@
   "license": "No License",
   "dependencies": {
     "async": "^1.5.2",
+    "bezier-easing": "^2.0.3",
     "cubic-bezier": "^0.1.2",
     "glob": "^6.0.3",
     "immutable": "^3.7.6",

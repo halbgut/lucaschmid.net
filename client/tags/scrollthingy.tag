@@ -111,7 +111,7 @@ this.on('mount', () => {
       .set('chapters', h.getChapters(initModel))
       .update('chapters', h.initializeSectionStyles)
     const chapters = model.get('chapters').toArray()
-    const exec = () => { model = render(update(model)) }
+    const exec = () => { model = update(render(model)) }
 
     this.update({ chapters: chapters.slice(0, chapters.length - 1) })
 

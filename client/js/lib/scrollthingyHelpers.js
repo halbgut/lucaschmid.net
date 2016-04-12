@@ -1,7 +1,7 @@
 const Immutable = require('immutable')
 
 // Math is not my strong suite
-const bezier = require('cubic-bezier')
+const bezier = require('bezier-easing')
 
 const getChapters = (model) =>
   Immutable.List(
@@ -19,7 +19,7 @@ const getChapters = (model) =>
       vh: calcVh(el.clientHeight),
       element: el, // Not Immutable
       bezier: i + 2 < arr.count()
-         ? bezier(0.5, 0, 0, 0.5, 10000)
+         ? bezier(0.5, 0, 0, 0.5)
          : null
     }))
 
