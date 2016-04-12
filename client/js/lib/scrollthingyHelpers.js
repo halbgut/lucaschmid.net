@@ -18,9 +18,9 @@ const getChapters = (model) =>
       pos: 0,
       vh: calcVh(el.clientHeight),
       element: el, // Not Immutable
-      bezier: i + 2 < arr.count()
-         ? bezier(0.5, 0, 0, 0.5)
-         : null
+      //bezier: i + 2 < arr.count()
+      //   ? bezier(0.5, 0, 0, 0.5)
+      //   : null
     }))
 
 const getChapterByUrl = (url, model) =>
