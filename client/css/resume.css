@@ -126,3 +126,46 @@ section[data-name="02_particulars"] .text {
   }
 }
 
+/**
+ * Used a lot of !importants here.
+ * Simply to override the styles set by css
+ */
+@media print {
+  html {
+    font-size: 16px;
+  }
+
+  img {
+    width: 50%;
+    margin: 0;
+  }
+
+  scrollthingy {
+    height: auto !important;
+  }
+
+  nav {
+    display: none !important;
+  }
+
+  .text__wrapper {
+    padding: 0;
+    float: none;
+    width: 100%;
+    max-width: none;
+    min-height: auto;
+  }
+
+  scrollthingy section[data-name] {
+    transform: none !important;
+    position: static !important;
+    display: block;
+    min-height: auto;
+    box-shadow: none;
+  }
+
+  .text {
+    margin-bottom: 0;
+  }
+}
+
