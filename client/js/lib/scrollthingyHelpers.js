@@ -1,5 +1,8 @@
 const Immutable = require('immutable')
 
+// Math is not my strong suite
+const bezier = require('cubic-bezier')
+
 const getChapters = (model) =>
   Immutable.List(
     Array.from(
@@ -14,7 +17,10 @@ const getChapters = (model) =>
       topPx: calcHeightSum(arr.slice(0, i)),
       pos: 0,
       vh: calcVh(el.clientHeight),
-      element: el // Not Immutable
+      element: el, // Not Immutable
+      bezier: i + 2 < arr.count()
+         ? bezier(0.5, 0, 0, 0.5, 10000)
+         : null
     }))
 
 const getChapterByUrl = (url, model) =>
@@ -47,8 +53,14 @@ const updatePosition = (model, chapter) => {
   const min = chapter.get('vh') * -1
   let pos =
     model.get('scrollY') / model.get('factor') * -1 + chapter.get('top')
-  if (pos < min) pos = min
-  if (pos > 0) pos = 0
+  if (pos < min) {
+    pos = min
+  } else if (pos > 0) {
+    pos = 0
+  } else {
+    const algo = chapter.get('bezier')
+    if (algo) pos = algo(pos / min) * min
+  }
   return chapter.set('pos', pos)
 }
 
