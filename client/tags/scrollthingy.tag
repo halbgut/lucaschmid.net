@@ -128,8 +128,8 @@ this.on('mount', () => {
      * Update and render the scrollthingy at all relevant events.
      */
     exec()
-    window.addEventListener('scroll', exec)
-    window.addEventListener('resize', exec)
+    window.addEventListener('scroll', domH.throttleAnimation(exec))
+    window.addEventListener('resize', domH.throttleAnimation(exec))
     window.addEventListener('load', exec)
     window.addEventListener('hashchange', exec)
 

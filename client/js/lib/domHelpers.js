@@ -35,6 +35,18 @@ const addScrollStopEvent = (el) => {
   })
 }
 
+const throttleAnimation = (fn) => {
+  let resting = false
+  return (...args) => {
+    if (resting) return
+    resting = true
+    window.requestAnimationFrame(() => {
+      fn(...args)
+      resting = false
+    })
+  }
+}
+
 module.exports = {
   getTopOffset,
   updateHash,
@@ -42,6 +54,7 @@ module.exports = {
   setHashFrag,
   getHashFrags,
   getHashFrag,
-  addScrollStopEvent
+  addScrollStopEvent,
+  throttleAnimation
 }
 
