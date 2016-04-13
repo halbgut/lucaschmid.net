@@ -11,10 +11,10 @@ Some of my other Projects are described [here](https://lucaschmid.net/projects).
 
 ### People
 
-**Tom Schneider**<br />
-Team Leader Drupal, Somedia Production Web<br />
-[tom.schneider@somedia.ch](mailto:tom.schneider@somedia.ch)<br />
-[+41 81 255 55 81](tel:+41812555581)
+**Fabian Dennler**<br />
+CS Teacher, [GBC](http://gbchur.ch/) & Consultant<br />
+[fabian.dennler@gbchur.ch](mailto:fabian.dennler@gbchur.ch)<br />
+[Phone number on request](mailto:root@lucaschmid.me)
 
 **Andreas Kemp**<br />
 Department Head, Somedia Production Web<br />
