@@ -1,35 +1,39 @@
-## Skills
+## Competencies & Skills
 
 [image:/img/resume/small_tumblr_npu7nhn42b1sfie3io1_1280.jpg]
 
-_Rated on a scale of 2, 3, 5, 8, 13, 21._
+_Rated on a scale of 2, 3, 5, 8, 13, 21 (all fib)._
 
-### Softskills
+### Competencies
 
-* Integrates quickly in new environments.
-* I'm open minded and sociable
-* Like sharing and eager to learn
+* I integrate quickly in new environments.
+* Open minded and sociable
+* Like sharing and teaching
+* Am eager to learn
+* Good abstract-logical reasoning skills
 
-### (Natural) Languages
+### Skills
+
+#### (Natural) Languages
 
 * **13** – English
 * **21** – German
 
-### Programming Languages
+#### Programming Languages
 
-* **13** – JavaScript (ES5/ES6)
-* **13** – CSS & SASS
-* **8** – PHP
-* **5** – [Elm](elm-lang.org)
+* **13** – [JavaScript](http://www.ecma-international.org/ecma-262/6.0/) (ES5/ES6)
+* **13** – [CSS](https://www.w3.org/Style/CSS/) & [SASS](http://sass-lang.com/)/[LESS](http://lesscss.org/)
+* **8** – [PHP](http://php.net/)
+* **5** – [Elm](http://elm-lang.org)
 
-### Other Technologies
+#### Other Technologies
 
 * **13** - DOM
 * **3** – [React](https://facebook.github.io/react/)
 * **2** – [Angular](https://angular.io/)
 * **3** – [Cycle.js](http://cycle.js.org/)
-* **8** – [Riot.js](riotjs.com)
-* **13** – [Meteor](meteor.com)
+* **8** – [Riot.js](http://riotjs.com)
+* **13** – [Meteor](http://meteor.com)
 * **8** – JavaScript Build Systems (e.g. [Webpack](https://webpack.github.io/), [Gulp](http://gulpjs.com/), [Browserify](http://browserify.org/))
 * **8** - [BEM](https://bem.info/)
 * **5** - [Mocha](https://mochajs.org/)
