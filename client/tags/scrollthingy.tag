@@ -114,7 +114,6 @@ this.on('mount', () => {
     const chapters = model.get('chapters').toArray()
     const exec = () => { model = render(update(model)) }
 
-    console.log(chapters)
     this.update({ chapters: chapters.slice(0, chapters.length - 1) })
 
     /**
