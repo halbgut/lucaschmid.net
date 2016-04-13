@@ -40,7 +40,7 @@ _Rated on a scale of 2, 3, 5, 8, 13, 21 (all fib)._
 * **3** - [Karma](https://karma-runner.github.io)
 * **8** – [Node.js](http://nodejs.org/)
 * **13** – [Docker](http://docker.com/)
-* **5** – [WordPress](http://docker.com/)
+* **5** – [WordPress](http://wordpress.org/)
 * **5** – [Drupal 7, 8](http://drupal.org/)
 * **8** – [VIM](http://www.vim.org/)
 * **8** – [Git](https://www.git-scm.com/)
