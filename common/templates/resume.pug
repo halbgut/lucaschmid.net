@@ -11,19 +11,20 @@ html(lang=lang)
   body
     translation-switcher(data-languages= languages)
       scrollthingy
-        section(style="background-image: url('/img/resume/tumblr_o1dennYMHW1sfie3io1_1280.jpg')" data-name="01_toc" data-id="01_toc" data-title="Table Of Contents")
-          div.text__wrapper
-            each lang in languages
-              div.text(data-lang= lang)
-                ul
-                  each chapter in chapters
-                    if chapter.title
-                      li
-                        a(href="#/#{lang}/#{chapter.name}")= chapter.titles[lang]
         each chapter in chapters
           section(style="background-image: url('#{chapter.image}');" data-name= chapter.name data-title= chapter.title data-id= chapter.name)
             div.text__wrapper
-              each text in chapter.texts
-                div.text(data-lang= text.lang)!= text.html
+              if chapter.name === '01_toc'
+                each lang in languages
+                  div.text(data-lang= lang)
+                    !{chapter.texts[lang].html}
+                    ul
+                      each chapter in chapters
+                        if chapter.title
+                          li
+                            a(href="#/#{lang}/#{chapter.name}")= chapter.titles[lang]
+              else
+                each text in chapter.texts
+                  div.text(data-lang= text.lang)!= text.html
     script(src="/build/resume.js")
 
