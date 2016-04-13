@@ -26,7 +26,7 @@ const setHashFrags = (frags) => {
 
 const addScrollStopEvent = (el) => {
   let justScrolled = 0
-  const scrollStop = new window.CustomEvent('scrollStop', {})
+  const scrollStop = new window.CustomEvent('scrollstop', {})
   el.addEventListener('scroll', () => {
     ++justScrolled
     window.setTimeout(() => {
