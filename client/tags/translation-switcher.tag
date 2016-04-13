@@ -1,4 +1,4 @@
-<translation>
+<translation-switcher>
   <!-- This is simply implemented as cheaply as possible -->
   <nav class="langnav">
     <li each={ langs } class="langnav__item">
@@ -127,5 +127,5 @@ this.on('mount', () => {
 }
 
 </style>
-</translation>
+</translation-switcher>
 

@@ -6,10 +6,10 @@ html(lang=lang)
     meta(name="description" content=description)
     meta(name="viewport" content="width=device-width, initial-scale=1")
     title
-      | Resume
+      | Résumé
     <style>!{loadFile('client/build/resume.css')}</style>
   body
-    translation(data-languages= languages)
+    translation-switcher(data-languages= languages)
       scrollthingy
         section(style="background-image: url('/img/resume/tumblr_o1dennYMHW1sfie3io1_1280.jpg')" data-name="01_toc" data-id="01_toc" data-title="Table Of Contents")
           div.text__wrapper

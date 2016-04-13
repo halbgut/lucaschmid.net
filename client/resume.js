@@ -1,6 +1,6 @@
 const riot = require('riot')
 
-require('./tags/translation.tag')
+require('./tags/translation-switcher.tag')
 require('./tags/scrollthingy.tag')
 require('./css/resume.css')
 
