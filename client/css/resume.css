@@ -63,42 +63,42 @@ section:nth-last-child(1) .text {
   background-color: transparent;
 }
 
-section[data-name="00_intro"] {
+section[data-name$="_intro"] {
   background-position: center;
 }
 
-section[data-name="03_apprenticeship"] {
+section[data-name$="_apprenticeship"] {
   background-position: bottom;
 }
 
-section[data-name="04_goals"] {
+section[data-name$="_goals"] {
   background-position: center;
 }
 
-section[data-name="06_particulars"] {
+section[data-name$="_particulars"] {
   background-position: center;
 }
 
-section[data-name="08_cv"] {
+section[data-name$="_cv"] {
   background-position: bottom;
 }
 
-section[data-name="zz_footer"] .text {
+section[data-name$="_footer"] .text {
   min-height: 0;
   margin-bottom: 0;
 }
 
-section[data-name="zz_footer"] .text__wrapper {
+section[data-name$="_footer"] .text__wrapper {
   margin: 0;
   padding: 0;
 }
 
-section[data-name="02_particulars"] p:last-child {
+section[data-name$="_particulars"] p:last-child {
   margin-bottom: 0;
   line-height: 0;
 }
 
-section[data-name="02_particulars"] .text {
+section[data-name$="_particulars"] .text {
   padding-bottom: 0;
 }
 
