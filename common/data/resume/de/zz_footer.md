@@ -1,4 +1,4 @@
-<h2 style="display: hidden;">Fusszeile</h2>
+<h2 style="display: none;">Fusszeile</h2>
 
 Die Bilder sind von [New Old Stock](http://nos.twnsnd.co) und [Unspash](http://unsplash.com).<br />
 Ausser mein Protrait, das hat [Nicola Pitaro](http://nicolapitaro.ch/indexcs.php) für mich gemacht. Danke vielmals! 🎉🎉<br /><br />
