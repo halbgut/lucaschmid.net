@@ -58,6 +58,7 @@ this.on('mount', () => {
           ? show(el, this.lang)
           : hide(el)
       })
+    document.documentElement.setAttribute('lang', this.lang)
     window.setTimeout(triggerEvent, 900)
   })
   this.update({

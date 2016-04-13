@@ -118,6 +118,7 @@ module.exports = {
           context.status = 200
           context.body = pug(res[1])({
             description: 'My Application for a position as a front-end engineer at Wimdu',
+            lang: 'en',
             keywords: 'Application, Résumé, Wimdu, Front-End Engineer, Luca Nils Schmid, Kriegslustig',
             chapters,
             languages
