@@ -8,7 +8,7 @@ const getTitle = (el) =>
 
 const getChapters = (model) =>
   Immutable.List(
-    Array.from(
+    [].slice.call(
       model.get('root').querySelectorAll('.content section')
     )
   )

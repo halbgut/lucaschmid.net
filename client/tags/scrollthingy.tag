@@ -17,6 +17,8 @@ const h = require('../js/lib/scrollthingyHelpers.js')
 const domH = require('../js/lib/domHelpers.js')
 const Immutable = require('immutable')
 
+if (window.has3d === undefined) window.has3d = domH.has3d()
+
 /**
  * Trigger a 'scrollstop' event when a scroll event doesn't
  * occure within 100 ms of the last. (triggers update & rerender)
@@ -33,6 +35,10 @@ this.on('mount', () => {
   if (mounted) return
   mounted = true
 
+  if (!window.has3d) {
+    window.alert('Please use a modern browser to properly view this page.')
+  }
+
   /* Later used to scroll to the position of that slide */
   const initialHash = domH.getHashFrag(1)
   domH.setHashFrag(1, '')
@@ -41,7 +47,7 @@ this.on('mount', () => {
    * The initial state of the model
    */
   const model = Immutable.Map({
-    scrollY: window.scrollY,
+    scrollY: 0,
     windowH: window.innerHeight,
     hash: domH.getHashFrag(1),
     height: this.root.clientHeight,
@@ -60,7 +66,7 @@ this.on('mount', () => {
       .update('chapters', h.updateChapterMaps.bind(null, model))
     return (
       newModel
-        .set('scrollY', window.scrollY)
+        .set('scrollY', window.scrollY || window.pageYOffset)
         .set('windowH', window.innerHeight)
         .set('hash', domH.getHashFrag(1))
         .set( 'height', h.calcHeightSum(model.get('chapters')) )
@@ -92,7 +98,11 @@ this.on('mount', () => {
     },
     chapters: h.lazyArrayUpdater({
       pos: (pos, el) => {
-        el.get('element').style.transform = `translate3d(0, ${pos}vh, 0)`
+        if (window.has3d) {
+          el.get('element').style.transform = `translate3d(0, ${pos}vh, 0)`
+        } else {
+          el.get('element').style.top = `${pos}vh`
+        }
       },
     }),
     height: (height, model) => { model.get('root').style.height = height + 'px' },

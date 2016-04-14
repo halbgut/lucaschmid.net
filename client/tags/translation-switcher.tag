@@ -17,6 +17,7 @@
 window.translation = this
 
 const domH = require('../js/lib/domHelpers.js')
+require('../js/lib/CustomEvent.js')()
 
 const setLang = (lang) =>
   domH.setHashFrag(0, lang)
@@ -52,7 +53,7 @@ const hide = (el) => {
 this.on('mount', () => {
   this.on('updated', () => {
     setLang(this.lang)
-    Array.from(this.root.querySelectorAll('[data-lang]'))
+    ; [].slice.call(this.root.querySelectorAll('[data-lang]'))
       .forEach((el) => {
         el.getAttribute('data-lang') === this.lang
           ? show(el, this.lang)
