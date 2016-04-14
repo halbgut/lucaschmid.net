@@ -7,7 +7,7 @@
       <a
         href="#/{window.translation.lang}/{get('url')}"
         class={ böttns__link: true, böttns__link--active: active === get('url') }
-        alt={ 'Navigate to ' + get('title') }
+        alt={ get('title') }
       ></a>
     </li>
   </nav>
@@ -111,19 +111,7 @@ this.on('mount', () => {
     let model = initModel
       .set('chapters', h.getChapters(initModel))
       .update('chapters', h.initializeSectionStyles)
-    const chapters = model.get('chapters').toArray()
     const exec = () => { model = render(update(model)) }
-
-    this.update({ chapters: chapters.slice(0, chapters.length - 1) })
-
-    /**
-     * When the load event happens, set the hashFrag to it's
-     * Initial state. That way another hashchange happens and
-     * The renderer scrolls to the right slide.
-     */
-    addEventListener('load', () => {
-      domH.setHashFrag(1, initialHash)
-    })
 
     /**
      * Update and render the scrollthingy at all relevant events.
@@ -145,6 +133,7 @@ this.on('mount', () => {
      * The translation riot tag triggers a `translated` event
      * when all elements have been translated.
      */
+    let initialTranslation = true
     window.addEventListener('translated', () => {
       /**
        * Before the elements are translated, their height is
@@ -155,7 +144,22 @@ this.on('mount', () => {
         'chapters',
         h.updateChapterMaps.bind(null, model, true)
       )
+
+      /**
+       * After the initial translation loads, set the hashFrag to
+       * it's initial state. That way another hashchange happens and
+       * The renderer scrolls to the right slide.
+       */
+      if (initialTranslation) {
+        domH.setHashFrag(1, initialHash)
+        initialTranslation = false
+      }
+
       exec()
+
+      model = h.updateChapterTitles(model)
+      const chapters = model.get('chapters').toArray()
+      this.update({ chapters: chapters.slice(0, chapters.length - 1) })
     })
   })(model)
 })

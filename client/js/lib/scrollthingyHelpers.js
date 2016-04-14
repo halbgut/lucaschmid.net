@@ -3,6 +3,9 @@ const Immutable = require('immutable')
 // Math is not my strong suite
 const bezier = require('bezier-easing')
 
+const getTitle = (el) =>
+  el.querySelector(`[data-lang=${window.translation.lang}] h1,h2,h3`).innerText
+
 const getChapters = (model) =>
   Immutable.List(
     Array.from(
@@ -10,7 +13,7 @@ const getChapters = (model) =>
     )
   )
     .map((el, i, arr) => Immutable.Map({
-      title: el.getAttribute('data-title'),
+      title: getTitle(el),
       url: el.getAttribute('data-name'),
       height: el.clientHeight,
       top: calcVh(calcHeightSum(arr.slice(0, i))),
@@ -40,7 +43,7 @@ const updateChapterMaps = (() => {
       const top = calcHeightSum(arr.slice(0, i))
       return newChapter
         .set('vh', calcVh(height))
-        .set('heigt', height)
+        .set('height', height)
         .set('top', calcVh(top))
         .set('topPx', top)
     })
@@ -48,6 +51,13 @@ const updateChapterMaps = (() => {
     return newChapters
   }
 })()
+
+const updateChapterTitles = (model) =>
+  model.update('chapters', (chapters) =>
+    chapters.map((chapter) =>
+      chapter.set('title', getTitle(chapter.get('element')))
+    )
+  )
 
 const updatePosition = (model, chapter) => {
   const min = chapter.get('vh') * -1
@@ -123,6 +133,7 @@ export {
   calcHeightSum,
   lazyArrayUpdater,
   initializeSectionStyles,
-  getCurrentChapter
+  getCurrentChapter,
+  updateChapterTitles
 }
 
