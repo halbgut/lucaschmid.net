@@ -20,7 +20,7 @@ html(lang=lang)
     translation-switcher(data-languages= languages)
       scrollthingy
         each chapter in chapters
-          section(style="background-image: url('#{chapter.image}');" data-name= chapter.name data-title= chapter.title data-id= chapter.name)
+          section(style="background-image: url('#{chapter.image ? chapter.image : '' }');" data-name= chapter.name data-title= chapter.title data-id= chapter.name)
             div.text__wrapper
               if chapter.name === '01_toc'
                 each lang in languages
