@@ -8,8 +8,7 @@ const view = require('./lib/view')
 const fail = require('./lib/fail')
 const webdevquiz = require('./lib/webdevquiz')
 const getMarkdown = require('./lib/getMarkdown')
-const pug = require('../common/lib/pug')
-const parallelPromise = require('../common/lib/parallelPromise')
+const resumeRoute = require('./lib/resumeRoute')
 
 var feeds
 
@@ -96,37 +95,7 @@ module.exports = {
         resolve()
       })
     }),
-    '/resume-wimdu': (context) => new Promise((resolve, reject) => {
-      parallelPromise([
-        getMarkdown('resume/*/*'),
-        view.private.getTemplate('resume', false)
-      ])
-        .then((res) => {
-          const languages = []
-          const chapters = res[0]
-            .sort((c1, c2) => c1.name > c2.name ? 1 : -1)
-            .reduce((m, c) => {
-              const lang = c.file.split('/').reverse()[1]
-              if (languages.indexOf(lang) === -1) languages.push(lang)
-              if (!m[c.name]) m[c.name] = c
-              if (!m[c.name].texts) m[c.name].texts = {}
-              if (!m[c.name].titles) m[c.name].titles = {}
-              m[c.name].texts[lang] = { html: c.html, lang }
-              m[c.name].titles[lang] = c.title
-              return m
-            }, {})
-          context.status = 200
-          context.body = pug(res[1])({
-            description: 'My Application for a position as a front-end engineer at Wimdu',
-            lang: 'en',
-            keywords: 'Application, Résumé, Wimdu, Front-End Engineer, Luca Nils Schmid, Kriegslustig',
-            chapters,
-            languages
-          })
-          resolve()
-        })
-        .catch((err) => resolve(fail(context, err)))
-    })
+    '/resume-wimdu': resumeRoute
   }
 }
 
