@@ -53,6 +53,10 @@ img {
   padding: 1rem;
 }
 
+section {
+  overflow: hidden;
+}
+
 section:nth-last-child(1) .text__wrapper {
   min-height: auto;
   max-width: none;

@@ -20,8 +20,8 @@ html(lang=lang)
           display: block;
           overflow: hidden;
         }
-    translation-switcher(data-languages= languages)
-      scrollthingy
+    main
+      translation-switcher(data-languages= languages)
         each chapter in chapters
           section(style="background-image: url('#{chapter.image ? chapter.image : '' }');" data-name= chapter.name data-title= chapter.title data-id= chapter.name)
             div.text__wrapper
