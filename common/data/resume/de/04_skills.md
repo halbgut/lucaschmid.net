@@ -1,7 +1,5 @@
 ## Kompetenzen & Fähigkeiten
 
-[image:/img/resume/small_tumblr_npu7nhn42b1sfie3io1_1280.jpg]
-
 _Auf einer Skala von 2, 3, 5, 8, 13 bis 21 bewertet._
 
 ### Kompetenzen

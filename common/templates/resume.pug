@@ -8,7 +8,7 @@ html(lang=lang)
     meta(name="viewport" content="width=device-width, initial-scale=1")
     title
       | Resume
-    <style>!{loadFile('client/build/resume.css')}</style>
+    style!= loadFile('client/build/resume.css')
   body
     // Hi!
     // You probably wanna see some source code.
@@ -24,7 +24,7 @@ html(lang=lang)
       translation-switcher(data-languages= languages)
         div.scrollthingy__content
           each chapter in chapters
-            section(style="background-image: url('#{chapter.image ? chapter.image : '' }');" data-name= chapter.name data-title= chapter.title data-id= chapter.name).scrollthingy__section
+            section(data-name= chapter.name data-title= chapter.title data-id= chapter.name).scrollthingy__section
               div.text__wrapper
                 if chapter.name === '01_toc'
                   each lang in languages
@@ -39,4 +39,5 @@ html(lang=lang)
                   each text in chapter.texts
                     div.text(data-lang= text.lang)!= text.html
     script(src="/build/resume.js")
+    script(src="/build/scrollthingy.js")
 

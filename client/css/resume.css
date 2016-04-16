@@ -74,45 +74,6 @@ img {
   background-color: transparent;
 }
 
-.scrollthingy__section[data-name$="_intro"] {
-  background-position: center;
-}
-
-.scrollthingy__section[data-name$="_apprenticeship"] {
-  background-position: bottom;
-}
-
-.scrollthingy__section[data-name$="_goals"] {
-  background-position: center;
-}
-
-.scrollthingy__section[data-name$="_particulars"] {
-  background-position: center;
-}
-
-.scrollthingy__section[data-name$="_cv"] {
-  background-position: bottom;
-}
-
-.scrollthingy__section[data-name$="_footer"] .text {
-  min-height: 0;
-  margin-bottom: 0;
-}
-
-.scrollthingy__section[data-name$="_footer"] .text__wrapper {
-  margin: 0;
-  padding: 0;
-}
-
-.scrollthingy__section[data-name$="_particulars"] p:last-child {
-  margin-bottom: 0;
-  line-height: 0;
-}
-
-.scrollthingy__section[data-name$="_particulars"] .text {
-  padding-bottom: 0;
-}
-
 @media (min-width: 750px) {
   html,
   a {

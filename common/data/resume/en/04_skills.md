@@ -1,7 +1,5 @@
 ## Competencies & Skills
 
-[image:/img/resume/small_tumblr_npu7nhn42b1sfie3io1_1280.jpg]
-
 _Rated on a scale of 2, 3, 5, 8, 13, 21 (all fib)._
 
 ### Competencies

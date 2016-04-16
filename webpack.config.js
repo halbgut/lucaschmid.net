@@ -13,7 +13,8 @@ if (!dev) plugins.push(new webpack.optimize.DedupePlugin())
 module.exports = {
   entry: {
     main: './client/entry',
-    resume: './client/resume'
+    resume: './client/resume',
+    scrollthingy: './client/scrollthingy'
   },
   output: {
     filename: '[name].js',
@@ -47,7 +48,9 @@ module.exports = {
             : 'css-loader?minimize!postcss-loader'
           )
         )
-      }
+      },
+      { test: /\.png$/, loader: 'url-loader' },
+      { test: /\.jpg$/, loader: 'url-loader' }
     ]
   },
   postcss: () => [autoprefixer]

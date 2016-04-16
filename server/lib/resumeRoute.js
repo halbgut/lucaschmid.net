@@ -9,7 +9,7 @@ const getMarkdown = require('./getMarkdown')
   * the Master branch on the Github remote, the server
   * restarts and the cache is cleared. I can also manually
   * invalidate the cache using a special route and a secret
-  * key.
+  * key. The caching layer is disabled in development.
   */
 module.exports = (context) => new Promise((resolve, reject) => {
   Promise.all([

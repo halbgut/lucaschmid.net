@@ -1,0 +1,71 @@
+/**
+ * Define all backgrounds
+ */
+.scrollthingy__section[data-name$="_intro"] {
+  background-position: center;
+  background-image: url('../img/resume/small_tumblr_o4ogqlPRRG1sfie3io1_1280.jpg');
+}
+
+.scrollthingy__section[data-name$="_toc"] {
+  background-image: url('../img/resume/tumblr_o1dennYMHW1sfie3io1_1280.jpg');
+}
+
+.scrollthingy__section[data-name$="_cv"] {
+  background-image: url('../img/resume/small_tumblr_o3ygfd9Yle1sfie3io1_1280.jpg');
+  background-position: bottom;
+}
+
+.scrollthingy__section[data-name$="_particulars"] {
+  background-position: center;
+  background-image: url('../img/resume/small_tumblr_ns91cwA5so1sfie3io1_1280.jpg');
+}
+
+.scrollthingy__section[data-name$="_skills"] {
+  background-image: url('../img/resume/small_tumblr_npu7nhn42b1sfie3io1_1280.jpg');
+}
+
+.scrollthingy__section[data-name$="_me"] {
+  background-image: url('../img/resume/small_tumblr_nxysuzimJW1sfie3io1_1280.jpg');
+}
+
+.scrollthingy__section[data-name$="_motivation"] {
+  background-image: url('../img/resume/small_photo-1452032821564-0f802617a6a1.jpg');
+}
+
+.scrollthingy__section[data-name$="_apprenticeship"] {
+  background-position: bottom;
+  background-image: url('../img/resume/small_tumblr_nxysurSX2M1sfie3io1_1280.jpg');
+}
+
+.scrollthingy__section[data-name$="_open-source"] {
+  background-image: url('../img/resume/small_tumblr_nztqykvR361sfie3io1_1280.jpg');
+}
+
+.scrollthingy__section[data-name$="_goals"] {
+  background-image: url('../img/resume/small_tumblr_nrt7g8WDii1sfie3io1_1280.jpg');
+  background-position: center;
+}
+
+.scrollthingy__section[data-name$="_references"] {
+  background-image: url('../img/resume/small_tumblr_o2mhfipopj1sfie3io1_1280.jpg');
+}
+
+.scrollthingy__section[data-name$="_footer"] .text {
+  min-height: 0;
+  margin-bottom: 0;
+}
+
+.scrollthingy__section[data-name$="_footer"] .text__wrapper {
+  margin: 0;
+  padding: 0;
+}
+
+.scrollthingy__section[data-name$="_particulars"] p:last-child {
+  margin-bottom: 0;
+  line-height: 0;
+}
+
+.scrollthingy__section[data-name$="_particulars"] .text {
+  padding-bottom: 0;
+}
+

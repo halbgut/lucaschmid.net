@@ -1,7 +1,5 @@
 ## Referenzen
 
-[image:/img/resume/small_tumblr_o2mhfipopj1sfie3io1_1280.jpg]
-
 ### Projekte
 
 * [lucaschmid.net](https://github.com/Kriegslustig/lucaschmid.net) – Ich experimentiere gerne mit verschiedenen Technologien.
