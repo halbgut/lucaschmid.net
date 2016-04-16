@@ -1,3 +1,10 @@
+/**
+ * Here you'll find styles specific to this project
+ * The scrollthingy styles are split up into generic
+ * an specific ones. The generic ones should provide
+ * a very basic starting point.
+ */
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -25,7 +32,7 @@ a {
   color: #FFF;
 }
 
-section {
+.scrollthingy__section {
   background-size: cover;
 }
 
@@ -53,56 +60,56 @@ img {
   padding: 1rem;
 }
 
-section {
+.scrollthingy__section {
   overflow: hidden;
 }
 
-section:nth-last-child(1) .text__wrapper {
+.scrollthingy__section:nth-last-child(1) .text__wrapper {
   min-height: auto;
   max-width: none;
   width: 100%;
 }
 
-section:nth-last-child(1) .text {
+.scrollthingy__section:nth-last-child(1) .text {
   background-color: transparent;
 }
 
-section[data-name$="_intro"] {
+.scrollthingy__section[data-name$="_intro"] {
   background-position: center;
 }
 
-section[data-name$="_apprenticeship"] {
+.scrollthingy__section[data-name$="_apprenticeship"] {
   background-position: bottom;
 }
 
-section[data-name$="_goals"] {
+.scrollthingy__section[data-name$="_goals"] {
   background-position: center;
 }
 
-section[data-name$="_particulars"] {
+.scrollthingy__section[data-name$="_particulars"] {
   background-position: center;
 }
 
-section[data-name$="_cv"] {
+.scrollthingy__section[data-name$="_cv"] {
   background-position: bottom;
 }
 
-section[data-name$="_footer"] .text {
+.scrollthingy__section[data-name$="_footer"] .text {
   min-height: 0;
   margin-bottom: 0;
 }
 
-section[data-name$="_footer"] .text__wrapper {
+.scrollthingy__section[data-name$="_footer"] .text__wrapper {
   margin: 0;
   padding: 0;
 }
 
-section[data-name$="_particulars"] p:last-child {
+.scrollthingy__section[data-name$="_particulars"] p:last-child {
   margin-bottom: 0;
   line-height: 0;
 }
 
-section[data-name$="_particulars"] .text {
+.scrollthingy__section[data-name$="_particulars"] .text {
   padding-bottom: 0;
 }
 
@@ -112,7 +119,7 @@ section[data-name$="_particulars"] .text {
     color: hsl(0, 0%, 0%);
   }
 
-  section {
+  .scrollthingy__section {
     box-shadow: 0 -14px 30px 14px black;
   }
 
@@ -144,7 +151,7 @@ section[data-name$="_particulars"] .text {
     margin: 0;
   }
 
-  scrollthingy {
+  .scrollthingy {
     height: auto !important;
   }
 
@@ -160,7 +167,7 @@ section[data-name$="_particulars"] .text {
     min-height: auto;
   }
 
-  scrollthingy section[data-name] {
+  .scrollthingy__section[data-name] {
     transform: none !important;
     position: static !important;
     display: block;

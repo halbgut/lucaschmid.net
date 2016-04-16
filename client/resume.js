@@ -2,6 +2,7 @@ const riot = require('riot')
 
 require('./tags/translation-switcher.tag')
 require('./css/resume.css')
+require('./components/scrollthingy/main.js')
 
 riot.mount('*')
 
