@@ -68,9 +68,7 @@ this.on('mount', () => {
       .split(',')
       .map( (lang) => ({ lang: lang.substring(1, lang.length - 1) }) )
   })
-  setTimeout(() =>
-    this.update({ lang: getLang() || this.langs[1].lang })
-  , 1)
+  this.update({ lang: getLang() || this.langs[1].lang })
 })
 
 </script>

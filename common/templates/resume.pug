@@ -21,10 +21,10 @@ html(lang=lang)
           overflow: hidden;
         }
     main
-      translation-switcher(data-languages= languages)
-        div.scrollthingy
+    translation-switcher(data-languages= languages)
+      scrollthingy.scrollthingy
         each chapter in chapters
-          section(data-name= chapter.name).scrollthingy__section
+          section(data-name= chapter.name id= chapter.name).scrollthingy__section
             div.text__wrapper
               if chapter.name === '01_toc'
                 each lang in languages

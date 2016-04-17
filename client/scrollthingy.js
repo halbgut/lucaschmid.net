@@ -1,15 +1,6 @@
-import Cycle from '@cycle/core'
-import {makeDOMDriver} from '@cycle/dom'
-
-import { backgrounds } from './css/resumeBackgrounds.css'
-import { main, styles } from './components/scrollthingy/main.js'
-
-Cycle.run(
-  main,
-  { /* Drivers */
-    DOM: makeDOMDriver('.scrollthingy')
-  }
-)
+import riot from 'riot'
+import scrollthingy from './tags/scrollthingy.tag' // eslint-disable-line no-unused-vars
+import styles from './css/resumeBackgrounds.css' // eslint-disable-line no-unused-vars
 
 window.requestAnimationFrame(() => {
   const link = document.createElement('link')
@@ -19,5 +10,5 @@ window.requestAnimationFrame(() => {
   head.parentNode.insertBefore(link, head)
 })
 
-export { styles, backgrounds }
+riot.mount('*')
 
