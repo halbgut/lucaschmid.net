@@ -29,9 +29,6 @@
     "websocket": "^1.0.22"
   },
   "devDependencies": {
-    "@cycle/core": "^6.0.3",
-    "@cycle/dom": "^9.4.0",
-    "@cycle/http": "^8.2.2",
     "aes-js": "^0.2.4",
     "autoprefixer": "^6.3.5",
     "babel-core": "^6.7.2",
@@ -49,8 +46,6 @@
     "postcss-loader": "^0.8.2",
     "riot": "^2.3.12",
     "riotjs-loader": "^3.0.0",
-    "rx": "^4.1.0",
-    "rx-dom": "^7.0.3",
     "sitemap": "^1.5.0",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
