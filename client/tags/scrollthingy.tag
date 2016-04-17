@@ -18,6 +18,7 @@ const domH = require('../js/lib/domHelpers.js')
 const Immutable = require('immutable')
 
 if (window.has3d === undefined) window.has3d = domH.has3d()
+window.isiPad = window.navigator.userAgent.indexOf('iPad') > -1
 
 /**
  * Trigger a 'scrollstop' event when a scroll event doesn't
@@ -104,11 +105,11 @@ this.on('mount', () => {
        * animationframe.
        */
       pos: h.slowAnimation((pos, el, parent, cachedEl) => {
-        // if (window.has3d) {
-        //   el.get('element').style.transform = `translateY(${pos}vh)`
-        // } else {
+        if (window.has3d || isiPad) {
+          el.get('element').style.transform = `translate3d(0, ${pos}vh, 0)`
+        } else {
           el.get('element').style.top = `${pos}vh`
-        // }
+        }
       }),
     }),
     height: (height, model) => { model.get('root').style.height = height + 'px' },
