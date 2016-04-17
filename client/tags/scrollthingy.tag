@@ -97,9 +97,15 @@ this.on('mount', () => {
       }
     },
     chapters: h.lazyArrayUpdater({
+      /**
+       * To prevent frame skipping and generally shitty performance,
+       * the diffs in the position attributes are applied sequentially.
+       * `slowAnimation` simply triggers a function in the next
+       * animationframe.
+       */
       pos: h.slowAnimation((pos, el, parent, cachedEl) => {
         if (window.has3d) {
-          el.get('element').style.transform = `translate3d(0, ${pos}vh, 0)`
+          el.get('element').style.transform = `translateY(${pos}vh)`
         } else {
           el.get('element').style.top = `${pos}vh`
         }
