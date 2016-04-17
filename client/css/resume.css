@@ -74,6 +74,35 @@ img {
   background-color: transparent;
 }
 
+.loader {
+  position: fixed;
+  z-index: 100;
+  height: 100vh;
+  width: 100%;
+  opacity: 0;
+  transition: opacity .4s;
+  background-color: hsl(0, 0%, 100%);
+}
+
+.loader--active {
+  opacity: 1;
+}
+
+.loader__spinner {
+  position: absolute;
+  width: 10vh;
+  height: 10vh;
+  left: calc(50vw - 5vh);
+  top: 45vh;
+  border-radius: 100%;
+  border: .5rem solid hsl(0, 0%, 80%);
+  border-top-color: hsl(0, 0%, 100%);
+  border-bottom-color: hsl(0, 0%, 100%);
+  transform: rotate(0);
+  animation: .5s spin infinite;
+  color: transparent;
+}
+
 @media (min-width: 750px) {
   html,
   a {
@@ -138,6 +167,16 @@ img {
 
   .text {
     margin-bottom: 0;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
   }
 }
 

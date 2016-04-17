@@ -21,6 +21,8 @@ html(lang=lang)
           overflow: hidden;
         }
     main
+    div(class="loader loader--active")
+      div.loader__spinner
     translation-switcher(data-languages= languages)
       scrollthingy.scrollthingy
         each chapter in chapters
