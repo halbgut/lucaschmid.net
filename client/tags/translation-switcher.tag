@@ -29,7 +29,7 @@ const triggerEvent = () => {
   window.dispatchEvent(
     new window.CustomEvent(
       'translated',
-      { details: { language: this.lang } }
+      { detail: { language: this.lang } }
     )
   )
 }
@@ -68,7 +68,9 @@ this.on('mount', () => {
       .split(',')
       .map( (lang) => ({ lang: lang.substring(1, lang.length - 1) }) )
   })
-  this.update({ lang: getLang() || this.langs[1].lang })
+  setTimeout(() =>
+    this.update({ lang: getLang() || this.langs[1].lang })
+  , 1)
 })
 
 </script>

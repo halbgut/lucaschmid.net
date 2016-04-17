@@ -22,22 +22,22 @@ html(lang=lang)
         }
     main
       translation-switcher(data-languages= languages)
-        div.scrollthingy__content
-          each chapter in chapters
-            section(data-name= chapter.name data-title= chapter.title data-id= chapter.name).scrollthingy__section
-              div.text__wrapper
-                if chapter.name === '01_toc'
-                  each lang in languages
-                    div.text(data-lang= lang)
-                      !{chapter.texts[lang].html}
-                      ul
-                        each chapter in chapters
-                          if chapter.title
-                            li
-                              a(href="#/#{lang}/#{chapter.name}")= chapter.titles[lang]
-                else
-                  each text in chapter.texts
-                    div.text(data-lang= text.lang)!= text.html
+        div.scrollthingy
+        each chapter in chapters
+          section(data-name= chapter.name).scrollthingy__section
+            div.text__wrapper
+              if chapter.name === '01_toc'
+                each lang in languages
+                  div.text(data-lang= lang)
+                    !{chapter.texts[lang].html}
+                    ul
+                      each chapter in chapters
+                        if chapter.title
+                          li
+                            a(href="#/#{lang}/#{chapter.name}")= chapter.titles[lang]
+              else
+                each text in chapter.texts
+                  div.text(data-lang= text.lang)!= text.html
     script(src="/build/resume.js")
     script(src="/build/scrollthingy.js")
 
