@@ -104,11 +104,11 @@ this.on('mount', () => {
        * animationframe.
        */
       pos: h.slowAnimation((pos, el, parent, cachedEl) => {
-        if (window.has3d) {
-          el.get('element').style.transform = `translateY(${pos}vh)`
-        } else {
+        // if (window.has3d) {
+        //   el.get('element').style.transform = `translateY(${pos}vh)`
+        // } else {
           el.get('element').style.top = `${pos}vh`
-        }
+        // }
       }),
     }),
     height: (height, model) => { model.get('root').style.height = height + 'px' },
