@@ -97,13 +97,13 @@ this.on('mount', () => {
       }
     },
     chapters: h.lazyArrayUpdater({
-      pos: (pos, el) => {
+      pos: h.slowAnimation((pos, el, parent, cachedEl) => {
         if (window.has3d) {
           el.get('element').style.transform = `translate3d(0, ${pos}vh, 0)`
         } else {
           el.get('element').style.top = `${pos}vh`
         }
-      },
+      }),
     }),
     height: (height, model) => { model.get('root').style.height = height + 'px' },
     chapter: h.updater({

@@ -85,7 +85,7 @@ const updater = (actions, model) => { // This function is used to produce side-e
           el !== cachedModel.get(k)
         )
       ) {
-        actions[k](el, model, parentModel)
+        actions[k](el, model, parentModel, cachedModel.get(k))
       }
     })
     cachedModel = model
@@ -125,6 +125,10 @@ const getCurrentChapter = (model) => {
   ).get(0) || Immutable.Map()
 }
 
+const slowAnimation = (fn) =>
+  (...args) =>
+    window.requestAnimationFrame(() => fn(...args))
+
 export {
   getChapters,
   getChapterByUrl,
@@ -134,6 +138,7 @@ export {
   lazyArrayUpdater,
   initializeSectionStyles,
   getCurrentChapter,
-  updateChapterTitles
+  updateChapterTitles,
+  slowAnimation
 }
 
