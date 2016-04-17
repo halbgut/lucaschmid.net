@@ -65,8 +65,8 @@ img {
 }
 
 .scrollthingy__section:nth-last-child(1) .text__wrapper {
-  min-height: auto;
-  max-width: none;
+  min-height: initial;
+  max-width: initial;
   width: 100%;
 }
 
@@ -124,15 +124,15 @@ img {
     padding: 0;
     float: none;
     width: 100%;
-    max-width: none;
-    min-height: auto;
+    max-width: initial;
+    min-height: initial;
   }
 
   .scrollthingy__section[data-name] {
     transform: none !important;
     position: static !important;
     display: block;
-    min-height: auto;
+    min-height: initial;
     box-shadow: none;
   }
 
