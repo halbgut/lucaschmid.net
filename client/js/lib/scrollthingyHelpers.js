@@ -118,7 +118,7 @@ const initializeSectionStyles = (chapters) => {
 }
 
 const getCurrentChapter = (model) => {
-  const pos = model.get('scrollY')
+  const pos = model.get('scrollY') + model.get('windowH') * 0.6
   return model.get('chapters').filter((el) =>
     el.get('topPx') <= pos &&
     el.get('topPx') + el.get('height') > pos
