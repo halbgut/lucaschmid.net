@@ -28,13 +28,13 @@ html(lang=lang)
         each chapter in chapters
           section(data-name= chapter.name id= chapter.name).scrollthingy__section
             div.text__wrapper
-              if chapter.name === '01_toc'
+              if chapter.name === '02_toc'
                 each lang in languages
                   div.text(data-lang= lang)
                     !{chapter.texts[lang].html}
                     ul
                       each chapter in chapters
-                        if chapter.title
+                        if chapter.title && chapter.name !== '02_toc' && chapter.name !== '00_intro'
                           li
                             a(href="#/#{lang}/#{chapter.name}")= chapter.titles[lang]
               else
