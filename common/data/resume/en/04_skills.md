@@ -1,16 +1,18 @@
 ## Competencies & Skills
 
-_Rated on a scale of 2, 3, 5, 8, 13, 21 (all fib)._
-
 ### Competencies
 
-* I integrate quickly in new environments.
+* Integrate quickly in new environments.
 * Open minded and sociable
 * Like sharing and teaching
 * Am eager to learn
 * Good abstract-logical reasoning skills
 
 ### Skills
+
+_Rated on a scale of 2, 3, 5, 8, 13, 21 (all Fibonacci numbers)._<br/>
+_2 = Basic understanding_<br/>
+_21 = Awesome_<br/>
 
 #### (Natural) Languages
 

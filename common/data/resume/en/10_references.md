@@ -13,7 +13,7 @@ Some of my other Projects are described [here](https://lucaschmid.net/projects).
 **Fabian Dennler**<br />
 CS Teacher, [GBC](http://gbchur.ch/) & Consultant<br />
 [fabian.dennler@gbchur.ch](mailto:fabian.dennler@gbchur.ch)<br />
-[Phone number on request](mailto:root@lucaschmid.me)
+[Phone number on request](mailto:root@lucaschmid.net)
 
 **Andreas Kemp**<br />
 Department Head, Somedia Production Web<br />

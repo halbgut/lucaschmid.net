@@ -1,16 +1,18 @@
 ## Kompetenzen & Fähigkeiten
 
-_Auf einer Skala von 2, 3, 5, 8, 13 bis 21 bewertet._
-
 ### Kompetenzen
 
 * Integriere mich schnell in neue Umgebungen
-* Ich bin kontaktfreudig und weltoffen
+* Kontaktfreudig und weltoffen
 * Teile gerne und bin lehrfreudig
 * Bin sehr lernbegierig
 * Gutes logisch-abstraktes Denkvermögen
 
 ### Fähigkeiten
+
+_Auf einer Skala von 2, 3, 5, 8, 13 bis 21 bewertet (alles Fibonacci Zahlen)._<br/>
+_2 = Grundlegendes Verständnis_<br/>
+_21 = Fantastisch_<br/>
 
 #### (Natürliche) Sprachen
 

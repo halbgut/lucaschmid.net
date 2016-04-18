@@ -13,7 +13,7 @@ Zu einigen meiner Projekte habe ich [hier](https://lucaschmid.net/projects) etwa
 **Fabian Dennler**<br />
 Informatik-Lehrer, [Gewerbliche Berufsschule Chur](http://gbchur.ch/) & Consultant<br />
 [fabian.dennler@gbchur.ch](mailto:fabian.dennler@gbchur.ch)<br />
-[Telefon Nummer auf Anfrage](mailto:root@lucaschmid.me)
+[Telefon Nummer auf Anfrage](mailto:root@lucaschmid.net)
 
 **Andreas Kemp**<br />
 Abteilungsleiter, Somedia Production Web<br />
