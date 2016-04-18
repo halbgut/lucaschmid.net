@@ -69,6 +69,7 @@ this.on('mount', () => {
       .map( (lang) => ({ lang: lang.substring(1, lang.length - 1) }) )
   })
   this.update({ lang: getLang() || this.langs[1].lang })
+  setTimeout(() => this.update({ lang: this.lang }), 600) // To make sure the translations have been rendered
 })
 
 </script>
