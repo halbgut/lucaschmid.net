@@ -104,13 +104,12 @@ this.on('mount', () => {
        * `slowAnimation` simply triggers a function in the next
        * animationframe.
        */
-      pos: h.slowAnimation((pos, el, parent, cachedEl) => {
-        if (window.has3d || isiPad) {
-          el.get('element').style.transform = `translate3d(0, ${pos}vh, 0)`
-        } else {
-          el.get('element').style.top = `${pos}vh`
-        }
-      }),
+      position: (pos, el) => {
+        el.get('element').style.position = pos
+      },
+      height: (h, el) => {
+        el.get('parent').style.height = `${h}px`
+      }
     }),
     height: (height, model) => { model.get('root').style.height = height + 'px' },
     chapter: h.updater({
@@ -187,6 +186,7 @@ this.on('mount', () => {
   position: relative;
   z-index: 1;
   display: block;
+  overflow: hidden;
 }
 
 :scope .scrollthingy__content {
@@ -197,8 +197,16 @@ this.on('mount', () => {
   position: relative;
 }
 
+:scope .scrollthingy__sectionWrapper {
+  position: relative;
+  width: 100%;
+  display: block;
+}
+
 :scope .scrollthingy__section {
   position: relative;
+  top: 0;
+  left: 0;
   min-height: 100vh;
   min-width: 100%;
   background-color: white;
@@ -241,8 +249,9 @@ this.on('mount', () => {
   box-shadow: 0 -14px 30px 14px black;
 }
 
-:scope .scrollthingy__section:nth-last-child(1) {
+:scope .scrollthingy__sectionWrapper:nth-last-child(1) .scrollthingy__section {
   min-height: 10vh;
+  top: auto;
   bottom: 0;
   color: #000;
   width: 100%;
@@ -250,7 +259,7 @@ this.on('mount', () => {
   line-height: 2rem;
 }
 
-:scope .scrollthingy__section:nth-last-child(1) a {
+:scope .scrollthingy__sectionWrapper:nth-last-child(1) a {
   color: blue;
 }
 

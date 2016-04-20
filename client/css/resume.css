@@ -64,13 +64,13 @@ img {
   overflow: hidden;
 }
 
-.scrollthingy__section:nth-last-child(1) .text__wrapper {
+.scrollthingy__sectionWrapper:nth-last-child(1) .text__wrapper {
   min-height: initial;
   max-width: initial;
   width: 100%;
 }
 
-.scrollthingy__section:nth-last-child(1) .text {
+.scrollthingy__sectionWrapper:nth-last-child(1) .scrollthingy__section .text {
   background-color: transparent;
 }
 

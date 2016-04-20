@@ -19,6 +19,8 @@ const getChapters = (model) =>
       top: calcVh(calcHeightSum(arr.slice(0, i))),
       topPx: calcHeightSum(arr.slice(0, i)),
       pos: 0,
+      position: 'absolute',
+      parent: el.parentNode,
       vh: calcVh(el.clientHeight),
       element: el, // Not Immutable
       bezier: i + 2 < arr.count()
@@ -37,7 +39,12 @@ const updateChapterMaps = (() => {
   let cachedWidth = 0
   return (model, noCache) => {
     let newChapters = model.get('chapters').map((chapter, i, arr) => {
-      const newChapter = updatePosition(model, chapter)
+      let newChapter = updatePosition(model, chapter)
+      newChapter = newChapter.update('position', () =>
+        newChapter.get('pos') !== 0
+          ? 'relative'
+          : 'fixed'
+      )
       if (noCache !== true && model.get('width') === cachedWidth) return newChapter
       const height = newChapter.get('element').clientHeight
       const top = calcHeightSum(arr.slice(0, i))
@@ -113,6 +120,7 @@ const initializeSectionStyles = (chapters) => {
   chapters.forEach((chapter, i, arr) => {
     chapter.get('element').style.position = 'fixed'
     chapter.get('element').style.zIndex = arr.count() - i
+    chapter.get('parent').style.zIndex = arr.count() - i
   })
   return chapters
 }
