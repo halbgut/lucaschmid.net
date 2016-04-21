@@ -4,6 +4,7 @@ const dns = require('dns')
 
 const github = require('./lib/github')
 const comments = require('./lib/comments')
+const pug = require('../common/lib/pug')
 const view = require('./lib/view')
 const fail = require('./lib/fail')
 const webdevquiz = require('./lib/webdevquiz')
@@ -95,7 +96,19 @@ module.exports = {
         resolve()
       })
     }),
-    '/resume-wimdu': resumeRoute
+    '/resume-wimdu': resumeRoute,
+    '/resume': (context) => new Promise((resolve, reject) => {
+      Promise.all([
+        getMarkdown('resumev2'),
+        view.private.getTemplate('resumev2', false)
+      ])
+        .then((res) => {
+          context.status = 200
+          context.body = pug(res[1])(res[0][0])
+          resolve()
+        })
+        .catch((err) => resolve(fail(context, err)))
+    })
   }
 }
 
