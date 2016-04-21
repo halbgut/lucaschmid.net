@@ -6,7 +6,6 @@
   "dependencies": {
     "async": "^1.5.2",
     "bezier-easing": "^2.0.3",
-    "cubic-bezier": "^0.1.2",
     "glob": "^6.0.3",
     "immutable": "^3.7.6",
     "jade": "^1.11.0",
@@ -26,6 +25,8 @@
     "showdown": "^1.3.0",
     "showdown-footnotes": "^1.1.0",
     "striptags": "^2.1.1",
+    "xml": "^1.0.0",
+    "github": "^0.2.4",
     "websocket": "^1.0.22"
   },
   "devDependencies": {
@@ -37,7 +38,6 @@
     "css-loader": "^0.23.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
-    "github": "^0.2.4",
     "highlight.js": "^9.2.0",
     "json-loader": "^0.5.4",
     "level4": "^1.0.1",
@@ -49,8 +49,7 @@
     "sitemap": "^1.5.0",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
-    "webpack": "^1.12.14",
-    "xml": "^1.0.0"
+    "webpack": "^1.12.14"
   },
   "scripts": {
     "build": "NODE_ENV=production webpack",
