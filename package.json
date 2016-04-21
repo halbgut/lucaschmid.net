@@ -2,7 +2,7 @@
   "name": "lucaschmid.net",
   "description": "My Portfolio",
   "repository": "https://github.com/Kriegslustig/lucaschmid.net",
-  "license": "No License",
+  "license": "UNLICENSED",
   "dependencies": {
     "async": "^1.5.2",
     "bezier-easing": "^2.0.3",
