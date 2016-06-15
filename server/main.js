@@ -18,6 +18,7 @@ const initTLS = require('./lib/tls')
 const security = require('./lib/security')
 const routes = require('./lib/routes')()
 const restart = require('./lib/restart')
+const redirects = require('./lib/redirects')
 const config = require('../common/config.js')
 
 // Initialize app
@@ -51,7 +52,8 @@ app.use(koaStatic(`${__dirname}/../common`))
 
 // TLS redirect
 let tls = false
-app.use(function *(next) {
+app.use(redirects)
+app.use(function * (next) {
   if (tls && !this.request.secure) {
     this.set('Location', `${config.defaultProto}://${config.hostname}${this.request.url}`)
     this.status = 302
