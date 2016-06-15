@@ -1,6 +1,6 @@
 const redirects = [
   ['192.168.99.100/fjs', 'https://github.com/kriegslustig/presentation-functional-javascript'],
-  ['lucaschmid.net/fjs', 'https://github.com/kriegslustig/presentation-functional-javascript']
+  ['ls7.ch/fjs', 'https://github.com/kriegslustig/presentation-functional-javascript']
 ]
 
 module.exports = function * (next) {
