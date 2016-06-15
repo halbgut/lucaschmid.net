@@ -5,9 +5,7 @@
   "license": "UNLICENSED",
   "dependencies": {
     "async": "^1.5.2",
-    "bezier-easing": "^2.0.3",
     "glob": "^6.0.3",
-    "immutable": "^3.7.6",
     "jade": "^1.11.0",
     "koa": "^1.1.2",
     "koa-body-parser": "^1.1.2",
@@ -30,6 +28,8 @@
     "websocket": "^1.0.22"
   },
   "devDependencies": {
+    "immutable": "^3.7.6",
+    "bezier-easing": "^2.0.3",
     "aes-js": "^0.2.4",
     "autoprefixer": "^6.3.5",
     "babel-core": "^6.7.2",
