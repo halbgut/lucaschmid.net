@@ -9,9 +9,19 @@ Here are things I spent considerable time on learning. They are orderd by skill-
 - PHP
 - Bash
 - Elm
-- C (~1000 LOC)
-- Python (~500 LOC)
-- Rust (~700 LOC)
+
+## Tools/Libraries
+
+- Node.js
+- Rx.js
+- Cycle.js
+- Express/Koa
+- Grunt/Gulp/Webpack
+- Docker
+- PostCSS
+- Riot.js
+- React
+- Angular
 
 ## Frameworks
 
@@ -25,17 +35,6 @@ Here are things I spent considerable time on learning. They are orderd by skill-
 - VIM
 - Git/hg
 - tmux
-
-## Tools
-
-- Node.js
-- Express/Koa
-- Grunt/Gulp/Webpack
-- Docker
-- PostCSS
-- Riot.js
-- React
-- Angular
 
 ## Databases
 
