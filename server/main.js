@@ -13,12 +13,12 @@ const etag = require('koa-etag')
 const fresh = require('koa-fresh')
 const bodyParser = require('koa-bodyparser')
 
+const redirects = require('./redirects')
 const websocketHandler = require('./lib/websocketHandler')
 const initTLS = require('./lib/tls')
 const security = require('./lib/security')
 const routes = require('./lib/routes')()
 const restart = require('./lib/restart')
-const redirects = require('./lib/redirects')
 const config = require('../common/config.js')
 
 // Initialize app
