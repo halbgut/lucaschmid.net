@@ -67,6 +67,7 @@ app.use(koaStatic(`${__dirname}/../elm-intro/client/assets`))
 app.use(mount('/vim-shortcut-viewer', koaStatic(`${__dirname}/../subsites/vim-shortcut-viewer`)))
 app.use(mount('/elm-pomodoro', koaStatic(`${__dirname}/../subsites/elm-pomodoro`)))
 app.use(mount('/minimum-viable-modern-javascript', koaStatic(`${__dirname}/../subsites/minimum-viable-modern-javascript/dist`)))
+app.use(mount('/curriculum-vitae', koaStatic(`${__dirname}/../subsites/curriculum-vitae/dist`)))
 
 // Add router
 app.use(routes.routes())

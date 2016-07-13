@@ -10,3 +10,6 @@
 [submodule "subsites/minimum-viable-modern-javascript"]
 	path = subsites/minimum-viable-modern-javascript
 	url = https://github.com/Kriegslustig/minimum-viable-modern-javascript.git
+[submodule "subsites/curriculum-vitae"]
+	path = subsites/curriculum-vitae
+	url = https://github.com/Kriegslustig/curriculum-vitae.git
