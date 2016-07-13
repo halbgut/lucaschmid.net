@@ -9,4 +9,4 @@
 	url = https://github.com/Kriegslustig/vim-shortcut-viewer.git
 [submodule "subsites/minimum-viable-modern-javascript"]
 	path = subsites/minimum-viable-modern-javascript
-	url = git@github.com:Kriegslustig/minimum-viable-modern-javascript.git
+	url = https://github.com/Kriegslustig/minimum-viable-modern-javascript.git

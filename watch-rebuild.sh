@@ -8,7 +8,7 @@ while RES=$(inotifywait -e create $APP_DIR --format %f); do
     rm ${APP_DIR}restart
     cd ${APP_DIR} && \
       git pull && \
-      git submodule update && \
+      git submodule update --init && \
       docker-compose restart
   fi
 done
