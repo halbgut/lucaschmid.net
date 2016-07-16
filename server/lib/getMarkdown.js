@@ -31,7 +31,7 @@ const blocks = [
   [
     'title',
     /#+ (.+)\n/,
-    (data) => data[1],
+    (data) => mdConverter.makeHtml(data[1]),
     true
   ]
 ]
