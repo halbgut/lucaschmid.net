@@ -22,9 +22,9 @@ module.exports = (root) => new Promise((resolve, reject) => {
         })
         .sort((a, b) => {
           return (
-            a.created.getTime() > b.create
-              ? 1
-              : -1
+            a.created.getTime() > b.created.getTime()
+              ? -1
+              : 1
           )
         })
       )
