@@ -6,7 +6,7 @@ const csp =
   "connect-src 'self' raw.githubusercontent.com https: ws: wss:"
 
 module.exports = function *(next) {
-  this.response.set('Strict-Transport-Security', 'strict-transport-security: max-age=31536000; includeSubdomains')
+  this.response.set('Strict-Transport-Security', 'max-age=31536000; includeSubdomains')
   this.response.set('Content-Security-Policy', csp)
   this.response.set('X-Content-Security-Policy', csp)
   this.response.set('x-frame-options', 'SAMEORIGIN')
