@@ -43,7 +43,7 @@ Inside my app's directory I created a directory called `tls`. I then created som
 ```bash
 mkdir tls
 cd tls
-ln -s /etc/letsencrypt/live/lucaschmid.net/cert.pem
+ln -s /etc/letsencrypt/live/lucaschmid.net/fullchain.pem cert.pem
 ln -s /etc/letsencrypt/live/lucaschmid.net/privkey.pem key.pem
 ```
 
@@ -72,10 +72,10 @@ var server = https.createServer(
   app
 )
 
-server.listen(ports[1][7])
+server.listen(ports[1])
 app.listen(ports[0])
 
-app.use('/', (req, res) =\> {
+app.use('/', (req, res) => {
   res.end('Hi')
 })
 ```
@@ -88,6 +88,9 @@ When you run this and go to your Website via HTTPS, you should see something lik
 Now go on!
 
 **ENCRYPT ALL THE THINGS!!**
+
+**UPDATE** 21. July 2016:
+A while ago I noticed, that some browsers (i.e. IE) marked my certificate as unverified. That didn't make much sense to me, since Let's Encrypts intermediate certificates are cross-signed by IdenTrust and IdenTrust is a well known CA. So any browser that has whitelisted IdenTrusts root certificate should also trust any Let's Encrypt certificate. The certificate this post used to instruct you to use (`/etc/letsencrypt/live/[domain]/cert.pem`) is of course only signed by the Let's Encrypt CA. For a browser to know that the certificate is indirectly cross-signed by IdenTrust we actually need to use `/etc/letsencrypt/live/[domain]/fullchain.pem`, which as the name implies, contains the whole certificate chain. That includes the cross-signed Let's Encrypt intermediate certificates. You can view the changes I made to the post [here](https://github.com/Kriegslustig/lucaschmid.net/commits/master/common/data/blog/letsencrypt-express.md).
 
 [0]: https://lucaschmid.net/anotherblog/letsencrypt-express
 [1]: https://letsencrypt.org/
