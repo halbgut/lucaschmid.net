@@ -1,3 +1,5 @@
+const striptags = require('striptags')
+
 const getMarkdown = require('./getMarkdown')
 const config = require('../config.js')
 
@@ -9,7 +11,7 @@ module.exports = (root) => new Promise((resolve, reject) => {
           return {
             name: md.name,
             url: config.getFullUrl(`anotherblog/${md.name}`),
-            title: md.title,
+            title: striptags(md.title),
             teaser: md.paragraphs[0],
             articleContent: md.html,
             author: {
