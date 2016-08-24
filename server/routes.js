@@ -1,5 +1,6 @@
 'use strict'
 
+const fs = require('fs')
 const dns = require('dns')
 
 const github = require('./lib/github')
@@ -108,6 +109,18 @@ module.exports = {
           resolve()
         })
         .catch((err) => resolve(fail(context, err)))
+    }),
+    '/keybase.txt': context => new Promise((resolve, reject) => {
+      fs.readFile(
+        `${__dirname}/../common/data/keybase-proof.txt`,
+        { encoding: 'utf8' },
+        (err, data) => {
+          if (err) resolve(fail(context, err))
+          context.status = 200
+          context.body = data
+          resolve()
+        }
+      )
     })
   }
 }

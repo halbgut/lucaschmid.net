@@ -1,0 +1,73 @@
+==================================================================
+https://keybase.io/kriegslustig
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://lucaschmid.net
+  * I am kriegslustig (https://keybase.io/kriegslustig) on keybase.
+  * I have a public key with fingerprint 6ADB CF51 9AFE 846A D92E  E1D7 7715 3E85 25E5 8A1A
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "0101704acf2c03ce4d57598f9c82a8772c0f6a8cee66cccea95e322be072d610df750a",
+            "fingerprint": "6adbcf519afe846ad92ee1d777153e8525e58a1a",
+            "host": "keybase.io",
+            "key_id": "77153e8525e58a1a",
+            "kid": "0101704acf2c03ce4d57598f9c82a8772c0f6a8cee66cccea95e322be072d610df750a",
+            "uid": "49b005ea438dedd0b39f483e82528619",
+            "username": "kriegslustig"
+        },
+        "service": {
+            "hostname": "lucaschmid.net",
+            "protocol": "https:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1472035476,
+    "expire_in": 157680000,
+    "prev": "ebb60ca381620038244baf8b28364b0f174eab6d1121054f19ef7adaba8fb927",
+    "seqno": 3,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+
+owGtUntQVHUUXhYwwLHoocUjpTs8huJx3w9yeiCPzCweTdAOsN3H7+7ehHuX3bsg
+4NaYAxI0Zc0kD0dHIpgGapJCZBaRHUiUBAZN0cSilZEEKkMZwNfQvYz915/9/vnN
+Oef7vvOdM2ffOl9DgE/p+hcqo67VhPqcmeEMOb3lbRUQpwhlUFIFtAOsfqBQAA7V
+vEMSoCQIRmCEgnGWF1EexniACwRFMLTI8DTK0hSlZUWSpXkASJLnecAyBMBQlAMw
+hQokAgsiRcAsFAeJkmwBdptdklVNlmQFjhcJhGFFQONaxKAAIAJFUQiBAZpACUDQ
+LKITrYpDZ2jmONYBEiRFy2mBedXef+D/Z9/OVTmc4WCYACyO0QIQBJjDGBGntc4o
+gdIkwuhAB7DLbBHQvdolYHEUOh2qZIFccZBWKZF4oC9Xn+YBqtDJsw7eWiQJCTJQ
+NQWbXVEVXinUalZVtTmSdK5aZtPBpYAzP5Axc5IsaNvUGCXA7pAUGUpCNCSvSrou
+glMojBE4RcZBYKdNsgOzpCMIiqRh7el9QIkmCQo4joR5FqMREoVhjEZxnGNFmkNp
+jMQ5WEQoHLAcKSAIisAELiIMEClWYDmWFjkGpSB9smJZgZIwzSdr0TQdkkVmVacd
+QK6gD43hfgafAMMaf6N+Z4agwOB/j+/QrUfub7h41XTpl6m1Pd8Vd39Qf2UcH/0x
+vjp6sMk/L7h561ue58bSl+7Gvz13diKrotaSuPsNw1LHHBug8FY/7KCcEfHp+y3T
+CcQr8d75muz7KWPhvzU3J6tuyQVXso/7fn2k64vbd8KwgnWe/pFfhz4+/oNz73xs
+6IHsy6dOPpTSYZ85VL+c5iObFmJDPNFnc/d8+0xZ7njokZgLpbxnP1VrXQlor2QK
+Gto3YXlrxqZq/POqPmq5PWDqCsor/qx9su1cfpGxy93kAreWMw4fiypanv8q4s0n
+vXLkTiIiofjh08PuyfSR1HutQ4tAidxWff7uyEnmpRORG/tuBk1sr6uaGuB7uzPD
+KXuOM+3pvuSGA3WV1vK17uxrgZn135CDZ05Qtpub32393Bi2ef873jHU++fV9Jn6
+mEYeOZg1pKYv9D87Wb643tlafqfq9fPRvbuY8cDOzNn2/J/c+XP9KZMVpu+XvGr3
+6bQrr7kSeWPp0eoVui+Hjsre1XE9pO2xJzY0CSF7zAueLfLi78K55BeXknP81JgM
+643ti7mxh2+UbmlcuTArjj661OJrghpkfvaUq9P8qid1OvLYdQ+ZUssMQxsdzx99
++ct7AdsupjYai8L8hqf/+uPn3dbOxuycrZ9Am/ZlDBTG9v9d+96oEstN9HgvZ10K
+VlLlQXdPuimx7jhwPzVf1foP
+=FAuo
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/kriegslustig
+
+==================================================================
+
