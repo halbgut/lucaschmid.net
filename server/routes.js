@@ -8,7 +8,6 @@ const comments = require('./lib/comments')
 const pug = require('../common/lib/pug')
 const view = require('./lib/view')
 const fail = require('./lib/fail')
-const webdevquiz = require('./lib/webdevquiz')
 const getMarkdown = require('./lib/getMarkdown')
 const resumeRoute = require('./lib/resumeRoute')
 
@@ -83,10 +82,6 @@ module.exports = {
       } else {
         reject()
       }
-    }),
-    '/webdevquiz': (context) => new Promise((resolve, reject) => {
-      webdevquiz(context)
-      resolve()
     }),
     '/ip': (context) => new Promise((resolve, reject) => {
       let addr = context.req.connection.remoteAddress
