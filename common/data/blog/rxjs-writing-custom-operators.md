@@ -1,5 +1,7 @@
 # Rx.js – Writing Custom Operators
 
+[ctime:1510076184455]
+
 Rx.js is great, especially because of its wide range of built-in operators. But sometime you might find that the built-in operators don't nicely fit your problem. That's when you might write you own operator, but that can be a little painful. Not least because of Rx's lacking documentation. In this article we explore the different ways we can write custom operators.
 
 ## Anatomy of an Operator
